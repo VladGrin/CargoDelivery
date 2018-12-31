@@ -5,6 +5,7 @@
   Time: 17:53
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -37,7 +38,12 @@
 </header>
 
 <main>
-
+    <h2>Все города</h2><br />
+    <c:forEach var="city" items="${requestScope.cities}">
+        <ul>
+            <li style="text-align: center"><c:out value="${city.name }"/></li>
+        </ul>
+    </c:forEach>
 </main>
 
 <footer>

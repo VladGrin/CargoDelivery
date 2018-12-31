@@ -1,6 +1,9 @@
 <%--
-  Author: Pavel Ravvich.
-  Date: 14.10.17.
+  Created by IntelliJ IDEA.
+  User: ЭЛЬДОРАДО
+  Date: 30.12.2018
+  Time: 17:00
+  To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>

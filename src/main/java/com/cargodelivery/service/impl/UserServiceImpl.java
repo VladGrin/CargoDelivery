@@ -37,6 +37,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean existsUser(String login, String password) {
-        return false;
+        return userRepository.existsUser(login, password);
     }
 }

@@ -5,6 +5,7 @@
   Time: 17:41
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -36,10 +37,10 @@
     </nav>
 </header>
 <main>
-    <form method="post" action="" class="forma">
+    <form method="post" action="/registration" class="forma">
         <div class="one">
             <img src="../../images/name.png">
-            <input type="text" required placeholder="Имя" name="тфьу" >
+            <input type="text" required placeholder="Имя" name="name" >
         </div>
         <div class="one">
             <img src="../../images/surname.png">
@@ -55,15 +56,13 @@
         </div>
         <div class="one">
             <img src="../../images/e-mail.png">
-            <input type="text" required placeholder="E-mail" name="e-mail">
+            <input type="text" required placeholder="E-mail" name="mail">
         </div>
         <div class="one">
             <img src="../../images/lock.png">
             <input type="password" required placeholder="Пароль" name="password"><br><br>
         </div>
         <input class="button" type="submit" value="Регистрация">
-        <div class="text1"><p>или</p></div>
-        <div class="text2"><p>Войти</p></div>
     </form>
 </main>
 

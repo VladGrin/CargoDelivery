@@ -4,15 +4,6 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
-    <!--<servlet>-->
-    <!--<servlet-name>GetStartPageServlet</servlet-name>-->
-    <!--<servlet-class>com.cargodelivery.servlets.GetIndexPageServlet</servlet-class>-->
-    <!--</servlet>-->
-
-    <!--<servlet-mapping>-->
-    <!--<servlet-name>GetStartPageServlet</servlet-name>-->
-    <!--<url-pattern>/</url-pattern>-->
-    <!--</servlet-mapping>-->
 
     <filter>
         <filter-name>UserAuthFilter</filter-name>
@@ -24,21 +15,31 @@
     </filter-mapping>
 
     <servlet>
-        <servlet-name>Direction</servlet-name>
-        <jsp-file>/WEB-INF/view/direction.jsp</jsp-file>
+        <servlet-name>GetCitiesServlet</servlet-name>
+        <servlet-class>com.cargodelivery.servlets.GetCitiesServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Direction</servlet-name>
+        <servlet-name>GetCitiesServlet</servlet-name>
         <url-pattern>/direction</url-pattern>
     </servlet-mapping>
 
     <servlet>
         <servlet-name>Registration</servlet-name>
-        <jsp-file>/WEB-INF/view/registrationForm.jsp</jsp-file>
+        <servlet-class>com.cargodelivery.servlets.RegistrationServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Registration</servlet-name>
         <url-pattern>/registration</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>com.cargodelivery.servlets.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
 
 </web-app>
