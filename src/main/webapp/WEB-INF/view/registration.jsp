@@ -16,7 +16,6 @@
 </head>
 <body>
 
-
 <header>
     <div class="logo">
         <a href="../../WEB-INF/view/index.jsp">
@@ -30,7 +29,7 @@
             <a href="">О КОМПАНИИ</a>
             <a href="">ТАРИФЫ</a>
             <a href="/direction">НАПРАВЛЕНИЕ</a>
-            <a href="">КАЛЬКУЛЯТОР</a>
+            <a href="/calculator">КАЛЬКУЛЯТОР</a>
             <a href="">КОНТАКТЫ</a>
             <a href="#" id="menu" class="icon">&#9776;
         </div>
@@ -72,7 +71,7 @@
         <a href="">О КОМПАНИИ</a>
         <a href="">ТАРИФЫ</a>
         <a href="/direction">НАПРАВЛЕНИЕ</a>
-        <a href="">КАЛЬКУЛЯТОР</a>
+        <a href="/calculator">КАЛЬКУЛЯТОР</a>
         <a href="">КОНТАКТЫ</a>
     </nav>
     <div class="social">

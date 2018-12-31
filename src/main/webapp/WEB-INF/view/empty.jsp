@@ -16,7 +16,6 @@
 </head>
 <body>
 
-
 <header>
     <div class="logo">
         <a href="/">
@@ -29,8 +28,8 @@
             <a href="/">ГЛАВНАЯ</a>
             <a href="">О КОМПАНИИ</a>
             <a href="">ТАРИФЫ</a>
-            <a href="#">НАПРАВЛЕНИЕ</a>
-            <a href="/calculator">КАЛЬКУЛЯТОР</a>
+            <a href="">НАПРАВЛЕНИЕ</a>
+            <a href="">КАЛЬКУЛЯТОР</a>
             <a href="">КОНТАКТЫ</a>
             <a href="#" id="menu" class="icon">&#9776;
         </div>
@@ -38,12 +37,7 @@
 </header>
 
 <main>
-    <h2>Все города</h2><br />
-    <c:forEach var="city" items="${requestScope.cities}">
-        <ul>
-            <li style="text-align: center"><c:out value="${city.name }"/></li>
-        </ul>
-    </c:forEach>
+
 </main>
 
 <footer>
@@ -51,8 +45,8 @@
         <a href="/">ГЛАВНАЯ</a>
         <a href="">О КОМПАНИИ</a>
         <a href="">ТАРИФЫ</a>
-        <a href="#">НАПРАВЛЕНИЕ</a>
-        <a href="/calculator">КАЛЬКУЛЯТОР</a>
+        <a href="">НАПРАВЛЕНИЕ</a>
+        <a href="">КАЛЬКУЛЯТОР</a>
         <a href="">КОНТАКТЫ</a>
     </nav>
     <div class="social">

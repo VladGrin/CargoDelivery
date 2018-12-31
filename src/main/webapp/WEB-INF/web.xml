@@ -15,11 +15,11 @@
     </filter-mapping>
 
     <servlet>
-        <servlet-name>GetCitiesServlet</servlet-name>
-        <servlet-class>com.cargodelivery.servlets.GetCitiesServlet</servlet-class>
+        <servlet-name>Direction</servlet-name>
+        <servlet-class>com.cargodelivery.servlets.DirectionServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>GetCitiesServlet</servlet-name>
+        <servlet-name>Direction</servlet-name>
         <url-pattern>/direction</url-pattern>
     </servlet-mapping>
 
@@ -41,5 +41,21 @@
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>RoomServlet</servlet-name>
+        <servlet-class>com.cargodelivery.servlets.RoomServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RoomServlet</servlet-name>
+        <url-pattern>/room</url-pattern>
+    </servlet-mapping>
 
+    <servlet>
+        <servlet-name>CalculatorServlet</servlet-name>
+        <servlet-class>com.cargodelivery.servlets.CalculatorServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CalculatorServlet</servlet-name>
+        <url-pattern>/calculator</url-pattern>
+    </servlet-mapping>
 </web-app>

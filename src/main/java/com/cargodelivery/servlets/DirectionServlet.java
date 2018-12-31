@@ -13,15 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.Set;
 
 /**
  *
  */
 
-public class GetCitiesServlet extends HttpServlet {
+public class DirectionServlet extends HttpServlet {
 
     private final String direction = "/WEB-INF/view/direction.jsp";
     private final DBConnection dbConnection = new MySQLConnection();
