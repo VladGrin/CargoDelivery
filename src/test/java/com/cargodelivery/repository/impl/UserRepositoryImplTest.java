@@ -49,7 +49,7 @@ public class UserRepositoryImplTest {
     @Test
     public void findUserByIdWhichExistThenReturnUser() {
         User user = userRepository.findById(1);
-        User expectedUser = new User.Builder().setId(1).setName("Max").setSurname("Barski")
+        User expectedUser = new User.UserBuilder().setId(1).setName("Max").setSurname("Barski")
                 .setCity("Vinnitsa").setPhone("+380672121212").setMail("bar@gmail.com")
                 .setPassword("1111").build();
         assertEquals(user, expectedUser);
@@ -74,7 +74,7 @@ public class UserRepositoryImplTest {
     @Test
     public void findUserByLoginWhichExistThenReturnUser() {
         User user = userRepository.findByLogin("bar@gmail.com");
-        User expectedUser = new User.Builder().setId(1).setName("Max").setSurname("Barski")
+        User expectedUser = new User.UserBuilder().setId(1).setName("Max").setSurname("Barski")
                 .setCity("Vinnitsa").setPhone("+380672121212").setMail("bar@gmail.com")
                 .setPassword("1111").build();
         assertEquals(user, expectedUser);

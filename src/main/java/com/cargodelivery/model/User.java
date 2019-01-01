@@ -11,7 +11,7 @@ public class User {
     private String mail;
     private String password;
 
-    private User(Builder builder) {
+    private User(UserBuilder builder) {
         this.id = builder.id;
         this.name = builder.name;
         this.surname = builder.surname;
@@ -49,7 +49,7 @@ public class User {
         return password;
     }
 
-    public static class Builder{
+    public static class UserBuilder {
         private Integer id;
         private String name;
         private String surname;
@@ -58,37 +58,37 @@ public class User {
         private String mail;
         private String password;
 
-        public Builder setId(Integer id) {
+        public UserBuilder setId(Integer id) {
             this.id = id;
             return this;
         }
 
-        public Builder setName(String name) {
+        public UserBuilder setName(String name) {
             this.name = name;
             return this;
         }
 
-        public Builder setSurname(String surname) {
+        public UserBuilder setSurname(String surname) {
             this.surname = surname;
             return this;
         }
 
-        public Builder setCity(String city) {
+        public UserBuilder setCity(String city) {
             this.city = city;
             return this;
         }
 
-        public Builder setPhone(String phone) {
+        public UserBuilder setPhone(String phone) {
             this.phone = phone;
             return this;
         }
 
-        public Builder setMail(String mail) {
+        public UserBuilder setMail(String mail) {
             this.mail = mail;
             return this;
         }
 
-        public Builder setPassword(String password) {
+        public UserBuilder setPassword(String password) {
             this.password = password;
             return this;
         }

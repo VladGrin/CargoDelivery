@@ -2,7 +2,6 @@ package com.cargodelivery.servlets.filters;
 
 import com.cargodelivery.configconnection.DBConnection;
 import com.cargodelivery.configconnection.impl.MySQLConnection;
-import com.cargodelivery.repository.UserRepository;
 import com.cargodelivery.repository.impl.UserRepositoryImpl;
 import com.cargodelivery.service.UserService;
 import com.cargodelivery.service.impl.UserServiceImpl;
@@ -13,8 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
 public class UserAuthFilter implements Filter {
 

@@ -72,7 +72,7 @@ public class UserRepositoryImpl implements UserRepository {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                user = new User.Builder().setId(id)
+                user = new User.UserBuilder().setId(id)
                         .setName(resultSet.getString("name"))
                         .setSurname(resultSet.getString("surname"))
                         .setCity(resultSet.getString("city"))
@@ -101,7 +101,7 @@ public class UserRepositoryImpl implements UserRepository {
             statement.setString(1, login);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                user = new User.Builder().setId(resultSet.getInt("id"))
+                user = new User.UserBuilder().setId(resultSet.getInt("id"))
                         .setName(resultSet.getString("name"))
                         .setSurname(resultSet.getString("surname"))
                         .setCity(resultSet.getString("city"))

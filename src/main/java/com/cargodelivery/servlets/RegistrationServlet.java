@@ -36,7 +36,7 @@ public class RegistrationServlet extends HttpServlet {
 //            doGet(req, resp);
 //        }
 
-        User user = new User.Builder().setName(request.getParameter("name"))
+        User user = new User.UserBuilder().setName(request.getParameter("name"))
                 .setSurname(request.getParameter("surname"))
                 .setCity(request.getParameter("city"))
                 .setPhone(request.getParameter("phone"))

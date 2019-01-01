@@ -62,13 +62,13 @@
                 <lable>Вид доставки</lable>
                 <select name="cargo">
                     <option disabled selected>Вид отправления</option>
-                    <option c:out value="document">документ</option>
-                    <option c:out value="parcel">посылка</option>
-                    <option c:out value="freight">груз</option>
+                    <option c:out value="DOCUMENT">документ</option>
+                    <option c:out value="PARSEL">посылка</option>
+                    <option c:out value="FREIGHT">груз</option>
                 </select>
             </div>
             <div class="one">
-                <%--<input type="text" required placeholder="Имя" name="name" >--%>
+                <%--<input type="text" required plFREIGHTaceholder="Имя" name="name" >--%>
                 <lable>Вес груза</lable>
                 <input type="text" required placeholder="вес" name="weight">
             </div>
