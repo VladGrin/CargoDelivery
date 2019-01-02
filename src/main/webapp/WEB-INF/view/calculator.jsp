@@ -37,7 +37,12 @@
     </div>
     <nav>
         <div class="topnav" id="myTopnav">
-            <a href="/">ГЛАВНАЯ</a>
+            <c:if test="${requestScope.role == 0}">
+                <a href="/">ГЛАВНАЯ</a>
+            </c:if>
+            <c:if test="${requestScope.role == 1}">
+                <a href="/">КАБИНЕТ</a>
+            </c:if>
             <a href="">О КОМПАНИИ</a>
             <a href="">ТАРИФЫ</a>
             <a href="/direction">НАПРАВЛЕНИЕ</a>
@@ -90,7 +95,12 @@
 
 <footer>
     <nav>
-        <a href="/">ГЛАВНАЯ</a>
+        <c:if test="${requestScope.role == 0}">
+            <a href="">ГЛАВНАЯ</a>
+        </c:if>
+        <c:if test="${requestScope.role == 1}">
+            <a href="">КАБИНЕТ</a>
+        </c:if>
         <a href="">О КОМПАНИИ</a>
         <a href="">ТАРИФЫ</a>
         <a href="/direction">НАПРАВЛЕНИЕ</a>

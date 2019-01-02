@@ -27,10 +27,6 @@ public class DirectionServlet extends HttpServlet {
     private final String direction = "/WEB-INF/view/direction.jsp";
     private final DBConnection dbConnection = new MySQLConnection();
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Connection connection = dbConnection.getConnection();
 
