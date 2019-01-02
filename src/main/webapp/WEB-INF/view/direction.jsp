@@ -11,11 +11,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Direction</title>
-    <link rel="stylesheet" type="text/css" href="../../styles/direction.css">
+    <link rel="stylesheet" type="text/css" href="/styles/direction.css">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 </head>
 <body>
-
 
 <header>
     <div class="logo">
@@ -23,6 +22,19 @@
             <img class="graficlogo" src="../../images/logo.png" alt="Logo">
             <p style="color:white;font-size: 35px;font-family: 'Arial';margin-top: 20px;">CargoDelivery</p>
         </a>
+        <c:if test="${requestScope.role == 0}">
+            <form method="post" action="/" class="form">
+                <input type="text" required placeholder="Email" name="login" class="first"><!-- <br> -->
+                <input type="password" required placeholder="Password" name="password" class="second">
+                <input class="button" type="submit" value="Вход">
+                <div class="text">
+                    <a href="/registration" style="color:white;">регистрация</a>
+                </div>
+            </form>
+        </c:if>
+        <c:if test="${requestScope.role == 1}">
+            <a class="button" href=<c:url value="/logout"/>>Выход</a>
+        </c:if>
     </div>
     <nav>
         <div class="topnav" id="myTopnav">
@@ -38,12 +50,13 @@
 </header>
 
 <main>
-    <h2>Все города</h2><br />
+    <h2>Все города</h2><br/>
     <c:forEach var="city" items="${requestScope.cities}">
         <ul>
             <li style="text-align: center"><c:out value="${city.name }"/></li>
         </ul>
     </c:forEach>
+
 </main>
 
 <footer>

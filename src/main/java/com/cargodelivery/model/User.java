@@ -10,6 +10,7 @@ public class User {
     private String phone;
     private String mail;
     private String password;
+    private Role role;
 
     private User(UserBuilder builder) {
         this.id = builder.id;
@@ -19,6 +20,7 @@ public class User {
         this.phone = builder.phone;
         this.mail = builder.mail;
         this.password = builder.password;
+        this.role = builder.role;
     }
 
     public Integer getId() {
@@ -49,6 +51,10 @@ public class User {
         return password;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
     public static class UserBuilder {
         private Integer id;
         private String name;
@@ -57,6 +63,7 @@ public class User {
         private String phone;
         private String mail;
         private String password;
+        private Role role;
 
         public UserBuilder setId(Integer id) {
             this.id = id;
@@ -93,6 +100,11 @@ public class User {
             return this;
         }
 
+        public UserBuilder setRole(Role role) {
+            this.role = role;
+            return this;
+        }
+
         public User build(){
             return new User(this);
         }
@@ -109,7 +121,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(mail, password);
+        return Objects.hash(mail, password, role);
     }
 
     @Override
@@ -122,6 +134,12 @@ public class User {
                 ", phone='" + phone + '\'' +
                 ", mail='" + mail + '\'' +
                 ", password='" + password + '\'' +
+                ", role=" + role +
                 '}';
+    }
+
+    public enum Role{
+        UNKNOWN,
+        USER;
     }
 }

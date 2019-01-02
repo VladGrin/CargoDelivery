@@ -35,18 +35,25 @@ public class RegistrationServlet extends HttpServlet {
 //        if (!requestIsValid(req)) {
 //            doGet(req, resp);
 //        }
+        String login = request.getParameter("mail");
+        String password = request.getParameter("password");
+        User.Role role = User.Role.USER;
 
         User user = new User.UserBuilder().setName(request.getParameter("name"))
                 .setSurname(request.getParameter("surname"))
                 .setCity(request.getParameter("city"))
                 .setPhone(request.getParameter("phone"))
-                .setMail(request.getParameter("mail"))
-                .setPassword(request.getParameter("password")).build();
+                .setMail(login).setPassword(password)
+                .setRole(role).build();
 
         UserService userService = new UserServiceImpl(new UserRepositoryImpl(connection));
         userService.saveUser(user);
 
         dbConnection.closeConnection(connection);
+        request.getSession().setAttribute("login", login);
+        request.getSession().setAttribute("password", password);
+        request.getSession().setAttribute("role", role);
+
         request.getRequestDispatcher(room).forward(request, response);
     }
 }

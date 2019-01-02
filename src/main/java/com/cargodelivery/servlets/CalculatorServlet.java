@@ -3,6 +3,7 @@ package com.cargodelivery.servlets;
 import com.cargodelivery.configconnection.DBConnection;
 import com.cargodelivery.configconnection.impl.MySQLConnection;
 import com.cargodelivery.model.City;
+import com.cargodelivery.model.User;
 import com.cargodelivery.repository.impl.CityRepositoryImpl;
 import com.cargodelivery.service.CityService;
 import com.cargodelivery.service.impl.CityServiceImpl;
@@ -35,6 +36,14 @@ public class CalculatorServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Object role = request.getSession().getAttribute("role");
+        if(role == null){
+            request.setAttribute("role", 0);
+        } else {
+            User.Role userRole = (User.Role) role;
+            request.setAttribute("role", userRole.ordinal());
+        }
+
         setCitiesFromDBToRequest(request, response);
     }
 

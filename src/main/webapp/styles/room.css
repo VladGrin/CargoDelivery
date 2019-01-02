@@ -33,6 +33,24 @@ body{
 	transform: rotate(360deg);
 	transition: 0.6s;
 }
+.button {
+    text-decoration: none;
+    outline: none;
+    display: inline-block;
+    padding: 11px 15px;
+    margin: 4px 16px 19px 16px;
+    border-radius: 10px;
+    box-shadow: 0 0 40px 40px #de0e0e inset, 0 0 0 0 #f9f9f9;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: white;
+    transition: .15s ease-in-out;
+}
+.button:hover{
+    box-shadow: 0 0 10px 0 #de0e0e inset, 0 0 10px 4px #de0e0e;
+    color: #de0e0e;
+}
 .graficlogo{
 	padding: 5px;
 	max-width: 100%;
@@ -149,7 +167,7 @@ footer nav a:hover{
 		float: right;
 		margin-top: -17px;
 		display: block;
-		color: black;	
+		color: black;
 	}
 	nav{
 		width: 100%;

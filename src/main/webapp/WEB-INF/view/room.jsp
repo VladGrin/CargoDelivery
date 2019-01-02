@@ -11,16 +11,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Room</title>
-    <link rel="stylesheet" type="text/css" href="../../styles/room.css">
+    <link rel="stylesheet" type="text/css" href="/styles/room.css">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 </head>
 <body>
 <header>
     <div class="logo">
-        <a href="/">
-            <img class="graficlogo" src="../../images/logo.png" alt="Logo">
-            <p style="color:white;font-size: 35px;font-family: 'Arial';margin-top: 20px;">CargoDelivery</p>
-        </a>
+        <div class="logo">
+            <a href="../../WEB-INF/view/index.jsp">
+                <img class="graficlogo" src="../../images/logo.png" alt="Logo">
+                <p style="color:white;font-size: 35px;font-family: 'Arial';margin-top: 20px;">CargoDelivery</p>
+            </a>
+            <a class="button" href=<c:url value="/logout"/>>Выход</a>
+        </div>
+
     </div>
     <nav>
         <div class="topnav" id="myTopnav">
@@ -37,9 +41,6 @@
 
 <main>
     <h1>MY ROOM!!!</h1>
-    <div>
-        <a href=<c:url value="/logout"/>>Logout</a>
-    </div>
 
 </main>
 

@@ -11,11 +11,10 @@
 <head>
     <meta charset="UTF-8">
     <title>MAIN</title>
-    <link rel="stylesheet" type="text/css" href="../../styles/registration.css">
+    <link rel="stylesheet" type="text/css" href="/styles/registration.css">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 </head>
 <body>
-
 <header>
     <div class="logo">
         <a href="../../WEB-INF/view/index.jsp">

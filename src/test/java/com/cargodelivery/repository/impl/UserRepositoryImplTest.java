@@ -49,9 +49,9 @@ public class UserRepositoryImplTest {
     @Test
     public void findUserByIdWhichExistThenReturnUser() {
         User user = userRepository.findById(1);
-        User expectedUser = new User.UserBuilder().setId(1).setName("Max").setSurname("Barski")
-                .setCity("Vinnitsa").setPhone("+380672121212").setMail("bar@gmail.com")
-                .setPassword("1111").build();
+        User expectedUser = new User.UserBuilder().setId(1).setName("Максим").setSurname("Барко")
+                .setCity("Винница").setPhone("+380672121212").setMail("bar@gmail.com")
+                .setPassword("11").setRole(User.Role.USER).build();
         assertEquals(user, expectedUser);
         assertEquals(user.getId(), expectedUser.getId());
         assertEquals(user.getName(), expectedUser.getName());
@@ -74,9 +74,9 @@ public class UserRepositoryImplTest {
     @Test
     public void findUserByLoginWhichExistThenReturnUser() {
         User user = userRepository.findByLogin("bar@gmail.com");
-        User expectedUser = new User.UserBuilder().setId(1).setName("Max").setSurname("Barski")
-                .setCity("Vinnitsa").setPhone("+380672121212").setMail("bar@gmail.com")
-                .setPassword("1111").build();
+        User expectedUser = new User.UserBuilder().setId(1).setName("Максим").setSurname("Барко")
+                .setCity("Винница").setPhone("+380672121212").setMail("bar@gmail.com")
+                .setPassword("11").setRole(User.Role.USER).build();
         assertEquals(user, expectedUser);
         assertEquals(user.getId(), expectedUser.getId());
         assertEquals(user.getName(), expectedUser.getName());
@@ -98,7 +98,7 @@ public class UserRepositoryImplTest {
      */
     @Test
     public void whenUserExistsReturnTrue(){
-        boolean isExist = userRepository.existsUser("bar@gmail.com", "1111");
+        boolean isExist = userRepository.existsUser("bar@gmail.com", "11");
         assertTrue(isExist);
     }
     /**

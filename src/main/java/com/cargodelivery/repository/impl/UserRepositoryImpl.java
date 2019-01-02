@@ -39,7 +39,6 @@ public class UserRepositoryImpl implements UserRepository {
      * @param user for create
      * @return false if User already exist. If creating success true.
      */
-
     @Override
     public boolean save(User user) {
         boolean isSave = false;
@@ -50,6 +49,7 @@ public class UserRepositoryImpl implements UserRepository {
             statement.setString(4, user.getPhone());
             statement.setString(5, user.getMail());
             statement.setString(6, user.getPassword());
+            statement.setInt(7, user.getRole().ordinal());
             isSave = statement.executeUpdate() != 0;
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
@@ -58,6 +58,7 @@ public class UserRepositoryImpl implements UserRepository {
         logger.info("User was saved to database : " + isSave);
         return isSave;
     }
+
 
     /**
      * Find User by id
@@ -78,7 +79,9 @@ public class UserRepositoryImpl implements UserRepository {
                         .setCity(resultSet.getString("city"))
                         .setPhone(resultSet.getString("phone"))
                         .setMail(resultSet.getString("mail"))
-                        .setPassword(resultSet.getString("password")).build();
+                        .setPassword(resultSet.getString("password"))
+                        .setRole(getUserRoleFromInt(resultSet.getInt("role")))
+                        .build();
             }
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
@@ -86,6 +89,21 @@ public class UserRepositoryImpl implements UserRepository {
         }
         logger.info("User was found from database : " + user);
         return user;
+    }
+
+    /**
+     * Converting Int to enum User.Role
+     * @param roleFromDB int to convert
+     * @return UserRole if it exists. Else return UserRole UNKNOWN
+     */
+    User.Role getUserRoleFromInt(int roleFromDB) {
+        User.Role userRole = User.Role.UNKNOWN;
+        for (User.Role role : User.Role.values()) {
+            if (role.ordinal() == roleFromDB) {
+                userRole = role;
+            }
+        }
+        return userRole;
     }
 
     /**
@@ -107,7 +125,9 @@ public class UserRepositoryImpl implements UserRepository {
                         .setCity(resultSet.getString("city"))
                         .setPhone(resultSet.getString("phone"))
                         .setMail(login)
-                        .setPassword(resultSet.getString("password")).build();
+                        .setPassword(resultSet.getString("password"))
+                        .setRole(getUserRoleFromInt(resultSet.getInt("role")))
+                        .build();
             }
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
@@ -124,12 +144,12 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     enum SQLUser {
-        SAVE("INSERT INTO users (id, name , surname, city, phone, mail, password)\n" +
-                "VALUES (DEFAULT, (?), (?), (?), (?), (?), (?));"),
-        FINDBYLOGIN("SELECT u.id, u.name, u.surname, u.city, u.phone, u.password\n" +
+        SAVE("INSERT INTO users (id, name , surname, city, phone, mail, password, role)\n" +
+                "VALUES (DEFAULT, (?), (?), (?), (?), (?), (?), (?));"),
+        FINDBYLOGIN("SELECT u.id, u.name, u.surname, u.city, u.phone, u.password, u.role\n" +
                 "FROM users AS u\n" +
                 "WHERE u.mail = (?)"),
-        FINDBYID("SELECT u.name, u.surname, u.city, u.phone, u.mail, u.password\n" +
+        FINDBYID("SELECT u.name, u.surname, u.city, u.phone, u.mail, u.password, u.role\n" +
                 "FROM users AS u\n" +
                 "WHERE u.id = (?);");
 
