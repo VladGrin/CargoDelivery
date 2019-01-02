@@ -55,6 +55,19 @@
 
 <main>
     <div>
+        <h2>RESULT</h2>
+        <div>
+            <c:set var="price" value="${requestScope.price}"/>
+            <div>${price}</div>
+        </div>
+        <div>
+            <c:set var="priceError" value="${requestScope.priceError}"/>
+            <div>${priceError}</div>
+        </div>
+    </div>
+    <br>
+    <hr>
+    <div>
         <form method="post" action="/calculator" class="forma">
             <div class="one">
                 <lable>Город отправления</lable>
@@ -76,7 +89,7 @@
             </div>
             <div class="one">
                 <lable>Вид доставки</lable>
-                <select name="cargo">
+                <select name="cargoType">
                     <option disabled selected>Вид отправления</option>
                     <option c:out value="DOCUMENT">документ</option>
                     <option c:out value="PARSEL">посылка</option>
@@ -84,7 +97,6 @@
                 </select>
             </div>
             <div class="one">
-                <%--<input type="text" required plFREIGHTaceholder="Имя" name="name" >--%>
                 <lable>Вес груза</lable>
                 <input type="text" required placeholder="вес" name="weight">
             </div>

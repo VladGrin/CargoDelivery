@@ -8,7 +8,6 @@ import java.util.regex.Pattern;
 public class Validador {
 
     private static Pattern regexPattern;
-    private static Matcher regMatcher;
 
     public static void validateEmailAddress(String emailAddress) throws IncorrectInputException {
 
@@ -26,17 +25,27 @@ public class Validador {
 
     }
 
-    public static void validateText(String str) throws IncorrectInputException {
-        regexPattern = Pattern.compile("[A-ZА-ЯІ][a-z-а-яії]{1,15}");
-        if (!regexPattern.matcher(str).matches()) {
+    public static void validateText(String text) throws IncorrectInputException {
+        if (text == null || !Pattern.compile("[A-ZА-ЯІa-z-а-яії]{1,40}").matcher(text).matches()) {
             throw new IncorrectInputException("Incorrectly input text");
         }
     }
 
-//    public static void validateNumber(String str) throws IncorrectInputException {
-//        regexPattern = Pattern.compile("[1-9][0-9]{0,15}");
-//        if (!regexPattern.matcher(str).matches()) {
-//            throw new IncorrectInputException("Incorrectly input number");
-//        }
-//    }
+    public static void validateWeight(String weight, String type) throws IncorrectInputException {
+        if (weight == null || type == null || !Pattern.compile("[1-9][0-9]{0,5}").matcher(weight).matches()) {
+            throw new IncorrectInputException("Incorrectly input weight");
+        }
+        int weightInt = Integer.parseInt(weight);
+        if((weightInt > 3 && type.equals("DOCUMENT") ||
+                (weightInt > 50 && type.equals("PARSEL")) ||
+                (weightInt > 30000 && type.equals("FREIGHT")))){
+            throw new IncorrectInputException("Incorrectly input weight");
+        }
+    }
+
+    public static void validateNumber(String number) throws IncorrectInputException {
+        if (number == null || !Pattern.compile("[0-9]{0,5}").matcher(number).matches()) {
+            throw new IncorrectInputException("Incorrectly input number");
+        }
+    }
 }

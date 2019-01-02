@@ -9,6 +9,7 @@ public class Order {
     private String cityFrom;
     private String cityTo;
     private Type type;
+    private Integer weight;
     private String startDate;
     private String endDate;
     private String recipient;
@@ -19,6 +20,7 @@ public class Order {
         this.cityFrom = builder.cityFrom;
         this.cityTo = builder.cityTo;
         this.type = builder.type;
+        this.weight = builder.weight;
         this.startDate = builder.startDate;
         this.endDate = builder.endDate;
         this.recipient = builder.recipient;
@@ -45,6 +47,15 @@ public class Order {
         return type;
     }
 
+    public Type getTypeByName() {
+
+        return type;
+    }
+
+    public Integer getWeight() {
+        return weight;
+    }
+
     public String getStartDate() {
         return startDate;
     }
@@ -67,6 +78,7 @@ public class Order {
         private String cityFrom;
         private String cityTo;
         private Type type;
+        private Integer weight;
         private String startDate;
         private String endDate;
         private String recipient;
@@ -97,6 +109,15 @@ public class Order {
             return this;
         }
 
+        public OrderBuilder setTypeByName(String typeName) {
+            for(Type type : Type.values()){
+                if (type.name().equals(typeName)){
+                    this.type = type;
+                }
+            }
+            return this;
+        }
+
         public OrderBuilder setStartDate(String startDate) {
             this.startDate = startDate;
             return this;
@@ -117,12 +138,17 @@ public class Order {
             return this;
         }
 
+        public OrderBuilder setWeight(Integer weight) {
+            this.weight = weight;
+            return this;
+        }
+
         public Order build(){
             return new Order(this);
         }
     }
 
-    enum Type {
+    public enum Type {
         DOCUMENT,
         PARSEL,
         FREIGHT;

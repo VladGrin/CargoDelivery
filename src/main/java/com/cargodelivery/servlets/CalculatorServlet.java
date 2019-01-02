@@ -2,11 +2,15 @@ package com.cargodelivery.servlets;
 
 import com.cargodelivery.configconnection.DBConnection;
 import com.cargodelivery.configconnection.impl.MySQLConnection;
+import com.cargodelivery.exception.IncorrectInputException;
 import com.cargodelivery.model.City;
 import com.cargodelivery.model.User;
 import com.cargodelivery.repository.impl.CityRepositoryImpl;
+import com.cargodelivery.service.CalculateServise;
 import com.cargodelivery.service.CityService;
+import com.cargodelivery.service.impl.CalculatorServiceImpl;
 import com.cargodelivery.service.impl.CityServiceImpl;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,22 +26,35 @@ public class CalculatorServlet extends HttpServlet {
 
     private final String calculator = "/WEB-INF/view/calculator.jsp";
     private final DBConnection dbConnection = new MySQLConnection();
+    private final CalculateServise calculateServise = new CalculatorServiceImpl();
+    private final static Logger logger = Logger.getLogger(CalculatorServlet.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF8");
 
-        System.out.println(request.getParameter("cityFrom"));
-        System.out.println(request.getParameter("cityTo"));
-        System.out.println(request.getParameter("cargo"));
-        System.out.println(request.getParameter("weight"));
+        String cityTo = request.getParameter("cityTo");
+        String cityFrom = request.getParameter("cityFrom");
+        String cargoType = request.getParameter("cargoType");
+        String weight = request.getParameter("weight");
+        logger.info("Entered data: cityTo: " + cityTo + " cityFrom: " + cityFrom + " cargoType: " + cargoType + " weight: " + weight);
 
+        String orderPrice = null;
+        try {
+            orderPrice = String.valueOf(calculateServise.getOrderPrice(cityTo, cityFrom, cargoType, weight));
+            request.setAttribute("price", orderPrice);
+            logger.info("Get price: " + orderPrice);
+        } catch (IncorrectInputException e) {
+            request.setAttribute("priceError", "Введены некоректные данные.");
+            logger.error("Exception" + e);
+        }
         setCitiesFromDBToRequest(request, response);
+
         request.getRequestDispatcher(calculator).forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Object role = request.getSession().getAttribute("role");
-        if(role == null){
+        if (role == null) {
             request.setAttribute("role", 0);
         } else {
             User.Role userRole = (User.Role) role;
