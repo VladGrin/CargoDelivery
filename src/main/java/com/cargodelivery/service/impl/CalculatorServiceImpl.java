@@ -6,7 +6,15 @@ import com.cargodelivery.service.CalculateServise;
 import com.cargodelivery.service.calculateimpl.PriceCalculatorByCargoType;
 import com.cargodelivery.validator.Validator;
 
+import java.sql.Connection;
+
 public class CalculatorServiceImpl implements CalculateServise {
+
+    private PriceCalculatorByCargoType calculator;
+
+    public CalculatorServiceImpl(Connection connection) {
+        this.calculator = new PriceCalculatorByCargoType(connection);
+    }
 
     @Override
     public int getOrderPrice(String cityFrom, String cityTo, String cargoType, String weight) throws IncorrectInputException {
@@ -22,6 +30,6 @@ public class CalculatorServiceImpl implements CalculateServise {
                 .setTypeByName(cargoType)
                 .setWeight(Integer.parseInt(weight)).build();
 
-        return new PriceCalculatorByCargoType().getPriceExecuter(order);
+        return calculator.getPriceExecuter(order);
     }
 }

@@ -6,6 +6,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import static org.junit.Assert.assertEquals;
@@ -15,9 +17,29 @@ public class DistanceRepositoryImplTest {
     @NotNull
     private DistanceRepository distanceRepository;
 
+    @NotNull
+    private Connection connection;
+
     @Before
     public void before() {
-        distanceRepository = new DistanceRepositoryImpl();
+        try {
+            String userName = "root";
+            String password = "1111";
+            String connectionUrl = "jdbc:mysql://localhost:3306/cargodelivery?useSSL=true&characterEncoding=utf8";
+            connection = DriverManager.getConnection(connectionUrl, userName, password);
+            distanceRepository = new DistanceRepositoryImpl(connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @After
+    public void after() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

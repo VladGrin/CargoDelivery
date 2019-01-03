@@ -26,7 +26,6 @@ public class CalculatorServlet extends HttpServlet {
 
     private final String calculator = "/WEB-INF/view/calculator.jsp";
     private final DBConnection dbConnection = new MySQLConnection();
-    private final CalculateServise calculateServise = new CalculatorServiceImpl();
     private final static Logger logger = Logger.getLogger(CalculatorServlet.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -38,8 +37,28 @@ public class CalculatorServlet extends HttpServlet {
         String weight = request.getParameter("weight");
         logger.info("Entered data: cityTo: " + cityTo + " cityFrom: " + cityFrom + " cargoType: " + cargoType + " weight: " + weight);
 
+        getPriceAndSetToRequest(request, cityTo, cityFrom, cargoType, weight);
+        setCitiesFromDBToRequest(request);
+
+        setRoleToRequest(request);
+
+        request.getRequestDispatcher(calculator).forward(request, response);
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        setCitiesFromDBToRequest(request);
+
+        setRoleToRequest(request);
+
+        request.getRequestDispatcher(calculator).forward(request, response);
+    }
+
+    private void getPriceAndSetToRequest(HttpServletRequest request, String cityTo, String cityFrom, String cargoType, String weight) {
+        Connection connection = dbConnection.getConnection();
         String orderPrice = null;
         try {
+            CalculateServise calculateServise = new CalculatorServiceImpl(connection);
             orderPrice = String.valueOf(calculateServise.getOrderPrice(cityTo, cityFrom, cargoType, weight));
             request.setAttribute("price", orderPrice);
             logger.info("Get price: " + orderPrice);
@@ -47,19 +66,22 @@ public class CalculatorServlet extends HttpServlet {
             request.setAttribute("priceError", "Введены некоректные данные.");
             logger.error("Exception" + e);
         }
-
-        setRoleToRequest(request);
-
-        setCitiesFromDBToRequest(request, response);
-
-//        request.getRequestDispatcher(calculator).forward(request, response);
+        dbConnection.closeConnection(connection);
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void setCitiesFromDBToRequest(HttpServletRequest request) {
+        Connection connection = dbConnection.getConnection();
+        CityService cityService = new CityServiceImpl(connection);
+        Set<City> cities = null;
+        try {
+            cities = cityService.getAllCities();
+            logger.info("Servlet cities: " + cities);
+        } catch (NoSuchDataException e) {
+            logger.error("No any cities in servlet. " + e);
+        }
 
-        setRoleToRequest(request);
-
-        setCitiesFromDBToRequest(request, response);
+        request.setAttribute("cities", cities);
+        dbConnection.closeConnection(connection);
     }
 
     private void setRoleToRequest(HttpServletRequest request) {
@@ -70,24 +92,5 @@ public class CalculatorServlet extends HttpServlet {
             User.Role userRole = (User.Role) role;
             request.setAttribute("role", userRole.ordinal());
         }
-    }
-
-    private void setCitiesFromDBToRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        Connection connection = dbConnection.getConnection();
-
-        CityService cityService = new CityServiceImpl(connection);
-        Set<City> cities = null;
-        try {
-            cities = cityService.getAllCities();
-            logger.info("Servlet cities: " + cities);
-        } catch (NoSuchDataException e) {
-            logger.error("No any cities in servlet. " + e);
-        }
-        dbConnection.closeConnection(connection);
-
-        request.setAttribute("cities", cities);
-
-        request.getRequestDispatcher(calculator).forward(request, response);
     }
 }

@@ -4,9 +4,15 @@ import com.cargodelivery.model.Order;
 import com.cargodelivery.repository.DistanceRepository;
 import com.cargodelivery.repository.impl.DistanceRepositoryImpl;
 
+import java.sql.Connection;
+
 class ParselPriceCalculator implements CalculatorStrategy {
 
-    private final DistanceRepository distanceRepository = new DistanceRepositoryImpl();
+    private final DistanceRepository distanceRepository;
+
+    public ParselPriceCalculator(Connection connection) {
+        this.distanceRepository = new DistanceRepositoryImpl(connection);
+    }
 
     @Override
     public int getPrice(Order order) {

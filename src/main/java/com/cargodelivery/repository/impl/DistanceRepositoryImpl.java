@@ -24,8 +24,8 @@ public class DistanceRepositoryImpl implements DistanceRepository {
     @NotNull
     private Connection connection;
 
-    public DistanceRepositoryImpl() {
-        this.connection = new MySQLConnection().getConnection();
+    public DistanceRepositoryImpl(Connection connection) {
+        this.connection = connection;
     }
 
     /**
