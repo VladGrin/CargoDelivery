@@ -4,15 +4,11 @@ import com.cargodelivery.model.Order;
 import com.cargodelivery.service.CalculateServise;
 
 public class PriceCalculatorByCargoType {
-    private CalculatorStrategy calculatorStrategy;
 
-    public PriceCalculatorByCargoType(Order order) {
+    public int getPriceExecuter(Order order) {
         String typeName = order.getType().name();
-        this.calculatorStrategy = new PriceCalculatorFactory().createCalculator(typeName);
-    }
-
-    public int getPriceExecuter() {
-        return calculatorStrategy.getPrice();
+        CalculatorStrategy calculatorStrategy = new PriceCalculatorFactory().createCalculator(typeName);
+        return calculatorStrategy.getPrice(order);
     }
 }
 

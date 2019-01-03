@@ -22,6 +22,6 @@ public class CalculatorServiceImpl implements CalculateServise {
                 .setTypeByName(cargoType)
                 .setWeight(Integer.parseInt(weight)).build();
 
-        return new PriceCalculatorByCargoType(order).getPriceExecuter();
+        return new PriceCalculatorByCargoType().getPriceExecuter(order);
     }
 }

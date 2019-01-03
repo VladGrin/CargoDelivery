@@ -52,7 +52,7 @@ public class CalculatorServlet extends HttpServlet {
 
         setCitiesFromDBToRequest(request, response);
 
-        request.getRequestDispatcher(calculator).forward(request, response);
+//        request.getRequestDispatcher(calculator).forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

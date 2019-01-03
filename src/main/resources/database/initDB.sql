@@ -33,3 +33,23 @@ WHERE u.id = (?);
 SELECT u.id, u.name, u.surname, u.city, u.phone, u.password, u.role
 FROM users AS u
 WHERE u.mail = (?);
+
+CREATE TABLE IF NOT EXISTS distance(
+  firstCity      VARCHAR(8)   NOT NULL ,
+  secondCity     VARCHAR(8)   NOT NULL ,
+  distance       INTEGER  NOT NULL
+);
+
+INSERT INTO distance (firstCity, secondCity , distance)
+VALUES ('2', '1', 270),
+       ('3', '1', 380),
+       ('3', '2', 560),
+       ('4', '1', 740),
+       ('4', '2', 480),
+       ('4', '3', 1050),
+       ('5', '1', 440),
+       ('5', '2', 500),
+       ('5', '3', 820),
+       ('5', '4', 700);
+SELECT DISTINCT d.distance FROM distance AS d
+WHERE (d.firstCity = (?) AND d.secondCity = (?)) OR (d.firstCity = (?) AND d.secondCity = (?));

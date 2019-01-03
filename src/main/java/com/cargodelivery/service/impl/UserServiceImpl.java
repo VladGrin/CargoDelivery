@@ -16,10 +16,6 @@ import java.sql.Connection;
  * Author : Volodymyr Hrinchenko
  */
 public class UserServiceImpl implements UserService {
-    /**
-     * Logger log4j
-     */
-    final static Logger logger = Logger.getLogger(UserServiceImpl.class);
 
     private UserRepository userRepository;
 

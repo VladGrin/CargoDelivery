@@ -59,7 +59,6 @@ public class UserRepositoryImpl implements UserRepository {
         return isSave;
     }
 
-
     /**
      * Find User by id
      *
