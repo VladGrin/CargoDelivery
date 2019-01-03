@@ -3,9 +3,9 @@ package com.cargodelivery.servlets;
 import com.cargodelivery.configconnection.DBConnection;
 import com.cargodelivery.configconnection.impl.MySQLConnection;
 import com.cargodelivery.exception.IncorrectInputException;
+import com.cargodelivery.exception.NoSuchDataException;
 import com.cargodelivery.model.City;
 import com.cargodelivery.model.User;
-import com.cargodelivery.repository.impl.CityRepositoryImpl;
 import com.cargodelivery.service.CalculateServise;
 import com.cargodelivery.service.CityService;
 import com.cargodelivery.service.impl.CalculatorServiceImpl;
@@ -47,12 +47,22 @@ public class CalculatorServlet extends HttpServlet {
             request.setAttribute("priceError", "Введены некоректные данные.");
             logger.error("Exception" + e);
         }
+
+        setRoleToRequest(request);
+
         setCitiesFromDBToRequest(request, response);
 
         request.getRequestDispatcher(calculator).forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        setRoleToRequest(request);
+
+        setCitiesFromDBToRequest(request, response);
+    }
+
+    private void setRoleToRequest(HttpServletRequest request) {
         Object role = request.getSession().getAttribute("role");
         if (role == null) {
             request.setAttribute("role", 0);
@@ -60,18 +70,23 @@ public class CalculatorServlet extends HttpServlet {
             User.Role userRole = (User.Role) role;
             request.setAttribute("role", userRole.ordinal());
         }
-
-        setCitiesFromDBToRequest(request, response);
     }
 
     private void setCitiesFromDBToRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         Connection connection = dbConnection.getConnection();
 
-        CityService cityService = new CityServiceImpl(new CityRepositoryImpl(connection));
-        Set<City> cities = cityService.getAllCities();
-        request.setAttribute("cities", cities);
-
+        CityService cityService = new CityServiceImpl(connection);
+        Set<City> cities = null;
+        try {
+            cities = cityService.getAllCities();
+            logger.info("Servlet cities: " + cities);
+        } catch (NoSuchDataException e) {
+            logger.error("No any cities in servlet. " + e);
+        }
         dbConnection.closeConnection(connection);
+
+        request.setAttribute("cities", cities);
 
         request.getRequestDispatcher(calculator).forward(request, response);
     }

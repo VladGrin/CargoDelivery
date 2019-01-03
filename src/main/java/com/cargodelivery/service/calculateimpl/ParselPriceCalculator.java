@@ -4,6 +4,6 @@ class ParselPriceCalculator implements CalculatorStrategy {
 
     @Override
     public int getPrice() {
-        return 1;
+        return 100;
     }
 }

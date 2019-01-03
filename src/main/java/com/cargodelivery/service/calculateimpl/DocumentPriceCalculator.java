@@ -4,6 +4,6 @@ class DocumentPriceCalculator implements CalculatorStrategy {
 
     @Override
     public int getPrice() {
-        return 0;
+        return 40;
     }
 }

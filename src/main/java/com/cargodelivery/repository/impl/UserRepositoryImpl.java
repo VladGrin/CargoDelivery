@@ -55,7 +55,7 @@ public class UserRepositoryImpl implements UserRepository {
             logger.error("Invalid connection. ");
             e.printStackTrace();
         }
-        logger.info("User was saved to database : " + isSave);
+        logger.info("User: " + user + " was saved to database");
         return isSave;
     }
 
@@ -80,7 +80,7 @@ public class UserRepositoryImpl implements UserRepository {
                         .setPhone(resultSet.getString("phone"))
                         .setMail(resultSet.getString("mail"))
                         .setPassword(resultSet.getString("password"))
-                        .setRole(getUserRoleFromInt(resultSet.getInt("role")))
+                        .setRoleByOrderNumber(resultSet.getInt("role"))
                         .build();
             }
         } catch (SQLException e) {
@@ -89,21 +89,6 @@ public class UserRepositoryImpl implements UserRepository {
         }
         logger.info("User was found from database : " + user);
         return user;
-    }
-
-    /**
-     * Converting Int to enum User.Role
-     * @param roleFromDB int to convert
-     * @return UserRole if it exists. Else return UserRole UNKNOWN
-     */
-    User.Role getUserRoleFromInt(int roleFromDB) {
-        User.Role userRole = User.Role.UNKNOWN;
-        for (User.Role role : User.Role.values()) {
-            if (role.ordinal() == roleFromDB) {
-                userRole = role;
-            }
-        }
-        return userRole;
     }
 
     /**
@@ -126,7 +111,7 @@ public class UserRepositoryImpl implements UserRepository {
                         .setPhone(resultSet.getString("phone"))
                         .setMail(login)
                         .setPassword(resultSet.getString("password"))
-                        .setRole(getUserRoleFromInt(resultSet.getInt("role")))
+                        .setRoleByOrderNumber(resultSet.getInt("role"))
                         .build();
             }
         } catch (SQLException e) {

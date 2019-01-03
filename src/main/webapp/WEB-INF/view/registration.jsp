@@ -38,11 +38,11 @@
     <form method="post" action="/registration" class="forma">
         <div class="one">
             <img src="../../images/name.png">
-            <input type="text" required placeholder="Имя" name="name" >
+            <input type="text" required placeholder="Имя" name="name">
         </div>
         <div class="one">
             <img src="../../images/surname.png">
-            <input type="text" required placeholder="Фамилия" name="surname" >
+            <input type="text" required placeholder="Фамилия" name="surname">
         </div>
         <div class="one">
             <img src="../../images/city.png">
@@ -60,8 +60,13 @@
             <img src="../../images/lock.png">
             <input type="password" required placeholder="Пароль" name="password"><br><br>
         </div>
+        <div>
+            <c:set var="registrationError" value="${requestScope.registrationError}"/>
+            <div>${registrationError}</div>
+        </div>
         <input class="button" type="submit" value="Регистрация">
     </form>
+
 </main>
 
 <footer>

@@ -4,6 +4,6 @@ class FreightPriceCalculator implements CalculatorStrategy {
 
     @Override
     public int getPrice() {
-        return 2;
+        return 1000;
     }
 }

@@ -67,10 +67,10 @@
 <footer>
     <nav>
         <c:if test="${requestScope.role == 0}">
-            <a href="">ГЛАВНАЯ</a>
+            <a href="/">ГЛАВНАЯ</a>
         </c:if>
         <c:if test="${requestScope.role == 1}">
-            <a href="">КАБИНЕТ</a>
+            <a href="/">КАБИНЕТ</a>
         </c:if>
         <a href="">О КОМПАНИИ</a>
         <a href="">ТАРИФЫ</a>

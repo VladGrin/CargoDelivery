@@ -4,17 +4,17 @@ import com.cargodelivery.exception.IncorrectInputException;
 import com.cargodelivery.model.Order;
 import com.cargodelivery.service.CalculateServise;
 import com.cargodelivery.service.calculateimpl.PriceCalculatorByCargoType;
-import com.cargodelivery.validator.Validador;
+import com.cargodelivery.validator.Validator;
 
 public class CalculatorServiceImpl implements CalculateServise {
 
     @Override
     public int getOrderPrice(String cityFrom, String cityTo, String cargoType, String weight) throws IncorrectInputException {
 
-        Validador.validateWeight(weight, cargoType);
-        Validador.validateNumber(cityFrom);
-        Validador.validateNumber(cityTo);
-        Validador.validateText(cargoType);
+        Validator.validateWeight(weight, cargoType);
+        Validator.validateNumber(cityFrom);
+        Validator.validateNumber(cityTo);
+        Validator.validateText(cargoType);
 
         Order order = new Order.OrderBuilder()
                 .setCityFrom(cityFrom)

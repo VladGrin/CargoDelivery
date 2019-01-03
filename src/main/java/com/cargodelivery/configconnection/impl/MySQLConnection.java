@@ -1,12 +1,18 @@
 package com.cargodelivery.configconnection.impl;
 
 import com.cargodelivery.configconnection.DBConnection;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MySQLConnection implements DBConnection {
+    /**
+     * Logger log4j
+     */
+    private final static Logger logger = Logger.getLogger(MySQLConnection.class);
+
     @Override
     public Connection getConnection() {
         String userName = "root";
@@ -16,8 +22,9 @@ public class MySQLConnection implements DBConnection {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(connectionUrl, userName, password);
+            logger.info("The connection was successful");
         } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.error("The connection was not successful. " + e);
         }
         return connection;
     }
@@ -25,9 +32,10 @@ public class MySQLConnection implements DBConnection {
     @Override
     public void closeConnection(Connection connection) {
         try {
+            logger.info("Connection was closed successfully.");
             connection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.info("Connection was not closed successfully. " + e);
         }
     }
 }

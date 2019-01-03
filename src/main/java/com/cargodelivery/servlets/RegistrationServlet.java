@@ -2,10 +2,12 @@ package com.cargodelivery.servlets;
 
 import com.cargodelivery.configconnection.DBConnection;
 import com.cargodelivery.configconnection.impl.MySQLConnection;
+import com.cargodelivery.exception.DataAlreadyExistsException;
+import com.cargodelivery.exception.IncorrectInputException;
 import com.cargodelivery.model.User;
-import com.cargodelivery.repository.impl.UserRepositoryImpl;
 import com.cargodelivery.service.UserService;
 import com.cargodelivery.service.impl.UserServiceImpl;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +20,7 @@ public class RegistrationServlet extends HttpServlet {
 
     private final String registration = "/WEB-INF/view/registration.jsp";
     private final String room = "/WEB-INF/view/room.jsp";
+    private final static Logger logger = Logger.getLogger(RegistrationServlet.class);
 
     private final DBConnection dbConnection = new MySQLConnection();
 
@@ -28,32 +31,40 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Connection connection = dbConnection.getConnection();
-
         request.setCharacterEncoding("UTF8");
 
-//        if (!requestIsValid(req)) {
-//            doGet(req, resp);
-//        }
+        String name = request.getParameter("name");
+        String surname = request.getParameter("surname");
+        String city = request.getParameter("city");
+        String phone = request.getParameter("phone");
         String login = request.getParameter("mail");
         String password = request.getParameter("password");
         User.Role role = User.Role.USER;
 
-        User user = new User.UserBuilder().setName(request.getParameter("name"))
-                .setSurname(request.getParameter("surname"))
-                .setCity(request.getParameter("city"))
-                .setPhone(request.getParameter("phone"))
-                .setMail(login).setPassword(password)
-                .setRole(role).build();
+        String registrationError = null;
+        request.setAttribute("registrationError", registrationError);
 
-        UserService userService = new UserServiceImpl(new UserRepositoryImpl(connection));
-        userService.saveUser(user);
+        Connection connection = dbConnection.getConnection();
+        UserService userService = new UserServiceImpl(connection);
+        try {
+            userService.saveUser(name, surname, city, phone, login, password, role);
+            request.getSession().setAttribute("login", login);
+            request.getSession().setAttribute("password", password);
+            request.getSession().setAttribute("role", role);
 
+            request.getRequestDispatcher(room).forward(request, response);
+
+        } catch (IncorrectInputException e) {
+            registrationError = "Введены некоректные данные";
+            request.setAttribute("registrationError", registrationError);
+            logger.error("Incorrect input: " + e);
+            request.getRequestDispatcher(registration).forward(request, response);
+        } catch (DataAlreadyExistsException e) {
+            registrationError = "Такой пользователь уже существует.";
+            request.setAttribute("registrationError", registrationError);
+            logger.error("Such user already exists: " + e);
+            request.getRequestDispatcher(registration).forward(request, response);
+        }
         dbConnection.closeConnection(connection);
-        request.getSession().setAttribute("login", login);
-        request.getSession().setAttribute("password", password);
-        request.getSession().setAttribute("role", role);
-
-        request.getRequestDispatcher(room).forward(request, response);
     }
 }

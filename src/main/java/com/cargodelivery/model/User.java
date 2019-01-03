@@ -105,6 +105,15 @@ public class User {
             return this;
         }
 
+        public UserBuilder setRoleByOrderNumber(int roleOrderNumber) {
+            for(Role role : Role.values()){
+                if (role.ordinal() == roleOrderNumber){
+                    this.role = role;
+                }
+            }
+            return this;
+        }
+
         public User build(){
             return new User(this);
         }
