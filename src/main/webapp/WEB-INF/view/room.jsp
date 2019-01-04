@@ -13,22 +13,23 @@
     <title>Room</title>
     <link rel="stylesheet" type="text/css" href="/styles/room.css">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <style>
+        table, th, td {border: 1px solid black; border-collapse: collapse; border-spacing: 5px;}
+        th, td {padding: 3px;}
+    </style>
 </head>
 <body>
 <header>
     <div class="logo">
-        <div class="logo">
-            <a href="../../WEB-INF/view/index.jsp">
-                <img class="graficlogo" src="../../images/logo.png" alt="Logo">
-                <p style="color:white;font-size: 35px;font-family: 'Arial';margin-top: 20px;">CargoDelivery</p>
-            </a>
-            <a class="button" href=<c:url value="/logout"/>>Выход</a>
-        </div>
-
+        <a href="../../WEB-INF/view/index.jsp">
+            <img class="graficlogo" src="../../images/logo.png" alt="Logo">
+            <p style="color:white;font-size: 35px;font-family: 'Arial';margin-top: 20px;">CargoDelivery</p>
+        </a>
+        <a class="button" href=<c:url value="/logout"/>>Выход</a>
     </div>
     <nav>
         <div class="topnav" id="myTopnav">
-            <a href="/">ГЛАВНАЯ</a>
+            <a href="/">КАБИНЕТ</a>
             <a href="">О КОМПАНИИ</a>
             <a href="">ТАРИФЫ</a>
             <a href="/direction">НАПРАВЛЕНИЕ</a>
@@ -41,6 +42,45 @@
 
 <main>
     <h1>MY ROOM!!!</h1>
+    <a class="button" href=<c:url value="/room/order"/>>Сделать заказ</a>
+    <div>
+        <table>
+            <tr>
+                <th>Дата создания</th>
+                <th>Город отправления</th>
+                <th>Город доставки</th>
+                <th>Тип отпраления</th>
+                <th>Вес, кг</th>
+                <th>Дата отправления</th>
+                <th>Дата доставки</th>
+                <th>Получатель</th>
+                <th>Контактный телефон</th>
+                <th>Адресс доставки</th>
+                <th>Цена доставки, грн</th>
+            </tr>
+            <c:forEach var="order" items="${requestScope.orders}">
+            <tr>
+                <td><b><c:out value="${order.createDate}"/></b></td>
+                <td><span><c:out value="${order.cityFrom}"/></span></td>
+                <td><span><c:out value="${order.cityTo}"/></span></td>
+                <td><span><c:out value="${order.type}"/></span></td>
+                <td><span><c:out value="${order.weight}"/></span></td>
+                <td><span><c:out value="${order.startDate}"/></span></td>
+                <td><span><c:out value="${order.endDate}"/></span></td>
+                <td><span><c:out value="${order.recipient}"/></span></td>
+                <td><span><c:out value="${order.recipientPhone}"/></span></td>
+                <td><span><c:out value="${order.deliveryAddress}"/></span></td>
+                <td><span><c:out value="${order.price}"/></span></td>
+            </tr>
+            </c:forEach>
+        </table>
+    </div>
+
+
+
+
+
+
 
 </main>
 

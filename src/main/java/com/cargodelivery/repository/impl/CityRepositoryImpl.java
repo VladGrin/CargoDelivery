@@ -102,7 +102,7 @@ public class CityRepositoryImpl implements CityRepository {
     }
 
     /**
-     * Find all cities by login
+     * Find all cities
      *
      * @return entities City if they exist. If entities does not exist return null.
      */

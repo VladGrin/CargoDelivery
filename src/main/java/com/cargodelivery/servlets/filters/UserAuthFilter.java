@@ -43,7 +43,9 @@ public class UserAuthFilter implements Filter {
             try {
                 existsUser = userService.existsUser(login, password);
                 if (existsUser) {
-                    role = userService.getUserByLogin(login).getRole();
+                    User userByLogin = userService.getUserByLogin(login);
+                    role = userByLogin.getRole();
+                    request.getSession().setAttribute("id", userByLogin.getId());
                 }
                 logger.info("Authentication user login: " + login);
             } catch (IncorrectInputException e) {
@@ -76,7 +78,8 @@ public class UserAuthFilter implements Filter {
     private void sendRequestByRole(HttpServletRequest request, HttpServletResponse response, User.Role role) throws ServletException, IOException {
         switch (role) {
             case USER:
-                request.getRequestDispatcher("/WEB-INF/view/room.jsp").forward(request, response);
+                response.sendRedirect("/room");
+//                request.getRequestDispatcher("/WEB-INF/view/room.jsp").forward(request, response);
                 break;
             case UNKNOWN:
                 request.getRequestDispatcher("/WEB-INF/view/index.jsp").forward(request, response);

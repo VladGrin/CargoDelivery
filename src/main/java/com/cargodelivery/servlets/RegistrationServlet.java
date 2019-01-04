@@ -4,6 +4,7 @@ import com.cargodelivery.configconnection.DBConnection;
 import com.cargodelivery.configconnection.impl.MySQLConnection;
 import com.cargodelivery.exception.DataAlreadyExistsException;
 import com.cargodelivery.exception.IncorrectInputException;
+import com.cargodelivery.exception.NoSuchDataException;
 import com.cargodelivery.model.User;
 import com.cargodelivery.service.UserService;
 import com.cargodelivery.service.impl.UserServiceImpl;
@@ -48,9 +49,11 @@ public class RegistrationServlet extends HttpServlet {
         UserService userService = new UserServiceImpl(connection);
         try {
             userService.saveUser(name, surname, city, phone, login, password, role);
+            User userByLogin = userService.getUserByLogin(login);
             request.getSession().setAttribute("login", login);
             request.getSession().setAttribute("password", password);
             request.getSession().setAttribute("role", role);
+            request.getSession().setAttribute("id", userByLogin.getId());
 
             request.getRequestDispatcher(room).forward(request, response);
 
@@ -64,6 +67,8 @@ public class RegistrationServlet extends HttpServlet {
             request.setAttribute("registrationError", registrationError);
             logger.error("Such user already exists: " + e);
             request.getRequestDispatcher(registration).forward(request, response);
+        } catch (NoSuchDataException e) {
+            e.printStackTrace();
         }
         dbConnection.closeConnection(connection);
     }

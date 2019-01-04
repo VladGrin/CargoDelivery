@@ -1,11 +1,11 @@
 package com.cargodelivery.model;
 
-import lombok.Data;
+import java.util.Objects;
 
-@Data
-public class Order {
+public class Order implements Comparable<Order>{
     private Integer id;
-    private User user;
+    private Integer userId;
+    private String createDate;
     private String cityFrom;
     private String cityTo;
     private Type type;
@@ -14,9 +14,12 @@ public class Order {
     private String endDate;
     private String recipient;
     private String recipientPhone;
+    private String deliveryAddress;
+    private Integer price;
 
     private Order(OrderBuilder builder) {
-        this.user = builder.user;
+        this.userId = builder.userId;
+        this.createDate = builder.createDate;
         this.cityFrom = builder.cityFrom;
         this.cityTo = builder.cityTo;
         this.type = builder.type;
@@ -25,14 +28,20 @@ public class Order {
         this.endDate = builder.endDate;
         this.recipient = builder.recipient;
         this.recipientPhone = builder.recipientPhone;
+        this.price = builder.price;
+        this.deliveryAddress = builder.deliveryAddress;
     }
 
     public Integer getId() {
         return id;
     }
 
-    public User getUser() {
-        return user;
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public String getCreateDate() {
+        return createDate;
     }
 
     public String getCityFrom() {
@@ -44,11 +53,6 @@ public class Order {
     }
 
     public Type getType() {
-        return type;
-    }
-
-    public Type getTypeByName() {
-
         return type;
     }
 
@@ -68,13 +72,27 @@ public class Order {
         return recipient;
     }
 
+    public String getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
     public String getRecipientPhone() {
         return recipientPhone;
     }
 
+    public Integer getPrice() {
+        return price;
+    }
+
+    @Override
+    public int compareTo(Order o) {
+        return id - o.id;
+    }
+
     public static class OrderBuilder {
         private Integer id;
-        private User user;
+        private Integer userId;
+        private String createDate;
         private String cityFrom;
         private String cityTo;
         private Type type;
@@ -83,14 +101,21 @@ public class Order {
         private String endDate;
         private String recipient;
         private String recipientPhone;
+        private String deliveryAddress;
+        private Integer price;
 
         public OrderBuilder setId(Integer id) {
             this.id = id;
             return this;
         }
 
-        public OrderBuilder setUser(User user) {
-            this.user = user;
+        public OrderBuilder setUserId(Integer userId) {
+            this.userId = userId;
+            return this;
+        }
+
+        public OrderBuilder setCreateDate(String createDate) {
+            this.createDate = createDate;
             return this;
         }
 
@@ -110,11 +135,16 @@ public class Order {
         }
 
         public OrderBuilder setTypeByName(String typeName) {
-            for(Type type : Type.values()){
-                if (type.name().equals(typeName)){
+            for (Type type : Type.values()) {
+                if (type.name().equals(typeName)) {
                     this.type = type;
                 }
             }
+            return this;
+        }
+
+        public OrderBuilder setWeight(Integer weight) {
+            this.weight = weight;
             return this;
         }
 
@@ -138,14 +168,63 @@ public class Order {
             return this;
         }
 
-        public OrderBuilder setWeight(Integer weight) {
-            this.weight = weight;
+        public OrderBuilder setDeliveryAddress(String deliveryAddress) {
+            this.deliveryAddress = deliveryAddress;
             return this;
         }
 
-        public Order build(){
+        public OrderBuilder setPrice(Integer price) {
+            this.price = price;
+            return this;
+        }
+
+        public Order build() {
             return new Order(this);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return Objects.equals(id, order.id) &&
+                Objects.equals(userId, order.userId) &&
+                Objects.equals(createDate, order.createDate) &&
+                Objects.equals(cityFrom, order.cityFrom) &&
+                Objects.equals(cityTo, order.cityTo) &&
+                type == order.type &&
+                Objects.equals(weight, order.weight) &&
+                Objects.equals(startDate, order.startDate) &&
+                Objects.equals(endDate, order.endDate) &&
+                Objects.equals(recipient, order.recipient) &&
+                Objects.equals(recipientPhone, order.recipientPhone) &&
+                Objects.equals(deliveryAddress, order.deliveryAddress) &&
+                Objects.equals(price, order.price);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, userId, createDate, cityFrom, cityTo, type, weight, startDate, endDate, recipient, recipientPhone, deliveryAddress, price);
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", createDate='" + createDate + '\'' +
+                ", cityFrom='" + cityFrom + '\'' +
+                ", cityTo='" + cityTo + '\'' +
+                ", type=" + type +
+                ", weight=" + weight +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", recipient='" + recipient + '\'' +
+                ", recipientPhone='" + recipientPhone + '\'' +
+                ", deliveryAddress='" + deliveryAddress + '\'' +
+                ", price=" + price +
+                '}';
     }
 
     public enum Type {

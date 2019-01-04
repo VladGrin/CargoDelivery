@@ -35,21 +35,43 @@ FROM users AS u
 WHERE u.mail = (?);
 
 CREATE TABLE IF NOT EXISTS distance(
-  firstCity      VARCHAR(8)   NOT NULL ,
-  secondCity     VARCHAR(8)   NOT NULL ,
-  distance       INTEGER  NOT NULL
+  firstCity          VARCHAR(8)   NOT NULL ,
+  secondCity         VARCHAR(8)   NOT NULL ,
+  distance           INTEGER  NOT NULL ,
+  delivery_term      INTEGER  NOT NULL
 );
 
-INSERT INTO distance (firstCity, secondCity , distance)
-VALUES ('2', '1', 270),
-       ('3', '1', 380),
-       ('3', '2', 560),
-       ('4', '1', 740),
-       ('4', '2', 480),
-       ('4', '3', 1050),
-       ('5', '1', 440),
-       ('5', '2', 500),
-       ('5', '3', 820),
-       ('5', '4', 700);
+INSERT INTO distance (firstCity, secondCity , distance, delivery_term)
+VALUES ('2', '1', 270, 2),
+       ('3', '1', 380, 2),
+       ('3', '2', 560, 3),
+       ('4', '1', 740, 3),
+       ('4', '2', 480, 2),
+       ('4', '3', 1050, 3),
+       ('5', '1', 440, 2),
+       ('5', '2', 500, 2),
+       ('5', '3', 820, 3),
+       ('5', '4', 700, 3);
+
 SELECT DISTINCT d.distance FROM distance AS d
 WHERE (d.firstCity = (?) AND d.secondCity = (?)) OR (d.firstCity = (?) AND d.secondCity = (?));
+
+CREATE TABLE IF NOT EXISTS orders(
+  id                 INTEGER AUTO_INCREMENT PRIMARY KEY ,
+  userId             INTEGER       NOT NULL ,
+  createDate         VARCHAR(20)   NOT NULL ,
+  cityFrom           VARCHAR(30)   NOT NULL ,
+  cityTo             VARCHAR(30)   NOT NULL ,
+  orderType          VARCHAR(30)   NOT NULL ,
+  weight             INTEGER       NOT NULL ,
+  startDate          VARCHAR(30)   NOT NULL ,
+  endDate            VARCHAR(30)   NOT NULL ,
+  recipient          VARCHAR(100)  NOT NULL ,
+  recipientPhone     VARCHAR(30)   NOT NULL ,
+  deliveryAddress    VARCHAR(100)  NOT NULL ,
+  price              INTEGER       NOT NULL
+);
+
+INSERT INTO orders (id, userId , createDate, cityFrom, cityTo, orderType, weight, startDate, endDate, recipient,
+                      recipientPhone, deliveryAddress, price)
+VALUES (DEFAULT, (?), (?), (?), (?), (?), (?), (?), (?), (?), (?), (?), (?));
