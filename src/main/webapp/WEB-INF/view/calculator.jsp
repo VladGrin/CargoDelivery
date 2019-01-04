@@ -10,7 +10,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Direction</title>
+    <title>Calculator</title>
     <link rel="stylesheet" type="text/css" href="/styles/calculator.css">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 </head>

@@ -18,7 +18,7 @@ import java.sql.Connection;
 
 public class UserAuthFilter implements Filter {
 
-    private DBConnection dbConnection = new MySQLConnection();
+    private final DBConnection dbConnection = new MySQLConnection();
     private final static Logger logger = Logger.getLogger(UserAuthFilter.class);
 
     @Override

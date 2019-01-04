@@ -14,7 +14,6 @@ import java.io.IOException;
 public class RoomServlet extends HttpServlet {
 
     private final String room = "/WEB-INF/view/room.jsp";
-    private final DBConnection dbConnection = new MySQLConnection();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
