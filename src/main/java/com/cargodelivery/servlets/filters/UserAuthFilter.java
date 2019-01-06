@@ -35,6 +35,7 @@ public class UserAuthFilter implements Filter {
         final String login = request.getParameter("login");
         final String password = request.getParameter("password");
 
+        HttpSession session = request.getSession();
         User.Role role = null;
         boolean existsUser = false;
         if (login != null && password != null) {
@@ -45,7 +46,7 @@ public class UserAuthFilter implements Filter {
                 if (existsUser) {
                     User userByLogin = userService.getUserByLogin(login);
                     role = userByLogin.getRole();
-                    request.getSession().setAttribute("id", userByLogin.getId());
+                    session.setAttribute("userId", userByLogin.getId());
                 }
                 logger.info("Authentication user login: " + login);
             } catch (IncorrectInputException e) {
@@ -56,17 +57,15 @@ public class UserAuthFilter implements Filter {
             dbConnection.closeConnection(connection);
         }
 
-        HttpSession session = request.getSession();
-
         if (session.getAttribute("login") != null && session.getAttribute("password") != null) {
             role = (User.Role) session.getAttribute("role");
 
             sendRequestByRole(request, response, role);
 
         } else if (existsUser) {
-            request.getSession().setAttribute("login", login);
-            request.getSession().setAttribute("password", password);
-            request.getSession().setAttribute("role", role);
+            session.setAttribute("login", login);
+            session.setAttribute("password", password);
+            session.setAttribute("role", role);
 
             sendRequestByRole(request, response, role);
 

@@ -21,25 +21,34 @@ import java.util.List;
 public class RoomServlet extends HttpServlet {
 
     private final String room = "/WEB-INF/view/room.jsp";
+    private final String index = "/WEB-INF/view/index.jsp";
     private final DBConnection dbConnection = new MySQLConnection();
     private final static Logger logger = Logger.getLogger(RoomServlet.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String id = request.getParameter("orderId");
+        System.out.println("Order id: " + id);
 
+        response.sendRedirect("/room");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Connection connection = dbConnection.getConnection();
         OrderService orderService = new OrderServiceImpl(connection);
-        Object id = request.getSession().getAttribute("id");
+        Object userId = request.getSession().getAttribute("userId");
+        if (userId == null) {
+            request.getRequestDispatcher(index).forward(request, response);
+        }
         List<Order> orders = null;
         try {
-            orders = orderService.getAllOrdersByUserId((Integer) id);
+            orders = orderService.getAllOrdersByUserId((Integer) userId);
             logger.info("Get orders list: " + orders);
         } catch (NoSuchDataException e) {
             logger.error("Order list is empty" + e);
         }
         request.setAttribute("orders", orders);
+
+        dbConnection.closeConnection(connection);
 
         request.getRequestDispatcher(room).forward(request, response);
     }

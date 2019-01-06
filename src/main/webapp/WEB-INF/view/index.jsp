@@ -23,7 +23,7 @@
             <p style="color:white;font-size: 35px;font-family: 'Arial';margin-top: 20px;">CargoDelivery</p>
         </a>
         <form method="post" action="" class="form">
-            <input type="text" required placeholder="Email" name="login" class="first"><!-- <br> -->
+            <input type="email" required placeholder="Email" name="login" class="first"><!-- <br> -->
             <input type="password" required placeholder="Password" name="password" class="second">
             <input class="button" type="submit" value="Вход">
             <div class="text">

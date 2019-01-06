@@ -63,9 +63,45 @@ public class DistanceRepositoryImpl implements DistanceRepository {
         return distance;
     }
 
+    /**
+     * Find delivery term between two sities
+     * @param firstCity
+     * @param secondCity
+     * @return delivery term if it exists. If delivery term does not exist return 0.
+     */
+    @Override
+    public int getDeliveryTermBetweenTwoCities(String firstCity, String secondCity) {
+        int deliveryTerm = 0;
+
+        try (PreparedStatement statement = connection.prepareStatement(SQLDistance.FINDDELIVERYTERM.QUERY)) {
+            statement.setString(1, firstCity);
+            statement.setString(2, secondCity);
+            statement.setString(3, secondCity);
+            statement.setString(4, firstCity);
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                deliveryTerm = resultSet.getInt("delivery_term");
+            }
+        } catch (SQLException e) {
+            logger.error("Invalid connection.");
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        logger.info("Delibery term was found from database : " + deliveryTerm);
+        return deliveryTerm;
+    }
+
     enum SQLDistance {
         FINDDISTANCE("SELECT DISTINCT d.distance FROM distance AS d\n" +
-                "WHERE (d.firstCity = (?) AND d.secondCity = (?)) OR (d.firstCity = (?) AND d.secondCity = (?));");
+                "WHERE (d.firstCity = (?) AND d.secondCity = (?)) OR (d.firstCity = (?) AND d.secondCity = (?));"),
+        FINDDELIVERYTERM("SELECT DISTINCT d.delivery_term FROM distance AS d\n" +
+                             "WHERE (d.firstCity = (?) AND d.secondCity = (?)) OR (d.firstCity = (?) AND d.secondCity = (?));");
 
         String QUERY;
 

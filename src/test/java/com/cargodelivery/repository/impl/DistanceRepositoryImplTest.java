@@ -65,4 +65,27 @@ public class DistanceRepositoryImplTest {
         int distanceBetweenTwoCities = distanceRepository.getDistanceBetweenTwoCities(firstCity, secondCity);
         assertEquals(expectedDistance, distanceBetweenTwoCities);
     }
+
+    /**
+     * @see com.cargodelivery.repository.impl.DistanceRepositoryImpl#getDeliveryTermBetweenTwoCities(String, String)
+     */
+    @Test
+    public void getDeliveryTermBetweenTwoCities() {
+        int expectedDeliveryTerm = 2;
+        String firstCity = "1";
+        String secondCity = "2";
+        int deliveryTerm = distanceRepository.getDeliveryTermBetweenTwoCities(firstCity, secondCity);
+        assertEquals(expectedDeliveryTerm, deliveryTerm);
+    }
+    /**
+     * @see com.cargodelivery.repository.impl.DistanceRepositoryImpl#getDeliveryTermBetweenTwoCities(String, String)
+     */
+    @Test
+    public void WhenCitiesSameThenDeliveryTermReturnZero() {
+        int expectedDeliveryTerm = 0;
+        String firstCity = "1";
+        String secondCity = "1";
+        int deliveryTerm = distanceRepository.getDeliveryTermBetweenTwoCities(firstCity, secondCity);
+        assertEquals(expectedDeliveryTerm, deliveryTerm);
+    }
 }

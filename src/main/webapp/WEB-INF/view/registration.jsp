@@ -50,11 +50,11 @@
         </div>
         <div class="one">
             <img src="../../images/number.png">
-            <input type="text" required placeholder="Телефон" name="phone">
+            <input type="tel" required placeholder="Телефон" name="phone">
         </div>
         <div class="one">
             <img src="../../images/e-mail.png">
-            <input type="text" required placeholder="E-mail" name="mail">
+            <input type="email" required placeholder="E-mail" name="mail">
         </div>
         <div class="one">
             <img src="../../images/lock.png">

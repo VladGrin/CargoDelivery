@@ -23,7 +23,7 @@
         </a>
         <c:if test="${requestScope.role == 0}">
             <form method="post" action="/" class="form">
-                <input type="text" required placeholder="Email" name="login" class="first"><!-- <br> -->
+                <input type="email" required placeholder="Email" name="login" class="first"><!-- <br> -->
                 <input type="password" required placeholder="Password" name="password" class="second">
                 <input class="button" type="submit" value="Вход">
                 <div class="text">

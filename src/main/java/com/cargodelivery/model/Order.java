@@ -18,6 +18,7 @@ public class Order implements Comparable<Order>{
     private Integer price;
 
     private Order(OrderBuilder builder) {
+        this.id = builder.id;
         this.userId = builder.userId;
         this.createDate = builder.createDate;
         this.cityFrom = builder.cityFrom;

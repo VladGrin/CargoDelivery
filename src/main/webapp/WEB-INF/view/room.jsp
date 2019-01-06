@@ -29,7 +29,7 @@
     </div>
     <nav>
         <div class="topnav" id="myTopnav">
-            <a href="/">КАБИНЕТ</a>
+            <a href="#">КАБИНЕТ</a>
             <a href="">О КОМПАНИИ</a>
             <a href="">ТАРИФЫ</a>
             <a href="/direction">НАПРАВЛЕНИЕ</a>
@@ -56,7 +56,8 @@
                 <th>Получатель</th>
                 <th>Контактный телефон</th>
                 <th>Адресс доставки</th>
-                <th>Цена доставки, грн</th>
+                <th>Цена, грн</th>
+                <th>Удалить</th>
             </tr>
             <c:forEach var="order" items="${requestScope.orders}">
             <tr>
@@ -71,22 +72,24 @@
                 <td><span><c:out value="${order.recipientPhone}"/></span></td>
                 <td><span><c:out value="${order.deliveryAddress}"/></span></td>
                 <td><span><c:out value="${order.price}"/></span></td>
+                <td>
+                <form action="/room" method="post">
+                    <input type="hidden" name="orderId" c:out value="${order.id}">
+                    <input class="button" type="submit" value="удалить">
+                </form>
+                <%--</td>--%>
+            <%--<td class="button" c:out="${order.id}"></td>--%>
+                <%--<td><a class="button" href=<c:url value="/room/order"/>>удалить</a></td>--%>
             </tr>
             </c:forEach>
         </table>
     </div>
 
-
-
-
-
-
-
 </main>
 
 <footer>
     <nav>
-        <a href="/">ГЛАВНАЯ</a>
+        <a href="#">КАБИНЕТ</a>
         <a href="">О КОМПАНИИ</a>
         <a href="">ТАРИФЫ</a>
         <a href="/direction">НАПРАВЛЕНИЕ</a>

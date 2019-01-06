@@ -59,4 +59,13 @@
         <url-pattern>/calculator</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>OrderServlet</servlet-name>
+        <servlet-class>com.cargodelivery.servlets.OrderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OrderServlet</servlet-name>
+        <url-pattern>/room/order</url-pattern>
+    </servlet-mapping>
+
 </web-app>

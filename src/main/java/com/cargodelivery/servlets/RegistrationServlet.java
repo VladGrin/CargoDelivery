@@ -53,7 +53,7 @@ public class RegistrationServlet extends HttpServlet {
             request.getSession().setAttribute("login", login);
             request.getSession().setAttribute("password", password);
             request.getSession().setAttribute("role", role);
-            request.getSession().setAttribute("id", userByLogin.getId());
+            request.getSession().setAttribute("userId", userByLogin.getId());
 
             request.getRequestDispatcher(room).forward(request, response);
 
@@ -69,7 +69,8 @@ public class RegistrationServlet extends HttpServlet {
             request.getRequestDispatcher(registration).forward(request, response);
         } catch (NoSuchDataException e) {
             e.printStackTrace();
+        } finally {
+            dbConnection.closeConnection(connection);
         }
-        dbConnection.closeConnection(connection);
     }
 }

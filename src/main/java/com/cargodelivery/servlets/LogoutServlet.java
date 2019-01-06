@@ -26,6 +26,7 @@ public class LogoutServlet extends HttpServlet {
         session.removeAttribute("login");
         session.removeAttribute("password");
         session.removeAttribute("role");
+        session.removeAttribute("id");
 
         logger.info("The user left his room.");
 

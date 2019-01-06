@@ -38,7 +38,7 @@ public class Validator {
     }
 
     public static void validateText(String text) throws IncorrectInputException {
-        if (text == null || !Pattern.compile("[A-ZА-ЯІa-z-а-яії]{1,40}").matcher(text).matches()) {
+        if (text == null || !Pattern.compile("[A-ZА-ЯІa-z-а-яії ]{1,40}").matcher(text).matches()) {
             throw new IncorrectInputException("Incorrectly input text");
         }
     }
