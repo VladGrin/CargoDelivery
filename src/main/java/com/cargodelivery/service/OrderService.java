@@ -13,4 +13,6 @@ public interface OrderService {
                       String recipientPhone, String deliveryAdrress, int price) throws IncorrectInputException;
 
     List<Order> getAllOrdersByUserId(int userId) throws NoSuchDataException;
+
+    boolean deleteOrderById(String orderId);
 }

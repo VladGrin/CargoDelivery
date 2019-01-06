@@ -53,7 +53,7 @@ public class OrderServlet extends HttpServlet {
         int price = getPriceAndSetToRequest(request, idCityFrom, idCityTo, cargoType, weight);
 
 
-        Set<City> cities = getCitiesFromDBAndSetToRequest();
+        Set<City> cities = getCitiesFromDB();
         String cityFrom = cities.stream().filter(city -> city.getId().toString().equals(idCityFrom)).findFirst().get().getName();
         String cityTo = cities.stream().filter(city -> city.getId().toString().equals(idCityTo)).findFirst().get().getName();
 
@@ -78,7 +78,7 @@ public class OrderServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        Set<City> cities = getCitiesFromDBAndSetToRequest();
+        Set<City> cities = getCitiesFromDB();
         request.setAttribute("cities", cities);
 
         request.getRequestDispatcher(order).forward(request, response);
@@ -109,7 +109,7 @@ public class OrderServlet extends HttpServlet {
         return orderPrice;
     }
 
-    private Set<City> getCitiesFromDBAndSetToRequest() {
+    private Set<City> getCitiesFromDB() {
         Connection connection = dbConnection.getConnection();
         CityService cityService = new CityServiceImpl(connection);
         Set<City> cities = null;

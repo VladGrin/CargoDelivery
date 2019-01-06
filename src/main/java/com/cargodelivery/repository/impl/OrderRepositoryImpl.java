@@ -116,11 +116,32 @@ public class OrderRepositoryImpl implements OrderRepository {
         return orders;
     }
 
+    /**elete order by order id
+     * D
+     * @param orderId
+     * @return false if Order was not deleted. If deleting success true.
+     */
+    @Override
+    public boolean deleteOrderById(int orderId) {
+        boolean isDelete = false;
+        try (PreparedStatement statement = connection.prepareStatement(SQLOrder.DELETEBYID.QUERY)) {
+            statement.setInt(1, orderId);
+            isDelete = statement.executeUpdate() != 0;
+        } catch (SQLException e) {
+            logger.error("Invalid connection. ");
+            e.printStackTrace();
+        }
+        logger.info("Order by id " + orderId + " was deleted: " + isDelete);
+        return isDelete;
+    }
+
+
     enum SQLOrder {
         SAVE("INSERT INTO orders (id, userId , createDate, cityFrom, cityTo, orderType, weight, startDate, endDate, recipient, \n" +
                 "                      recipientPhone, deliveryAddress, price) \n" +
                 "VALUES (DEFAULT, (?), (?), (?), (?), (?), (?), (?), (?), (?), (?), (?), (?));"),
-        FINDALL("SELECT * FROM orders WHERE userId = (?)");
+        FINDALL("SELECT * FROM orders WHERE userId = (?)"),
+        DELETEBYID("DELETE FROM orders WHERE id = (?)");
 
         String QUERY;
 

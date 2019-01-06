@@ -9,4 +9,6 @@ public interface OrderRepository {
     boolean save(Order order);
 
     List<Order> findAllOrdersByUserId(int userId);
+
+    boolean deleteOrderById(int orderId);
 }

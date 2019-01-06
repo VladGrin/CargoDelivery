@@ -62,4 +62,9 @@ public class OrderServiceImpl implements OrderService {
         }
         return allOrdersByUserId;
     }
+
+    @Override
+    public boolean deleteOrderById(String orderId) {
+        return orderRepository.deleteOrderById(Integer.parseInt(orderId));
+    }
 }

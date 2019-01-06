@@ -26,8 +26,11 @@ public class RoomServlet extends HttpServlet {
     private final static Logger logger = Logger.getLogger(RoomServlet.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("orderId");
-        System.out.println("Order id: " + id);
+        String orderId = request.getParameter("orderId");
+
+        Connection connection = dbConnection.getConnection();
+        OrderService orderService = new OrderServiceImpl(connection);
+        orderService.deleteOrderById(orderId);
 
         response.sendRedirect("/room");
     }

@@ -49,7 +49,6 @@
                 <th>Дата создания</th>
                 <th>Город отправления</th>
                 <th>Город доставки</th>
-                <th>Тип отпраления</th>
                 <th>Вес, кг</th>
                 <th>Дата отправления</th>
                 <th>Дата доставки</th>
@@ -57,6 +56,7 @@
                 <th>Контактный телефон</th>
                 <th>Адресс доставки</th>
                 <th>Цена, грн</th>
+                <th>Счёт</th>
                 <th>Удалить</th>
             </tr>
             <c:forEach var="order" items="${requestScope.orders}">
@@ -64,7 +64,6 @@
                 <td><b><c:out value="${order.createDate}"/></b></td>
                 <td><span><c:out value="${order.cityFrom}"/></span></td>
                 <td><span><c:out value="${order.cityTo}"/></span></td>
-                <td><span><c:out value="${order.type}"/></span></td>
                 <td><span><c:out value="${order.weight}"/></span></td>
                 <td><span><c:out value="${order.startDate}"/></span></td>
                 <td><span><c:out value="${order.endDate}"/></span></td>
@@ -72,7 +71,7 @@
                 <td><span><c:out value="${order.recipientPhone}"/></span></td>
                 <td><span><c:out value="${order.deliveryAddress}"/></span></td>
                 <td><span><c:out value="${order.price}"/></span></td>
-                <td>
+                <td><a class="button" href=<c:url value="/room/bill"/>>Сделать заказ</a></td>
                 <form action="/room" method="post">
                     <input type="hidden" name="orderId" c:out value="${order.id}">
                     <input class="button" type="submit" value="удалить">
