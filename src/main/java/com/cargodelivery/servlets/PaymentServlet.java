@@ -19,9 +19,8 @@ import java.sql.Connection;
 @WebServlet(name = "PaymentServlet")
 public class PaymentServlet extends HttpServlet {
 
-    private final String room = "/WEB-INF/view/room.jsp";
     private final DBConnection dbConnection = new MySQLConnection();
-    private final static Logger logger = Logger.getLogger(BillServlet.class);
+    private final static Logger logger = Logger.getLogger(PaymentServlet.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String orderId = request.getParameter("orderId");
@@ -36,7 +35,6 @@ public class PaymentServlet extends HttpServlet {
         dbConnection.closeConnection(connection);
 
         response.sendRedirect("/room");
-//        request.getRequestDispatcher(room).forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

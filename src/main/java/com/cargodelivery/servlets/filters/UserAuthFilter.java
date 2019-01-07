@@ -1,7 +1,9 @@
 package com.cargodelivery.servlets.filters;
 
 import com.cargodelivery.configconnection.DBConnection;
+import com.cargodelivery.configconnection.PasswordEncryption;
 import com.cargodelivery.configconnection.impl.MySQLConnection;
+import com.cargodelivery.configconnection.impl.PasswordEncryptionImpl;
 import com.cargodelivery.exception.IncorrectInputException;
 import com.cargodelivery.exception.NoSuchDataException;
 import com.cargodelivery.model.User;
@@ -20,6 +22,7 @@ public class UserAuthFilter implements Filter {
 
     private final DBConnection dbConnection = new MySQLConnection();
     private final static Logger logger = Logger.getLogger(UserAuthFilter.class);
+    private final PasswordEncryption passwordEncryption = new PasswordEncryptionImpl();
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -32,8 +35,9 @@ public class UserAuthFilter implements Filter {
         final HttpServletRequest request = (HttpServletRequest) servletRequest;
         final HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        final String login = request.getParameter("login");
-        final String password = request.getParameter("password");
+        String login = request.getParameter("login");
+        String password = request.getParameter("password");
+        password = passwordEncryption.getEncryptedPassword(password);
 
         HttpSession session = request.getSession();
         User.Role role = null;

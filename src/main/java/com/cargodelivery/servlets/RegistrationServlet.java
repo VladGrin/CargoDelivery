@@ -1,7 +1,9 @@
 package com.cargodelivery.servlets;
 
 import com.cargodelivery.configconnection.DBConnection;
+import com.cargodelivery.configconnection.PasswordEncryption;
 import com.cargodelivery.configconnection.impl.MySQLConnection;
+import com.cargodelivery.configconnection.impl.PasswordEncryptionImpl;
 import com.cargodelivery.exception.DataAlreadyExistsException;
 import com.cargodelivery.exception.IncorrectInputException;
 import com.cargodelivery.exception.NoSuchDataException;
@@ -22,6 +24,7 @@ public class RegistrationServlet extends HttpServlet {
     private final String registration = "/WEB-INF/view/registration.jsp";
     private final String room = "/WEB-INF/view/room.jsp";
     private final static Logger logger = Logger.getLogger(RegistrationServlet.class);
+    private final PasswordEncryption passwordEncryption = new PasswordEncryptionImpl();
 
     private final DBConnection dbConnection = new MySQLConnection();
 
@@ -40,6 +43,7 @@ public class RegistrationServlet extends HttpServlet {
         String phone = request.getParameter("phone");
         String login = request.getParameter("mail");
         String password = request.getParameter("password");
+        password = passwordEncryption.getEncryptedPassword(password);
         User.Role role = User.Role.USER;
 
         String registrationError = null;

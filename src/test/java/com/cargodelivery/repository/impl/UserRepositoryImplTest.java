@@ -49,9 +49,9 @@ public class UserRepositoryImplTest {
     @Test
     public void findUserByIdWhichExistThenReturnUser() {
         User user = userRepository.findById(1);
-        User expectedUser = new User.UserBuilder().setId(1).setName("Максим").setSurname("Барко")
-                .setCity("Винница").setPhone("+380672121212").setMail("bar@gmail.com")
-                .setPassword("11").setRole(User.Role.USER).build();
+        User expectedUser = new User.UserBuilder().setId(1).setName("Василий").setSurname("Маханенко")
+                .setCity("Киев").setPhone("+380674561234").setMail("max@gmail.com")
+                .setPassword("e10adc3949ba59abbe56e057f20f883e").setRole(User.Role.USER).build();
         assertEquals(user, expectedUser);
         assertEquals(user.getId(), expectedUser.getId());
         assertEquals(user.getName(), expectedUser.getName());
@@ -74,10 +74,10 @@ public class UserRepositoryImplTest {
      */
     @Test
     public void findUserByLoginWhichExistThenReturnUser() {
-        User user = userRepository.findByLogin("bar@gmail.com");
-        User expectedUser = new User.UserBuilder().setId(1).setName("Максим").setSurname("Барко")
-                .setCity("Винница").setPhone("+380672121212").setMail("bar@gmail.com")
-                .setPassword("11").setRole(User.Role.USER).build();
+        User user = userRepository.findByLogin("max@gmail.com");
+        User expectedUser = new User.UserBuilder().setId(1).setName("Василий").setSurname("Маханенко")
+                .setCity("Киев").setPhone("+380674561234").setMail("max@gmail.com")
+                .setPassword("e10adc3949ba59abbe56e057f20f883e").setRole(User.Role.USER).build();
         assertEquals(user, expectedUser);
         assertEquals(user.getId(), expectedUser.getId());
         assertEquals(user.getName(), expectedUser.getName());
@@ -100,7 +100,7 @@ public class UserRepositoryImplTest {
      */
     @Test
     public void whenUserExistsReturnTrue() {
-        boolean isExist = userRepository.existsUser("bar@gmail.com", "11");
+        boolean isExist = userRepository.existsUser("max@gmail.com", "e10adc3949ba59abbe56e057f20f883e");
         assertTrue(isExist);
     }
 
