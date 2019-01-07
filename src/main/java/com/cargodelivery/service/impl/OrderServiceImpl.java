@@ -48,6 +48,7 @@ public class OrderServiceImpl implements OrderService {
                 .setRecipientPhone(recipientPhone)
                 .setDeliveryAddress(deliveryAdrress)
                 .setPrice(price)
+                .setPayment(false)
                 .build();
 
         logger.info("Order saved: " + order);
@@ -75,5 +76,9 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findOrderById(Integer.parseInt(orderId));
     }
 
-
+    @Override
+    public boolean updatePaymentByOrderId(String orderId, boolean isPayment) throws IncorrectInputException {
+        Validator.validateNumber(orderId);
+        return orderRepository.updatePaymentByOrderId(Integer.parseInt(orderId), isPayment);
+    }
 }

@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <title>Index</title>
     <link rel="stylesheet" type="text/css" href="/styles/index.css">
-    <%--<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">--%>
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 </head>
 <body>
 

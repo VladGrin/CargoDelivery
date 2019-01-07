@@ -81,16 +81,20 @@
                     <td><span><c:out value="${order.deliveryAddress}"/></span></td>
                     <td><span><c:out value="${order.price}"/></span></td>
                     <td>
-                        <form action="/room/bill" method="post">
-                            <input type="hidden" name="orderId" c:out value="${order.id}">
-                            <input class="button" type="submit" value="счёт">
-                        </form>
+                        <c:if test="${order.payment == false}">
+                            <form action="/room/bill" method="post">
+                                <input type="hidden" name="orderId" c:out value="${order.id}">
+                                <input class="button" type="submit" value="счёт">
+                            </form>
+                        </c:if>
                     </td>
                     <td>
-                        <form action="/room" method="post">
-                            <input type="hidden" name="orderId" c:out value="${order.id}">
-                            <input class="button" type="submit" value="удалить">
-                        </form>
+                        <c:if test="${order.payment == false}">
+                            <form action="/room" method="post">
+                                <input type="hidden" name="orderId" c:out value="${order.id}">
+                                <input class="button" type="submit" value="удалить">
+                            </form>
+                        </c:if>
                     </td>
                 </tr>
             </c:forEach>

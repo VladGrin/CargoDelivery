@@ -35,7 +35,7 @@ public class UserRepositoryImplTest {
     }
 
     @After
-    public void after(){
+    public void after() {
         try {
             connection.close();
         } catch (SQLException e) {
@@ -59,6 +59,7 @@ public class UserRepositoryImplTest {
         assertEquals(user.getCity(), expectedUser.getCity());
         assertEquals(user.getPhone(), expectedUser.getPhone());
     }
+
     /**
      * @see com.cargodelivery.repository.impl.UserRepositoryImpl#findById(Integer)
      */
@@ -84,6 +85,7 @@ public class UserRepositoryImplTest {
         assertEquals(user.getCity(), expectedUser.getCity());
         assertEquals(user.getPhone(), expectedUser.getPhone());
     }
+
     /**
      * @see com.cargodelivery.repository.impl.UserRepositoryImpl#findByLogin(String)
      */
@@ -97,23 +99,25 @@ public class UserRepositoryImplTest {
      * @see com.cargodelivery.repository.impl.UserRepositoryImpl#existsUser(String, String)
      */
     @Test
-    public void whenUserExistsReturnTrue(){
+    public void whenUserExistsReturnTrue() {
         boolean isExist = userRepository.existsUser("bar@gmail.com", "11");
         assertTrue(isExist);
     }
+
     /**
      * @see com.cargodelivery.repository.impl.UserRepositoryImpl#existsUser(String, String)
      */
     @Test
-    public void whenNoSuchLoginReturnFalse(){
+    public void whenNoSuchLoginReturnFalse() {
         boolean isExist = userRepository.existsUser("@gmail.com", "1111");
         assertFalse(isExist);
     }
+
     /**
      * @see com.cargodelivery.repository.impl.UserRepositoryImpl#existsUser(String, String)
      */
     @Test
-    public void whenNoSuitablePasswordReturnFalse(){
+    public void whenNoSuitablePasswordReturnFalse() {
         boolean isExist = userRepository.existsUser("bar@gmail.com", "1112");
         assertFalse(isExist);
     }

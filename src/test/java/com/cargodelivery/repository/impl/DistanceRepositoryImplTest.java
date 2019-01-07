@@ -77,6 +77,7 @@ public class DistanceRepositoryImplTest {
         int deliveryTerm = distanceRepository.getDeliveryTermBetweenTwoCities(firstCity, secondCity);
         assertEquals(expectedDeliveryTerm, deliveryTerm);
     }
+
     /**
      * @see com.cargodelivery.repository.impl.DistanceRepositoryImpl#getDeliveryTermBetweenTwoCities(String, String)
      */

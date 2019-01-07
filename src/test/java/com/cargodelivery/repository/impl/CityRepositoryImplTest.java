@@ -1,9 +1,7 @@
 package com.cargodelivery.repository.impl;
 
 import com.cargodelivery.model.City;
-import com.cargodelivery.model.User;
 import com.cargodelivery.repository.CityRepository;
-import com.cargodelivery.repository.UserRepository;
 import com.sun.istack.internal.NotNull;
 import org.junit.After;
 import org.junit.Before;
@@ -15,11 +13,10 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class CityRepositoryImplTest {
 
@@ -43,7 +40,7 @@ public class CityRepositoryImplTest {
     }
 
     @After
-    public void after(){
+    public void after() {
         try {
             connection.close();
         } catch (SQLException e) {

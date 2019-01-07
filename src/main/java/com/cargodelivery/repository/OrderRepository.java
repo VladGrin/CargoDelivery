@@ -13,4 +13,6 @@ public interface OrderRepository {
     boolean deleteOrderById(int orderId);
 
     Order findOrderById(int orderId);
+
+    boolean updatePaymentByOrderId(Integer orderId, boolean isPayment);
 }

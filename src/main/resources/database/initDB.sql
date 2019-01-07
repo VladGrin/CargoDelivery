@@ -69,12 +69,14 @@ CREATE TABLE IF NOT EXISTS orders(
   recipient          VARCHAR(100)  NOT NULL ,
   recipientPhone     VARCHAR(30)   NOT NULL ,
   deliveryAddress    VARCHAR(100)  NOT NULL ,
-  price              INTEGER       NOT NULL
+  price              INTEGER       NOT NULL ,
+  payment            BOOLEAN       NOT NULL
 );
 
+
 INSERT INTO orders (id, userId , createDate, cityFrom, cityTo, orderType, weight, startDate, endDate, recipient,
-                      recipientPhone, deliveryAddress, price)
-VALUES (DEFAULT, (?), (?), (?), (?), (?), (?), (?), (?), (?), (?), (?), (?));
+                      recipientPhone, deliveryAddress, price, payment)
+VALUES (DEFAULT, (?), (?), (?), (?), (?), (?), (?), (?), (?), (?), (?), (?), (?));
 
 CREATE TABLE IF NOT EXISTS company(
   id                 INTEGER AUTO_INCREMENT PRIMARY KEY ,

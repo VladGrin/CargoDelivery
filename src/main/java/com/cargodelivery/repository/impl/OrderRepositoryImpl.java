@@ -35,6 +35,8 @@ public class OrderRepositoryImpl implements OrderRepository {
         this.connection = connection;
     }
 
+
+
     /**
      * Create/save order in database
      *
@@ -57,6 +59,7 @@ public class OrderRepositoryImpl implements OrderRepository {
             statement.setString(10, order.getRecipientPhone());
             statement.setString(11, order.getDeliveryAddress());
             statement.setInt(12, order.getPrice());
+            statement.setBoolean(13, order.isPayment());
             isSave = statement.executeUpdate() != 0;
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
@@ -91,6 +94,7 @@ public class OrderRepositoryImpl implements OrderRepository {
                 String recipientPhone = resultSet.getString("recipientPhone");
                 String deliveryAddress = resultSet.getString("deliveryAddress");
                 int price = resultSet.getInt("price");
+                boolean payment = resultSet.getBoolean("payment");
 
                 Order order = new Order.OrderBuilder().setId(id)
                         .setUserId(userId)
@@ -104,7 +108,8 @@ public class OrderRepositoryImpl implements OrderRepository {
                         .setRecipient(recipient)
                         .setRecipientPhone(recipientPhone)
                         .setDeliveryAddress(deliveryAddress)
-                        .setPrice(price).build();
+                        .setPrice(price)
+                        .setPayment(payment).build();
                 orders.add(order);
             }
         } catch (SQLException e) {
@@ -159,6 +164,7 @@ public class OrderRepositoryImpl implements OrderRepository {
                 String recipientPhone = resultSet.getString("recipientPhone");
                 String deliveryAddress = resultSet.getString("deliveryAddress");
                 int price = resultSet.getInt("price");
+                boolean payment = resultSet.getBoolean("payment");
 
                 order = new Order.OrderBuilder().setId(orderId)
                         .setUserId(userId)
@@ -172,7 +178,8 @@ public class OrderRepositoryImpl implements OrderRepository {
                         .setRecipient(recipient)
                         .setRecipientPhone(recipientPhone)
                         .setDeliveryAddress(deliveryAddress)
-                        .setPrice(price).build();
+                        .setPrice(price)
+                        .setPayment(payment).build();
             }
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
@@ -182,13 +189,35 @@ public class OrderRepositoryImpl implements OrderRepository {
         return order;
     }
 
+    /**
+     * Update payment in Order by order id
+     * @param orderId
+     * @return false if Payment was not updated. If updating success true.
+     */
+    @Override
+    public boolean updatePaymentByOrderId(Integer orderId, boolean isPayment) {
+        boolean isUpdate = false;
+        try (PreparedStatement statement = connection.prepareStatement(SQLOrder.UPDATEPAYMENTBYORDERID.QUERY)) {
+            statement.setBoolean(1, isPayment);
+            statement.setInt(2, orderId);
+            isUpdate = statement.executeUpdate() != 0;
+        } catch (SQLException e) {
+            logger.error("Invalid connection. ");
+            e.printStackTrace();
+        }
+        logger.info("Order: " + orderId + " was updated");
+        return isUpdate;
+    }
+
     enum SQLOrder {
+
         SAVE("INSERT INTO orders (id, userId , createDate, cityFrom, cityTo, orderType, weight, startDate, endDate, recipient, \n" +
-                "                      recipientPhone, deliveryAddress, price) \n" +
-                "VALUES (DEFAULT, (?), (?), (?), (?), (?), (?), (?), (?), (?), (?), (?), (?));"),
+                "                      recipientPhone, deliveryAddress, price, payment) \n" +
+                "VALUES (DEFAULT, (?), (?), (?), (?), (?), (?), (?), (?), (?), (?), (?), (?), (?));"),
         FINDALLBYUSERID("SELECT * FROM orders WHERE userId = (?)"),
         DELETEBYID("DELETE FROM orders WHERE id = (?)"),
-        FINDBYID("SELECT * FROM orders WHERE id = (?)");
+        FINDBYID("SELECT * FROM orders WHERE id = (?)"),
+        UPDATEPAYMENTBYORDERID("UPDATE orders SET payment = (?) WHERE id=(?);");
 
         String QUERY;
 

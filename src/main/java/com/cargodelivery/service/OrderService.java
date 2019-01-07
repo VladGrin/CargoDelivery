@@ -17,4 +17,6 @@ public interface OrderService {
     boolean deleteOrderById(String orderId) throws IncorrectInputException;
 
     Order getOrderById(String orderId) throws IncorrectInputException;
+
+    boolean updatePaymentByOrderId(String orderId, boolean isPayment) throws IncorrectInputException;
 }

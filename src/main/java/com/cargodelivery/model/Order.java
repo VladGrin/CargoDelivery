@@ -16,6 +16,7 @@ public class Order implements Comparable<Order>{
     private String recipientPhone;
     private String deliveryAddress;
     private Integer price;
+    private boolean payment;
 
     private Order(OrderBuilder builder) {
         this.id = builder.id;
@@ -31,6 +32,7 @@ public class Order implements Comparable<Order>{
         this.recipientPhone = builder.recipientPhone;
         this.price = builder.price;
         this.deliveryAddress = builder.deliveryAddress;
+        this.payment = builder.payment;
     }
 
     public Integer getId() {
@@ -85,6 +87,14 @@ public class Order implements Comparable<Order>{
         return price;
     }
 
+    public boolean isPayment() {
+        return payment;
+    }
+
+    public void setPayment(boolean payment) {
+        this.payment = payment;
+    }
+
     @Override
     public int compareTo(Order o) {
         return o.id - id;
@@ -104,6 +114,7 @@ public class Order implements Comparable<Order>{
         private String recipientPhone;
         private String deliveryAddress;
         private Integer price;
+        private boolean payment;
 
         public OrderBuilder setId(Integer id) {
             this.id = id;
@@ -179,6 +190,11 @@ public class Order implements Comparable<Order>{
             return this;
         }
 
+        public OrderBuilder setPayment(boolean payment) {
+            this.payment = payment;
+            return this;
+        }
+
         public Order build() {
             return new Order(this);
         }
@@ -189,7 +205,8 @@ public class Order implements Comparable<Order>{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return Objects.equals(id, order.id) &&
+        return payment == order.payment &&
+                Objects.equals(id, order.id) &&
                 Objects.equals(userId, order.userId) &&
                 Objects.equals(createDate, order.createDate) &&
                 Objects.equals(cityFrom, order.cityFrom) &&
@@ -206,7 +223,7 @@ public class Order implements Comparable<Order>{
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, createDate, cityFrom, cityTo, type, weight, startDate, endDate, recipient, recipientPhone, deliveryAddress, price);
+        return Objects.hash(id, userId, createDate, cityFrom, cityTo, type, weight, startDate, endDate, recipient, recipientPhone, deliveryAddress, price, payment);
     }
 
     @Override
@@ -225,6 +242,7 @@ public class Order implements Comparable<Order>{
                 ", recipientPhone='" + recipientPhone + '\'' +
                 ", deliveryAddress='" + deliveryAddress + '\'' +
                 ", price=" + price +
+                ", payment=" + payment +
                 '}';
     }
 
