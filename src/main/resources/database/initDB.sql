@@ -75,3 +75,17 @@ CREATE TABLE IF NOT EXISTS orders(
 INSERT INTO orders (id, userId , createDate, cityFrom, cityTo, orderType, weight, startDate, endDate, recipient,
                       recipientPhone, deliveryAddress, price)
 VALUES (DEFAULT, (?), (?), (?), (?), (?), (?), (?), (?), (?), (?), (?), (?));
+
+CREATE TABLE IF NOT EXISTS company(
+  id                 INTEGER AUTO_INCREMENT PRIMARY KEY ,
+  name               VARCHAR(30)   NOT NULL ,
+  address            VARCHAR(40)   NOT NULL ,
+  codEDRPOU          VARCHAR(20)   NOT NULL ,
+  codINN             VARCHAR(20)   NOT NULL ,
+  bank               VARCHAR(20)   NOT NULL ,
+  mfo                VARCHAR(10)   NOT NULL ,
+  account            VARCHAR(20)   NOT NULL
+);
+INSERT INTO company (id, name , address, codEDRPOU, codINN, bank, mfo, account)
+VALUES (DEFAULT, 'OOO "Cargo Delivery"', 'г.Винница, ул.Короленко 15/113',
+'33944031', '339440326570', 'ПАТ "ОТП Банк"', '300528', '26006455017522');

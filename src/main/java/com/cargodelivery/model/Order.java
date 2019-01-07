@@ -87,7 +87,7 @@ public class Order implements Comparable<Order>{
 
     @Override
     public int compareTo(Order o) {
-        return id - o.id;
+        return o.id - id;
     }
 
     public static class OrderBuilder {

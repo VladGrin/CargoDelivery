@@ -14,5 +14,7 @@ public interface OrderService {
 
     List<Order> getAllOrdersByUserId(int userId) throws NoSuchDataException;
 
-    boolean deleteOrderById(String orderId);
+    boolean deleteOrderById(String orderId) throws IncorrectInputException;
+
+    Order getOrderById(String orderId) throws IncorrectInputException;
 }

@@ -11,4 +11,6 @@ public interface OrderRepository {
     List<Order> findAllOrdersByUserId(int userId);
 
     boolean deleteOrderById(int orderId);
+
+    Order findOrderById(int orderId);
 }

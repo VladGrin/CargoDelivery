@@ -75,7 +75,7 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Override
     public List<Order> findAllOrdersByUserId(int userId) {
         List<Order> orders = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(SQLOrder.FINDALL.QUERY)) {
+        try (PreparedStatement statement = connection.prepareStatement(SQLOrder.FINDALLBYUSERID.QUERY)) {
             statement.setInt(1, userId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -116,8 +116,8 @@ public class OrderRepositoryImpl implements OrderRepository {
         return orders;
     }
 
-    /**elete order by order id
-     * D
+    /**
+     * Delete order by order id
      * @param orderId
      * @return false if Order was not deleted. If deleting success true.
      */
@@ -135,13 +135,60 @@ public class OrderRepositoryImpl implements OrderRepository {
         return isDelete;
     }
 
+    /**
+     * Find order by order id
+     * @param orderId
+     * @return false if Order was not finded. If find success true.
+     */
+    @Override
+    public Order findOrderById(int orderId) {
+        Order order = null;
+        try (PreparedStatement statement = connection.prepareStatement(SQLOrder.FINDBYID.QUERY)) {
+            statement.setInt(1, orderId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                int userId = resultSet.getInt("userId");
+                String createDate = resultSet.getString("createDate");
+                String cityFrom = resultSet.getString("cityFrom");
+                String cityTo = resultSet.getString("cityTo");
+                String orderType = resultSet.getString("orderType");
+                int weight = resultSet.getInt("weight");
+                String startDate = resultSet.getString("startDate");
+                String endDate = resultSet.getString("endDate");
+                String recipient = resultSet.getString("recipient");
+                String recipientPhone = resultSet.getString("recipientPhone");
+                String deliveryAddress = resultSet.getString("deliveryAddress");
+                int price = resultSet.getInt("price");
+
+                order = new Order.OrderBuilder().setId(orderId)
+                        .setUserId(userId)
+                        .setCreateDate(createDate)
+                        .setCityFrom(cityFrom)
+                        .setCityTo(cityTo)
+                        .setTypeByName(orderType)
+                        .setWeight(weight)
+                        .setStartDate(startDate)
+                        .setEndDate(endDate)
+                        .setRecipient(recipient)
+                        .setRecipientPhone(recipientPhone)
+                        .setDeliveryAddress(deliveryAddress)
+                        .setPrice(price).build();
+            }
+        } catch (SQLException e) {
+            logger.error("Invalid connection. ");
+            e.printStackTrace();
+        }
+        logger.info("Order by id " + orderId + " was finded: " + order);
+        return order;
+    }
 
     enum SQLOrder {
         SAVE("INSERT INTO orders (id, userId , createDate, cityFrom, cityTo, orderType, weight, startDate, endDate, recipient, \n" +
                 "                      recipientPhone, deliveryAddress, price) \n" +
                 "VALUES (DEFAULT, (?), (?), (?), (?), (?), (?), (?), (?), (?), (?), (?), (?));"),
-        FINDALL("SELECT * FROM orders WHERE userId = (?)"),
-        DELETEBYID("DELETE FROM orders WHERE id = (?)");
+        FINDALLBYUSERID("SELECT * FROM orders WHERE userId = (?)"),
+        DELETEBYID("DELETE FROM orders WHERE id = (?)"),
+        FINDBYID("SELECT * FROM orders WHERE id = (?)");
 
         String QUERY;
 

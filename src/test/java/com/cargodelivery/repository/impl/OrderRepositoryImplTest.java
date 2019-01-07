@@ -65,11 +65,21 @@ public class OrderRepositoryImplTest {
     public void findAllOrdersByUserIdTest() {
         Order order = orderRepository.findAllOrdersByUserId(1)
                 .stream().findFirst().get();
-        Order expectedOrder = new Order.OrderBuilder().setUserId(1).setCreateDate("10-10-2018").setCityFrom("Винница")
-                .setCityTo("Киев").setType(Order.Type.DOCUMENT).setWeight(1).setStartDate("20-12-2018")
-                .setEndDate("22-12-2018").setRecipient("Величко Юрий").setRecipientPhone("+380937896541")
+        Order expectedOrder = new Order.OrderBuilder().setId(1).setUserId(1).setCreateDate("2018-10-10").setCityFrom("Винница")
+                .setCityTo("Киев").setType(Order.Type.DOCUMENT).setWeight(1).setStartDate("2018-12-20")
+                .setEndDate("2018-12-22").setRecipient("Величко Юрий").setRecipientPhone("+380937896541")
+                .setDeliveryAddress("ул. Рейтарская, 25/15").setPrice(40).build();
+        assertEquals(expectedOrder, order);
+    }
+
+    @Test
+    public void findOrderById() {
+        Order orderById = orderRepository.findOrderById(1);
+        Order expectedOrder = new Order.OrderBuilder().setId(1).setUserId(1).setCreateDate("2018-10-10").setCityFrom("Винница")
+                .setCityTo("Киев").setType(Order.Type.DOCUMENT).setWeight(1).setStartDate("2018-12-20")
+                .setEndDate("2018-12-22").setRecipient("Величко Юрий").setRecipientPhone("+380937896541")
                 .setDeliveryAddress("ул. Рейтарская, 25/15").setPrice(40).build();
 
-        assertEquals(expectedOrder, order);
+        assertEquals(expectedOrder, orderById);
     }
 }

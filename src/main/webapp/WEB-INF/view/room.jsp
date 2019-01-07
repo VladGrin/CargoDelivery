@@ -14,8 +14,15 @@
     <link rel="stylesheet" type="text/css" href="/styles/room.css">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <style>
-        table, th, td {border: 1px solid black; border-collapse: collapse; border-spacing: 5px;}
-        th, td {padding: 3px;}
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            border-spacing: 5px;
+        }
+
+        th, td {
+            padding: 3px;
+        }
     </style>
 </head>
 <body>
@@ -46,6 +53,7 @@
     <div>
         <table>
             <tr>
+                <th>Номер</th>
                 <th>Дата создания</th>
                 <th>Город отправления</th>
                 <th>Город доставки</th>
@@ -60,26 +68,31 @@
                 <th>Удалить</th>
             </tr>
             <c:forEach var="order" items="${requestScope.orders}">
-            <tr>
-                <td><b><c:out value="${order.createDate}"/></b></td>
-                <td><span><c:out value="${order.cityFrom}"/></span></td>
-                <td><span><c:out value="${order.cityTo}"/></span></td>
-                <td><span><c:out value="${order.weight}"/></span></td>
-                <td><span><c:out value="${order.startDate}"/></span></td>
-                <td><span><c:out value="${order.endDate}"/></span></td>
-                <td><span><c:out value="${order.recipient}"/></span></td>
-                <td><span><c:out value="${order.recipientPhone}"/></span></td>
-                <td><span><c:out value="${order.deliveryAddress}"/></span></td>
-                <td><span><c:out value="${order.price}"/></span></td>
-                <td><a class="button" href=<c:url value="/room/bill"/>>Сделать заказ</a></td>
-                <form action="/room" method="post">
-                    <input type="hidden" name="orderId" c:out value="${order.id}">
-                    <input class="button" type="submit" value="удалить">
-                </form>
-                <%--</td>--%>
-            <%--<td class="button" c:out="${order.id}"></td>--%>
-                <%--<td><a class="button" href=<c:url value="/room/order"/>>удалить</a></td>--%>
-            </tr>
+                <tr>
+                    <td><b><c:out value="${order.id}"/></b></td>
+                    <td><b><c:out value="${order.createDate}"/></b></td>
+                    <td><span><c:out value="${order.cityFrom}"/></span></td>
+                    <td><span><c:out value="${order.cityTo}"/></span></td>
+                    <td><span><c:out value="${order.weight}"/></span></td>
+                    <td><span><c:out value="${order.startDate}"/></span></td>
+                    <td><span><c:out value="${order.endDate}"/></span></td>
+                    <td><span><c:out value="${order.recipient}"/></span></td>
+                    <td><span><c:out value="${order.recipientPhone}"/></span></td>
+                    <td><span><c:out value="${order.deliveryAddress}"/></span></td>
+                    <td><span><c:out value="${order.price}"/></span></td>
+                    <td>
+                        <form action="/room/bill" method="post">
+                            <input type="hidden" name="orderId" c:out value="${order.id}">
+                            <input class="button" type="submit" value="счёт">
+                        </form>
+                    </td>
+                    <td>
+                        <form action="/room" method="post">
+                            <input type="hidden" name="orderId" c:out value="${order.id}">
+                            <input class="button" type="submit" value="удалить">
+                        </form>
+                    </td>
+                </tr>
             </c:forEach>
         </table>
     </div>

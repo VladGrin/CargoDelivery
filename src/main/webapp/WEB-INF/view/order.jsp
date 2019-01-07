@@ -85,26 +85,6 @@
             <lable>Адресс получателя</lable>
             <input type="text" required placeholder="адресс" name="deliveryAdrress">
         </div>
-        <%--<div class="one">--%>
-            <%--<input type="text" required placeholder="Фамилия" name="surname">--%>
-        <%--</div>--%>
-        <%--<div class="one">--%>
-            <%--<input type="text" required placeholder="Город" name="city">--%>
-        <%--</div>--%>
-        <%--<div class="one">--%>
-            <%--<input type="text" required placeholder="Телефон" name="phone">--%>
-        <%--</div>--%>
-        <%--<div class="one">--%>
-            <%--<input type="text" required placeholder="E-mail" name="mail">--%>
-        <%--</div>--%>
-        <%--<div class="one">--%>
-            <%--<img src="../../images/lock.png">--%>
-            <%--<input type="password" required placeholder="Пароль" name="password"><br><br>--%>
-        <%--</div>--%>
-        <%--<div>--%>
-            <%--<c:set var="registrationError" value="${requestScope.registrationError}"/>--%>
-            <%--<div>${registrationError}</div>--%>
-        <%--</div>--%>
         <input class="button" type="submit" value="Добавить заказ">
     </form>
 

@@ -30,7 +30,6 @@ import java.util.Set;
 public class OrderServlet extends HttpServlet {
 
     private final String order = "/WEB-INF/view/order.jsp";
-    private final String room = "/WEB-INF/view/room.jsp";
     private final DBConnection dbConnection = new MySQLConnection();
     private final static Logger logger = Logger.getLogger(CalculatorServlet.class);
     private final DataFormatter dataFormatter = new MySQLDateFormatter();
@@ -67,7 +66,7 @@ public class OrderServlet extends HttpServlet {
         try {
             orderServlet.saveOrder(userId, createDate, cityFrom, cityTo, cargoType, weight, startDate,
                     endDate, recipient, recipientPhone, deliveryAdrress, price);
-            request.getRequestDispatcher("/room").forward(request, response);
+            response.sendRedirect("/room");
         } catch (IncorrectInputException e) {
             logger.error("Incorrect input: " + e);
             response.sendRedirect("/room/order");

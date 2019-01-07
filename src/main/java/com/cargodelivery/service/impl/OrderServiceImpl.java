@@ -64,7 +64,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public boolean deleteOrderById(String orderId) {
+    public boolean deleteOrderById(String orderId) throws IncorrectInputException {
+        Validator.validateNumber(orderId);
         return orderRepository.deleteOrderById(Integer.parseInt(orderId));
     }
+
+    @Override
+    public Order getOrderById(String orderId) throws IncorrectInputException {
+        Validator.validateNumber(orderId);
+        return orderRepository.findOrderById(Integer.parseInt(orderId));
+    }
+
+
 }

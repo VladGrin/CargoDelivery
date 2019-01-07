@@ -68,4 +68,22 @@
         <url-pattern>/room/order</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+    <servlet-name>BillServlet</servlet-name>
+    <servlet-class>com.cargodelivery.servlets.BillServlet</servlet-class>
+</servlet>
+    <servlet-mapping>
+        <servlet-name>BillServlet</servlet-name>
+        <url-pattern>/room/bill</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PaymentServlet</servlet-name>
+        <servlet-class>com.cargodelivery.servlets.PaymentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PaymentServlet</servlet-name>
+        <url-pattern>/room/bill/payment</url-pattern>
+    </servlet-mapping>
+
 </web-app>
