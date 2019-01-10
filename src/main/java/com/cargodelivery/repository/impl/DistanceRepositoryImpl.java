@@ -52,12 +52,6 @@ public class DistanceRepositoryImpl implements DistanceRepository {
         } catch (SQLException e) {
             logger.error("Invalid connection.");
             e.printStackTrace();
-        } finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
         logger.info("Distance was found from database : " + distance);
         return distance;
@@ -86,12 +80,6 @@ public class DistanceRepositoryImpl implements DistanceRepository {
         } catch (SQLException e) {
             logger.error("Invalid connection.");
             e.printStackTrace();
-        } finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
         logger.info("Delibery term was found from database : " + deliveryTerm);
         return deliveryTerm;

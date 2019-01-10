@@ -58,7 +58,7 @@
         <h2>RESULT</h2>
         <div>
             <c:set var="price" value="${requestScope.price}"/>
-            <div>${price}</div>
+            <div>Стоимость перевозки: ${price} грн.</div>
         </div>
         <div>
             <c:set var="priceError" value="${requestScope.priceError}"/>
@@ -78,6 +78,7 @@
                     </c:forEach>
                 </select>
             </div>
+            <br>
             <div class="one">
                 <lable>Город доставки</lable>
                 <select name="cityTo">
@@ -87,6 +88,7 @@
                     </c:forEach>
                 </select>
             </div>
+            <br>
             <div class="one">
                 <lable>Вид доставки</lable>
                 <select name="cargoType">
@@ -96,6 +98,7 @@
                     <option c:out value="FREIGHT">груз</option>
                 </select>
             </div>
+            <br>
             <div class="one">
                 <lable>Вес груза</lable>
                 <input type="text" required placeholder="вес" name="weight">

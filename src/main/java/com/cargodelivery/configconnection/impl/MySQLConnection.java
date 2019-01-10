@@ -8,9 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MySQLConnection implements DBConnection {
-    /**
-     * Logger log4j
-     */
+
     private final static Logger logger = Logger.getLogger(MySQLConnection.class);
 
     @Override

@@ -54,7 +54,7 @@
         </div>
         <div class="one">
             <img src="../../images/e-mail.png">
-            <input type="email" required placeholder="E-mail" name="mail">
+            <input type="email" required placeholder="E-mail" name="mail" >
         </div>
         <div class="one">
             <img src="../../images/lock.png">

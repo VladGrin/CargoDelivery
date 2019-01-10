@@ -31,7 +31,7 @@ public class MySQLDateFormatter implements DataFormatter {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        calendar.add(Calendar.DATE, deliveryTerm);  // number of days to add
+        calendar.add(Calendar.DATE, deliveryTerm);
         return format.format(calendar.getTime());
     }
 }
