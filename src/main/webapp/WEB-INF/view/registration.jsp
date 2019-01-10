@@ -38,23 +38,28 @@
     <form method="post" action="/registration" class="forma">
         <div class="one">
             <img src="../../images/name.png">
-            <input type="text" required placeholder="Имя" name="name" pattern="fddfd">
+            <c:set var="name" value="${requestScope.name}"/>
+            <input type="text" required placeholder="Имя" name="name" value="${name}">
         </div>
         <div class="one">
             <img src="../../images/surname.png">
-            <input type="text" required placeholder="Фамилия" name="surname">
+            <c:set var="surname" value="${requestScope.surname}"/>
+            <input type="text" required placeholder="Фамилия" name="surname" value="${surname}">
         </div>
         <div class="one">
             <img src="../../images/city.png">
-            <input type="text" required placeholder="Город" name="city">
+            <c:set var="city" value="${requestScope.city}"/>
+            <input type="text" required placeholder="Город" name="city" value="${city}">
         </div>
         <div class="one">
             <img src="../../images/number.png">
-            <input type="tel" required placeholder="Телефон" name="phone">
+            <c:set var="phone" value="${requestScope.phone}"/>
+            <input type="tel" required placeholder="Телефон" name="phone" value="${phone}">
         </div>
         <div class="one">
             <img src="../../images/e-mail.png">
-            <input type="email" required placeholder="E-mail" name="mail" >
+            <c:set var="mail" value="${requestScope.mail}"/>
+            <input type="email" required placeholder="E-mail" name="mail" value="${mail}">
         </div>
         <div class="one">
             <img src="../../images/lock.png">

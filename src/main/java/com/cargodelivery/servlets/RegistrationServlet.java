@@ -30,6 +30,7 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         request.getRequestDispatcher(registration).forward(request, response);
     }
 
@@ -46,9 +47,6 @@ public class RegistrationServlet extends HttpServlet {
         password = passwordEncryption.getEncryptedPassword(password);
         User.Role role = User.Role.USER;
 
-        String registrationError = null;
-        request.setAttribute("registrationError", registrationError);
-
         Connection connection = dbConnection.getConnection();
         UserService userService = new UserServiceImpl(connection);
         try {
@@ -62,13 +60,11 @@ public class RegistrationServlet extends HttpServlet {
             request.getRequestDispatcher(room).forward(request, response);
 
         } catch (IncorrectInputException e) {
-            registrationError = "Введены некоректные данные";
-            request.setAttribute("registrationError", registrationError);
+            setAttributeToRequest(request, name, surname, city, phone, login);
             logger.error("Incorrect input: " + e);
             request.getRequestDispatcher(registration).forward(request, response);
         } catch (DataAlreadyExistsException e) {
-            registrationError = "Такой пользователь уже существует.";
-            request.setAttribute("registrationError", registrationError);
+            setAttributeToRequest(request, name, surname, city, phone, login);
             logger.error("Such user already exists: " + e);
             request.getRequestDispatcher(registration).forward(request, response);
         } catch (NoSuchDataException e) {
@@ -76,5 +72,14 @@ public class RegistrationServlet extends HttpServlet {
         } finally {
             dbConnection.closeConnection(connection);
         }
+    }
+
+    private void setAttributeToRequest(HttpServletRequest request, String name, String surname, String city, String phone, String login) {
+        request.setAttribute("registrationError", "Введены некоректные данные");
+        request.setAttribute("name", name);
+        request.setAttribute("surname", surname);
+        request.setAttribute("city", city);
+        request.setAttribute("phone", phone);
+        request.setAttribute("mail", login);
     }
 }
