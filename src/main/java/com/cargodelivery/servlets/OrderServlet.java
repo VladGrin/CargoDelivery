@@ -45,11 +45,11 @@ public class OrderServlet extends HttpServlet {
         String startDate = request.getParameter("startDate");
         String recipient = request.getParameter("recipient");
         String recipientPhone = request.getParameter("recipientPhone");
-        String deliveryAdrress = request.getParameter("deliveryAdrress");
+        String deliveryAddress = request.getParameter("deliveryAddress");
 
         String createDate = dataFormatter.getCurrentDate();
         String endDate = getEndDate(idCityFrom, idCityTo, startDate);
-        int price = getPriceAndSetToRequest(request, idCityFrom, idCityTo, cargoType, weight);
+        int price = getPrice(idCityFrom, idCityTo, cargoType, weight);
 
 
         Set<City> cities = getCitiesFromDB();
@@ -59,17 +59,24 @@ public class OrderServlet extends HttpServlet {
         logger.info("Entered data: userId: " + userId + " createDate: " + createDate + " cityFrom: " + cityFrom +
                 " cityTo: " + cityTo +" cargoType: " + cargoType + " weight: " + weight +
                 " startDate: " + startDate + " endDate: " + endDate + " recipient: " + recipient +
-                " recipientPhone: " + recipientPhone + " deliveryAdrress: " + deliveryAdrress + " price: " + price);
+                " recipientPhone: " + recipientPhone + " deliveryAddress: " + deliveryAddress + " price: " + price);
 
         Connection connection = dbConnection.getConnection();
         OrderService orderServlet = new OrderServiceImpl(connection);
         try {
             orderServlet.saveOrder(userId, createDate, cityFrom, cityTo, cargoType, weight, startDate,
-                    endDate, recipient, recipientPhone, deliveryAdrress, price);
+                    endDate, recipient, recipientPhone, deliveryAddress, price);
             response.sendRedirect("/room");
         } catch (IncorrectInputException e) {
+            request.setAttribute("registrationError", "Введены некоректные данные");
+            request.setAttribute("startDate", startDate);
+            request.setAttribute("weight", weight);
+            request.setAttribute("recipient", recipient);
+            request.setAttribute("recipientPhone", recipientPhone);
+            request.setAttribute("deliveryAddress", deliveryAddress);
+            request.setAttribute("cities", cities);
             logger.error("Incorrect input: " + e);
-            response.sendRedirect("/room/order");
+            request.getRequestDispatcher(order).forward(request, response);
         } finally {
             dbConnection.closeConnection(connection);
         }
@@ -94,7 +101,7 @@ public class OrderServlet extends HttpServlet {
         return dataFormatter.getEndDate(startDate, deliveryTerm);
     }
 
-    private int getPriceAndSetToRequest(HttpServletRequest request, String cityFrom, String cityTo, String cargoType, String weight) {
+    private int getPrice(String cityFrom, String cityTo, String cargoType, String weight) {
         Connection connection = dbConnection.getConnection();
         int orderPrice = 0;
         try {

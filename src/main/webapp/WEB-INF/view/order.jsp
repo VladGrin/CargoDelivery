@@ -40,14 +40,12 @@
         <div class="one">
             <lable>Город отправления</lable>
             <select name="cityFrom">
-                <option disabled selected>Выберите город</option>
                 <c:forEach var="cityFrom" items="${requestScope.cities}">
                     <option c:out value="${cityFrom.id}">${cityFrom.name}</option>
                 </c:forEach>
             </select>
             <lable>Город доставки</lable>
             <select name="cityTo">
-                <option disabled selected>Выберите город</option>
                 <c:forEach var="cityTo" items="${requestScope.cities}">
                     <option c:out value="${cityTo.id}">${cityTo.name}</option>
                 </c:forEach>
@@ -63,29 +61,36 @@
                 <option c:out value="FREIGHT">груз</option>
             </select>
             <lable>Вес груза</lable>
-            <input type="text" required placeholder="вес" name="weight">
+            <c:set var="weight" value="${requestScope.weight}"/>
+            <input type="text" required placeholder="вес" name="weight" value="${weight}">
         </div>
         <br>
         <div>
             <lable>Дата отправки</lable>
-            <input type="date" required placeholder="дата отправки" name="startDate">
+            <c:set var="startDate" value="${requestScope.startDate}"/>
+            <input type="date" required placeholder="дата отправки" name="startDate" value="${startDate}">
         </div>
         <br>
         <div>
             <lable>Получатель</lable>
-            <input type="text" required placeholder="ФИО" name="recipient">
+            <c:set var="recipient" value="${requestScope.recipient}"/>
+            <input type="text" required placeholder="ФИО" name="recipient" value="${recipient}">
         </div>
         <br>
         <div>
             <lable>Телефон получателя</lable>
-            <input type="tel" required placeholder="+38..." name="recipientPhone">
+            <c:set var="recipientPhone" value="${requestScope.recipientPhone}"/>
+            <input type="tel" required placeholder="+38..." name="recipientPhone" value="${recipientPhone}">
         </div>
         <br>
         <div>
             <lable>Адресс получателя</lable>
-            <input type="text" required placeholder="адресс" name="deliveryAdrress">
+            <c:set var="deliveryAdrress" value="${requestScope.deliveryAddress}"/>
+            <input type="text" required placeholder="адресс" name="deliveryAddress" value="${deliveryAddress}">
         </div>
         <input class="button" type="submit" value="Добавить заказ">
+        <c:set var="registrationError" value="${requestScope.registrationError}"/>
+        <div>${registrationError}</div>
     </form>
 
 </main>
