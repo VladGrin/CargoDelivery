@@ -27,6 +27,7 @@ import java.sql.Connection;
 public class BillServlet extends HttpServlet {
 
     private final String bill = "/WEB-INF/view/bill.jsp";
+    private final String index = "/WEB-INF/view/index.jsp";
     private final DBConnection dbConnection = new MySQLConnection();
     private final static Logger logger = Logger.getLogger(BillServlet.class);
 
@@ -46,6 +47,10 @@ public class BillServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Object userId = request.getSession().getAttribute("userId");
+        if (userId == null) {
+            request.getRequestDispatcher(index).forward(request, response);
+        }
 
         request.getRequestDispatcher(bill).forward(request, response);
     }

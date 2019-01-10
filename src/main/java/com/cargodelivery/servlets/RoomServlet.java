@@ -37,18 +37,21 @@ public class RoomServlet extends HttpServlet {
             logger.info("Order " + orderId + " was deleted");
         } catch (IncorrectInputException e) {
             logger.error("Order " + orderId + " was not delete: " + e);
+        } finally {
+            dbConnection.closeConnection(connection);
         }
 
         response.sendRedirect("/room");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Connection connection = dbConnection.getConnection();
-        OrderService orderService = new OrderServiceImpl(connection);
         Object userId = request.getSession().getAttribute("userId");
         if (userId == null) {
             request.getRequestDispatcher(index).forward(request, response);
         }
+
+        Connection connection = dbConnection.getConnection();
+        OrderService orderService = new OrderServiceImpl(connection);
         List<Order> orders = null;
         try {
             orders = orderService.getAllOrdersByUserId((Integer) userId).stream()
@@ -57,10 +60,11 @@ public class RoomServlet extends HttpServlet {
             logger.info("Get orders list: " + orders);
         } catch (NoSuchDataException e) {
             logger.error("Order list is empty" + e);
+        } finally {
+            dbConnection.closeConnection(connection);
         }
-        request.setAttribute("orders", orders);
 
-        dbConnection.closeConnection(connection);
+        request.setAttribute("orders", orders);
 
         request.getRequestDispatcher(room).forward(request, response);
     }

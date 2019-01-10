@@ -82,7 +82,6 @@ public class UserAuthFilter implements Filter {
         switch (role) {
             case USER:
                 response.sendRedirect("/room");
-//                request.getRequestDispatcher("/WEB-INF/view/room.jsp").forward(request, response);
                 break;
             case UNKNOWN:
                 request.getRequestDispatcher("/WEB-INF/view/index.jsp").forward(request, response);

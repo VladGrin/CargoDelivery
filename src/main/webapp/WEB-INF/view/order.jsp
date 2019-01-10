@@ -30,7 +30,7 @@
             <a href="/direction">НАПРАВЛЕНИЕ</a>
             <a href="/calculator">КАЛЬКУЛЯТОР</a>
             <a href="">КОНТАКТЫ</a>
-            <a href="#" id="menu" class="icon">&#9776;
+            <a href="#" id="menu" class="icon">&#9776;</a>
         </div>
     </nav>
 </header>

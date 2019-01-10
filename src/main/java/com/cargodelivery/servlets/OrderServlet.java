@@ -30,6 +30,7 @@ import java.util.Set;
 public class OrderServlet extends HttpServlet {
 
     private final String order = "/WEB-INF/view/order.jsp";
+    private final String index = "/WEB-INF/view/index.jsp";
     private final DBConnection dbConnection = new MySQLConnection();
     private final static Logger logger = Logger.getLogger(CalculatorServlet.class);
     private final DataFormatter dataFormatter = new MySQLDateFormatter();
@@ -83,6 +84,10 @@ public class OrderServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Object userId = request.getSession().getAttribute("userId");
+        if (userId == null) {
+            request.getRequestDispatcher(index).forward(request, response);
+        }
 
         Set<City> cities = getCitiesFromDB();
         request.setAttribute("cities", cities);
