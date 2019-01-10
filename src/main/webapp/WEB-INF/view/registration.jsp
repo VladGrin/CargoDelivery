@@ -38,7 +38,7 @@
     <form method="post" action="/registration" class="forma">
         <div class="one">
             <img src="../../images/name.png">
-            <input type="text" required placeholder="Имя" name="name">
+            <input type="text" required placeholder="Имя" name="name" pattern="fddfd">
         </div>
         <div class="one">
             <img src="../../images/surname.png">
