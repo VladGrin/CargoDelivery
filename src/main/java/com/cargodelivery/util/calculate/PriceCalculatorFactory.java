@@ -1,6 +1,6 @@
 package com.cargodelivery.util.calculate;
 
-class PriceCalculatorFactory {
+public class PriceCalculatorFactory {
 
     CalculatorStrategy createCalculator(String cargo) {
         switch (cargo) {

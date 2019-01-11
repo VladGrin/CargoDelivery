@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 
-@WebServlet(name = "BillServlet")
+@WebServlet("/room/bill")
 public class BillServlet extends HttpServlet {
 
     private final String bill = "/WEB-INF/view/bill.jsp";

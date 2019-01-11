@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 
-@WebServlet(name = "PaymentServlet")
+@WebServlet("/room/bill/payment")
 public class PaymentServlet extends HttpServlet {
 
     private final String index = "/WEB-INF/view/index.jsp";

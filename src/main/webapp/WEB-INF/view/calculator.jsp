@@ -48,7 +48,7 @@
             <a href="/direction">НАПРАВЛЕНИЕ</a>
             <a href="#">КАЛЬКУЛЯТОР</a>
             <a href="">КОНТАКТЫ</a>
-            <a href="#" id="menu" class="icon">&#9776;
+            <a href="#" id="menu" class="icon">&#9776;</a>
         </div>
     </nav>
 </header>
@@ -58,7 +58,7 @@
         <h2>RESULT</h2>
         <div>
             <c:set var="price" value="${requestScope.price}"/>
-            <div>Стоимость перевозки: ${price} грн.</div>
+            <div>${price}</div>
         </div>
         <div>
             <c:set var="priceError" value="${requestScope.priceError}"/>

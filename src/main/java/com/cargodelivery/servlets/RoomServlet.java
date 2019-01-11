@@ -19,7 +19,7 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@WebServlet(name = "RoomServlet")
+@WebServlet("/room")
 public class RoomServlet extends HttpServlet {
 
     private final String room = "/WEB-INF/view/room.jsp";

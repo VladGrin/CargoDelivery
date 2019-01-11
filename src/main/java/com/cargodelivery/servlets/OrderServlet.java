@@ -17,6 +17,8 @@ import com.cargodelivery.service.impl.CalculatorServiceImpl;
 import com.cargodelivery.service.impl.CityServiceImpl;
 import com.cargodelivery.service.impl.DistanceServiceImpl;
 import com.cargodelivery.service.impl.OrderServiceImpl;
+import com.cargodelivery.util.calculate.PriceCalculatorByCargoType;
+import com.cargodelivery.util.calculate.PriceCalculatorFactory;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -28,7 +30,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.Set;
 
-@WebServlet(name = "OrderServlet")
+@WebServlet("/room/order")
 public class OrderServlet extends HttpServlet {
 
     private final String order = "/WEB-INF/view/order.jsp";
@@ -114,7 +116,7 @@ public class OrderServlet extends HttpServlet {
         try {
             DistanceService distanceService = new DistanceServiceImpl(connection);
             int distance = distanceService.getDistanceBetweenTwoCities(cityFrom, cityTo);
-            CalculateServise calculateServise = new CalculatorServiceImpl();
+            CalculateServise calculateServise = new CalculatorServiceImpl(new PriceCalculatorByCargoType(new PriceCalculatorFactory()));
             orderPrice = calculateServise.getOrderPrice(cargoType, weight, distance);
             logger.info("Distance: " + distance + "Get price: " + orderPrice);
         } catch (IncorrectInputException e) {

@@ -18,10 +18,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.Set;
 
-/**
- *
- */
-@WebServlet(name = "DirectionServlet")
+@WebServlet("/direction")
 public class DirectionServlet extends HttpServlet {
 
     private final String direction = "/WEB-INF/view/direction.jsp";

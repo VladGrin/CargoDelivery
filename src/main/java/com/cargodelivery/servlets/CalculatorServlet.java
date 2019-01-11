@@ -13,6 +13,7 @@ import com.cargodelivery.service.impl.CalculatorServiceImpl;
 import com.cargodelivery.service.impl.CityServiceImpl;
 import com.cargodelivery.service.impl.DistanceServiceImpl;
 import com.cargodelivery.util.calculate.PriceCalculatorByCargoType;
+import com.cargodelivery.util.calculate.PriceCalculatorFactory;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -24,7 +25,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.Set;
 
-@WebServlet(name = "CalculatorServlet")
+@WebServlet("/calculator")
 public class CalculatorServlet extends HttpServlet {
 
     private final String calculator = "/WEB-INF/view/calculator.jsp";
@@ -43,7 +44,7 @@ public class CalculatorServlet extends HttpServlet {
         int distance = getDistance(cityFrom, cityTo);
 
         String orderPrice = getOrderPrice(cargoType, weight, distance);
-        request.setAttribute("priceError", orderPrice);
+        request.setAttribute("priceError", "Стоимость перевозки: " + orderPrice + " грн.");
 
         setCitiesFromDBToRequest(request);
 
