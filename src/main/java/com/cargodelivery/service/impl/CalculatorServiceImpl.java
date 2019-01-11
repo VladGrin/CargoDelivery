@@ -13,10 +13,6 @@ public class CalculatorServiceImpl implements CalculateServise {
         this.calculator = calculator;
     }
 
-//    public CalculatorServiceImpl() {
-//        this.calculator = new PriceCalculatorByCargoType();
-//    }
-
     @Override
     public int getOrderPrice(String cargoType, String weight, int distance) throws IncorrectInputException {
         Validator.validateWeight(weight, cargoType);

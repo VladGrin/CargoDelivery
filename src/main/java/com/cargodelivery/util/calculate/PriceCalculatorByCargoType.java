@@ -4,10 +4,6 @@ public class PriceCalculatorByCargoType {
 
     private PriceCalculatorFactory priceCalculatorFactory;
 
-//    public PriceCalculatorByCargoType() {
-//        this.priceCalculatorFactory = new PriceCalculatorFactory();
-//    }
-
     public PriceCalculatorByCargoType(PriceCalculatorFactory priceCalculatorFactory) {
         this.priceCalculatorFactory = priceCalculatorFactory;
     }
