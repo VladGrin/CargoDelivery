@@ -8,7 +8,6 @@ import com.cargodelivery.repository.UserRepository;
 import com.cargodelivery.repository.impl.UserRepositoryImpl;
 import com.cargodelivery.service.UserService;
 import com.cargodelivery.validator.Validator;
-import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 
@@ -25,14 +24,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean saveUser(String name, String surname, String city, String phone,
-                         String login, String password, User.Role role) throws IncorrectInputException, DataAlreadyExistsException {
+                            String login, String password, User.Role role) throws IncorrectInputException, DataAlreadyExistsException {
         Validator.validateName(name);
         Validator.validateName(surname);
         Validator.validateName(city);
         Validator.validateMobileNumber(phone);
         Validator.validateEmailAddress(login);
 
-        if(existsUser(login, password)){
+        if (existsUser(login, password)) {
             throw new DataAlreadyExistsException("Such user already exists");
         }
 
@@ -47,7 +46,7 @@ public class UserServiceImpl implements UserService {
     public User getUserById(Integer id) throws NoSuchDataException {
 
         User userById = userRepository.findById(id);
-        if (userById == null){
+        if (userById == null) {
             throw new NoSuchDataException("No user by id " + id);
         }
         return userById;
@@ -56,7 +55,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByLogin(String login) throws NoSuchDataException {
         User userByLogin = userRepository.findByLogin(login);
-        if (userByLogin == null){
+        if (userByLogin == null) {
             throw new NoSuchDataException("No such user: " + userByLogin);
         }
         return userByLogin;

@@ -8,8 +8,11 @@ import com.cargodelivery.model.City;
 import com.cargodelivery.model.User;
 import com.cargodelivery.service.CalculateServise;
 import com.cargodelivery.service.CityService;
+import com.cargodelivery.service.DistanceService;
 import com.cargodelivery.service.impl.CalculatorServiceImpl;
 import com.cargodelivery.service.impl.CityServiceImpl;
+import com.cargodelivery.service.impl.DistanceServiceImpl;
+import com.cargodelivery.util.calculate.PriceCalculatorByCargoType;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -37,7 +40,11 @@ public class CalculatorServlet extends HttpServlet {
         String weight = request.getParameter("weight");
         logger.info("Entered data: cityTo: " + cityTo + " cityFrom: " + cityFrom + " cargoType: " + cargoType + " weight: " + weight);
 
-        getPriceAndSetToRequest(request, cityTo, cityFrom, cargoType, weight);
+        int distance = getDistance(cityFrom, cityTo);
+
+        String orderPrice = getOrderPrice(cargoType, weight, distance);
+        request.setAttribute("priceError", orderPrice);
+
         setCitiesFromDBToRequest(request);
 
         setRoleToRequest(request);
@@ -54,19 +61,27 @@ public class CalculatorServlet extends HttpServlet {
         request.getRequestDispatcher(calculator).forward(request, response);
     }
 
-    private void getPriceAndSetToRequest(HttpServletRequest request, String cityTo, String cityFrom, String cargoType, String weight) {
+    private String getOrderPrice(String cargoType, String weight, int distance) {
         Connection connection = dbConnection.getConnection();
         String orderPrice = null;
         try {
-            CalculateServise calculateServise = new CalculatorServiceImpl(connection);
-            orderPrice = String.valueOf(calculateServise.getOrderPrice(cityTo, cityFrom, cargoType, weight));
-            request.setAttribute("price", orderPrice);
+            CalculateServise calculateServise = new CalculatorServiceImpl(new PriceCalculatorByCargoType(new PriceCalculatorFactory()));
+            orderPrice = String.valueOf(calculateServise.getOrderPrice(cargoType, weight, distance));
             logger.info("Get price: " + orderPrice);
         } catch (IncorrectInputException e) {
-            request.setAttribute("priceError", "Введены некоректные данные.");
+            orderPrice = "Введены некоректные данные.";
             logger.error("Exception" + e);
         }
         dbConnection.closeConnection(connection);
+        return orderPrice;
+    }
+
+    private int getDistance(String cityFrom, String cityTo){
+        Connection connection = dbConnection.getConnection();
+        DistanceService distanceService = new DistanceServiceImpl(connection);
+        int distance = distanceService.getDistanceBetweenTwoCities(cityTo, cityFrom);
+        dbConnection.closeConnection(connection);
+        return distance;
     }
 
     private void setCitiesFromDBToRequest(HttpServletRequest request) {

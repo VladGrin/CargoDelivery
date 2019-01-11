@@ -11,9 +11,11 @@ import com.cargodelivery.repository.DistanceRepository;
 import com.cargodelivery.repository.impl.DistanceRepositoryImpl;
 import com.cargodelivery.service.CalculateServise;
 import com.cargodelivery.service.CityService;
+import com.cargodelivery.service.DistanceService;
 import com.cargodelivery.service.OrderService;
 import com.cargodelivery.service.impl.CalculatorServiceImpl;
 import com.cargodelivery.service.impl.CityServiceImpl;
+import com.cargodelivery.service.impl.DistanceServiceImpl;
 import com.cargodelivery.service.impl.OrderServiceImpl;
 import org.apache.log4j.Logger;
 
@@ -98,8 +100,8 @@ public class OrderServlet extends HttpServlet {
     private String getEndDate(String cityFrom, String cityTo, String startDate) {
         Connection connection = dbConnection.getConnection();
 
-        DistanceRepository distanceRepository = new DistanceRepositoryImpl(connection);
-        int deliveryTerm = distanceRepository.getDeliveryTermBetweenTwoCities(cityFrom, cityTo);
+        DistanceService distanceService = new DistanceServiceImpl(connection);
+        int deliveryTerm = distanceService.getDeliveryTermBetweenTwoCities(cityFrom, cityTo);
 
         dbConnection.closeConnection(connection);
 
@@ -110,9 +112,11 @@ public class OrderServlet extends HttpServlet {
         Connection connection = dbConnection.getConnection();
         int orderPrice = 0;
         try {
-            CalculateServise calculateServise = new CalculatorServiceImpl(connection);
-            orderPrice = calculateServise.getOrderPrice(cityTo, cityFrom, cargoType, weight);
-            logger.info("Get price: " + orderPrice);
+            DistanceService distanceService = new DistanceServiceImpl(connection);
+            int distance = distanceService.getDistanceBetweenTwoCities(cityFrom, cityTo);
+            CalculateServise calculateServise = new CalculatorServiceImpl();
+            orderPrice = calculateServise.getOrderPrice(cargoType, weight, distance);
+            logger.info("Distance: " + distance + "Get price: " + orderPrice);
         } catch (IncorrectInputException e) {
             logger.error("Incorrect input data: " + e);
         }
