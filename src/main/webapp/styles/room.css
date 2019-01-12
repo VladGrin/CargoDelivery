@@ -98,9 +98,15 @@ nav{
 .topnav .icon{
 	display: none;
 }
+header{
+	height: 30%;
+}
 /*header*/
 
 /*main*/
+main{
+	min-height: 47%;
+}
 
 
 /*main*/
