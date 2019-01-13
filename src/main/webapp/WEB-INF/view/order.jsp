@@ -63,6 +63,7 @@
             <lable>Вес груза</lable>
             <c:set var="weight" value="${requestScope.weight}"/>
             <input type="text" required placeholder="вес" name="weight" value="${weight}">
+            <p style="font-size: 13px; margin-left: 19%">Вес документов до 3кг. Вес посылок до 50кг.</p>
         </div>
         <br>
         <div>
@@ -88,11 +89,11 @@
             <c:set var="deliveryAdrress" value="${requestScope.deliveryAddress}"/>
             <input type="text" required placeholder="адресс" name="deliveryAddress" value="${deliveryAddress}">
         </div>
+        <br>
         <input class="button" type="submit" value="Добавить заказ">
         <c:set var="registrationError" value="${requestScope.registrationError}"/>
-        <div>${registrationError}</div>
+        <div style="color: #de0e0e">${registrationError}</div>
     </form>
-
 </main>
 
 <footer>

@@ -105,9 +105,8 @@ header{
 
 /*main*/
 main{
-    height: 51.6%;
+    min-height: 51.6%;
 }
-
 
 /*main*/
 

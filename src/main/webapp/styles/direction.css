@@ -53,8 +53,8 @@ body{
 .logo a{
 	color: white;
 	display: flex;
-	margin-left: 10.5%;
 	flex-direction: row;
+	margin-left: 10.5%;
 }
 .logo p{
 	color:white;
@@ -63,6 +63,13 @@ body{
 .logo a img:hover{
 	transform: rotate(360deg);
 	transition: 0.6s;
+}
+.exit{
+	margin-top: 13px;
+	margin-left: 45%;
+}
+.exit a{
+	margin-left: 0;
 }
 .button {
 	text-decoration: none;

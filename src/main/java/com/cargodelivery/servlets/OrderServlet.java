@@ -34,7 +34,6 @@ import java.util.Set;
 public class OrderServlet extends HttpServlet {
 
     private final String order = "/WEB-INF/view/order.jsp";
-    private final String index = "/WEB-INF/view/index.jsp";
     private final DBConnection dbConnection = new MySQLConnection();
     private final static Logger logger = Logger.getLogger(CalculatorServlet.class);
     private final DataFormatter dataFormatter = new MySQLDateFormatter();
@@ -56,7 +55,6 @@ public class OrderServlet extends HttpServlet {
         String endDate = getEndDate(idCityFrom, idCityTo, startDate);
         int price = getPrice(idCityFrom, idCityTo, cargoType, weight);
 
-
         Set<City> cities = getCitiesFromDB();
         String cityFrom = cities.stream().filter(city -> city.getId().toString().equals(idCityFrom)).findFirst().get().getName();
         String cityTo = cities.stream().filter(city -> city.getId().toString().equals(idCityTo)).findFirst().get().getName();
@@ -73,6 +71,7 @@ public class OrderServlet extends HttpServlet {
                     endDate, recipient, recipientPhone, deliveryAddress, price);
             response.sendRedirect("/room");
         } catch (IncorrectInputException e) {
+            logger.error("Incorrect input: " + e);
             request.setAttribute("registrationError", "Введены некоректные данные");
             request.setAttribute("startDate", startDate);
             request.setAttribute("weight", weight);
@@ -80,8 +79,7 @@ public class OrderServlet extends HttpServlet {
             request.setAttribute("recipientPhone", recipientPhone);
             request.setAttribute("deliveryAddress", deliveryAddress);
             request.setAttribute("cities", cities);
-            logger.error("Incorrect input: " + e);
-            request.getRequestDispatcher(order).forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/view/order.jsp").forward(request, response);
         } finally {
             dbConnection.closeConnection(connection);
         }
@@ -90,7 +88,7 @@ public class OrderServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Object userId = request.getSession().getAttribute("userId");
         if (userId == null) {
-            request.getRequestDispatcher(index).forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/view/index.jsp").forward(request, response);
         }
 
         Set<City> cities = getCitiesFromDB();

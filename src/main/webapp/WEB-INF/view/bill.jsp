@@ -13,10 +13,6 @@
     <title>Room</title>
     <link rel="stylesheet" type="text/css" href="/styles/bill.css">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-    <style>
-        table, th, td {border: 1px solid black; border-collapse: collapse; border-spacing: 5px;}
-        th, td {padding: 3px;}
-    </style>
 </head>
 <body>
 <header>
@@ -39,67 +35,63 @@
     </nav>
 </header>
 
-<main>
-    <div>Счёт на оплату от <c:out value="${requestScope.order.createDate}"/></div>
-    <div>
-        <div>ПОСТАВЩИК: </div>
-        <div>
-            <span><c:out value="${requestScope.company.name}"/>.  </span>
-            <span><c:out value="${requestScope.company.address}"/></span>
-        </div>
-        <div>
-            <lable>р/с: </lable>
-            <span><c:out value="${requestScope.company.account}"/>.   </span>
-
-            <lable>Банк: </lable>
-            <span><c:out value="${requestScope.company.bank}"/>.  </span>
-
-            <lable>МФО: </lable>
-            <span><c:out value="${requestScope.company.mfo}"/></span>
-        </div>
-        <div>
-            <lable>Код ЕДРПОУ: </lable>
-            <span><c:out value="${requestScope.company.codEDRPOU}"/>.   </span>
-
-            <lable>ИНН: </lable>
-            <span><c:out value="${requestScope.company.codINN}"/></span>
-        </div>
-        <br>
-        <div>ПОКУПАТЕЛЬ</div>
-        <div>
-            <lable>Ф.И.О.</lable>
-            <span><c:out value="${requestScope.user.surname}"/>  <c:out value="${requestScope.user.name}"/></span>
-        </div>
-        <div>
-            <lable>Город, телефон: </lable>
-            <span><c:out value="${requestScope.user.city}"/>, <c:out value="${requestScope.user.phone}, "/></span>
-        </div>
-        <br>
-        <div>
-            <lable>Наименование услуг: </lable>
-            <span>Доставка груза.</span>
-        </div>
-        <br>
-        <div>Маршрут</div>
-        <div>
-            <lable>Город отправления: </lable>
-            <span><c:out value="${requestScope.order.cityFrom}"/></span>
-        </div>
-        <div>
-            <lable>Город назначения: </lable>
-            <span><c:out value="${requestScope.order.cityTo}"/></span>
-        </div>
-        <br>
-        <div>
-            <lable>Стоимость: </lable>
-            <span><c:out value="${requestScope.order.price}"/> грн.</span>
-        </div>
-        <form action="/room/bill/payment" method="post">
-            <input type="hidden" name="orderId" c:out value="${requestScope.order.id}">
-            <input class="button" type="submit" value="Оплатить">
-        </form>
+<main style="margin-left: 10%">
+    <h3>Счёт на оплату от <c:out value="${requestScope.order.createDate}"/></h3>
+    <br>
+    <div>ПОСТАВЩИК:
+        <span><c:out value="${requestScope.company.name}"/>.  </span>
+        <span><c:out value="${requestScope.company.address}"/></span>
     </div>
+    <div>
+        <lable>р/с:</lable>
+        <span><c:out value="${requestScope.company.account}"/>.   </span>
 
+        <lable>Банк:</lable>
+        <span><c:out value="${requestScope.company.bank}"/>.  </span>
+
+        <lable>МФО:</lable>
+        <span><c:out value="${requestScope.company.mfo}"/></span>
+    </div>
+    <div>
+        <lable>Код ЕДРПОУ:</lable>
+        <span><c:out value="${requestScope.company.codEDRPOU}"/>.   </span>
+
+        <lable>ИНН:</lable>
+        <span><c:out value="${requestScope.company.codINN}"/></span>
+    </div>
+    <br>
+    <div>ПОКУПАТЕЛЬ:
+        <lable>Ф.И.О.</lable>
+        <span><c:out value="${requestScope.user.surname}"/>  <c:out value="${requestScope.user.name}"/></span>
+    </div>
+    <div>
+        <lable>Город, телефон:</lable>
+        <span><c:out value="${requestScope.user.city}"/>, <c:out value="${requestScope.user.phone}, "/></span>
+    </div>
+    <br>
+    <div>
+        <lable>Наименование услуг:</lable>
+        <span>Доставка груза.</span>
+    </div>
+    <br>
+    <div>Маршрут</div>
+    <div>
+        <lable>Город отправления:</lable>
+        <span><c:out value="${requestScope.order.cityFrom}"/></span>
+    </div>
+    <div>
+        <lable>Город назначения:</lable>
+        <span><c:out value="${requestScope.order.cityTo}"/></span>
+    </div>
+    <br>
+    <div>
+        <lable>Стоимость:</lable>
+        <span><c:out value="${requestScope.order.price}"/> грн.</span>
+    </div>
+    <form action="/room/bill/payment" method="post">
+        <input type="hidden" name="orderId" c:out value="${requestScope.order.id}">
+        <input class="button" type="submit" value="Оплатить">
+    </form>
 </main>
 
 <footer>

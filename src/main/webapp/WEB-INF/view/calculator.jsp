@@ -32,7 +32,9 @@
             </form>
         </c:if>
         <c:if test="${requestScope.role == 1}">
-            <a class="button" href=<c:url value="/logout"/>>Выход</a>
+            <div class="exit">
+                <a class="button" href=<c:url value="/logout"/>>Выход</a>
+            </div>
         </c:if>
     </div>
     <nav>
@@ -55,7 +57,7 @@
 
 <main>
     <div class="calculate">
-        <div>Рассчёт стоимости доставки</div>
+        <h2>Рассчёт стоимости доставки</h2>
         <div>
             <div>
                 <c:set var="price" value="${requestScope.price}"/>

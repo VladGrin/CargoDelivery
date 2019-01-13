@@ -33,7 +33,9 @@
             </form>
         </c:if>
         <c:if test="${requestScope.role == 1}">
-            <a class="button" href=<c:url value="/logout"/>>Выход</a>
+            <div class="exit">
+                <a class="button" href=<c:url value="/logout"/>>Выход</a>
+            </div>
         </c:if>
     </div>
     <nav>
@@ -59,6 +61,7 @@
     <c:forEach var="city" items="${requestScope.cities}">
         <ul>
             <li style="text-align: center"><c:out value="${city.name }"/></li>
+            <br>
         </ul>
     </c:forEach>
 

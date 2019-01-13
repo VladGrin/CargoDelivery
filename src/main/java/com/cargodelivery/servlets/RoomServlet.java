@@ -22,8 +22,6 @@ import java.util.stream.Collectors;
 @WebServlet("/room")
 public class RoomServlet extends HttpServlet {
 
-    private final String room = "/WEB-INF/view/room.jsp";
-    private final String index = "/WEB-INF/view/index.jsp";
     private final DBConnection dbConnection = new MySQLConnection();
     private final static Logger logger = Logger.getLogger(RoomServlet.class);
 
@@ -47,7 +45,7 @@ public class RoomServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Object userId = request.getSession().getAttribute("userId");
         if (userId == null) {
-            request.getRequestDispatcher(index).forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/view/index.jsp").forward(request, response);
         }
 
         Connection connection = dbConnection.getConnection();
@@ -66,6 +64,6 @@ public class RoomServlet extends HttpServlet {
 
         request.setAttribute("orders", orders);
 
-        request.getRequestDispatcher(room).forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/view/room.jsp").forward(request, response);
     }
 }

@@ -13,17 +13,6 @@
     <title>Room</title>
     <link rel="stylesheet" type="text/css" href="/styles/room.css">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-    <style>
-        table, th, td {
-            border: 1px solid black;
-            border-collapse: collapse;
-            border-spacing: 5px;
-        }
-
-        th, td {
-            padding: 3px;
-        }
-    </style>
 </head>
 <body>
 <header>
@@ -32,7 +21,9 @@
             <img class="graficlogo" src="../../images/logo.png" alt="Logo">
             <p style="color:white;font-size: 35px;font-family: 'Arial';margin-top: 20px;">CargoDelivery</p>
         </a>
-        <a class="button" href=<c:url value="/logout"/>>Выход</a>
+        <div class="exit">
+            <a class="button" href=<c:url value="/logout"/>>Выход</a>
+        </div>
     </div>
     <nav>
         <div class="topnav" id="myTopnav">
@@ -48,7 +39,6 @@
 </header>
 
 <main>
-    <h1>кабинет</h1>
     <a class="button" href=<c:url value="/room/order"/>>Сделать заказ</a>
     <div>
         <table>
@@ -62,7 +52,7 @@
                 <th>Дата доставки</th>
                 <th>Получатель</th>
                 <th>Контактный телефон</th>
-                <th>Адресс доставки</th>
+                <th>Адрес доставки</th>
                 <th>Цена, грн</th>
                 <th>Счёт</th>
                 <th>Удалить</th>
