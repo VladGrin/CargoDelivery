@@ -40,24 +40,11 @@ public class CalculatorServlet extends HttpServlet {
         String weight = request.getParameter("weight");
         logger.info("Entered data: cityTo: " + cityTo + " cityFrom: " + cityFrom + " cargoType: " + cargoType + " weight: " + weight);
 
-        int distance = getDistance(cityFrom, cityTo);
-
-        getOrderPriceAndSetToRequest(request, cargoType, weight, distance);
-
-        doGet(request, response);
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        setCitiesFromDBToRequest(request);
-
-        setRoleToRequest(request);
-
-        request.getRequestDispatcher("/WEB-INF/view/calculator.jsp").forward(request, response);
-    }
-
-    private void getOrderPriceAndSetToRequest(HttpServletRequest request, String cargoType, String weight, int distance) {
         Connection connection = dbConnection.getConnection();
+
+        DistanceService distanceService = new DistanceServiceImpl(connection);
+        int distance = distanceService.getDistanceBetweenTwoCities(cityTo, cityFrom);
+
         String orderPrice = null;
         String errorPrice = null;
         try {
@@ -69,17 +56,20 @@ public class CalculatorServlet extends HttpServlet {
             errorPrice = "Введены некоректные данные";
             request.setAttribute("priceError", errorPrice);
             logger.error("Exception" + e);
-        } finally {
-            dbConnection.closeConnection(connection);
         }
+
+        dbConnection.closeConnection(connection);
+
+        doGet(request, response);
     }
 
-    private int getDistance(String cityFrom, String cityTo) {
-        Connection connection = dbConnection.getConnection();
-        DistanceService distanceService = new DistanceServiceImpl(connection);
-        int distance = distanceService.getDistanceBetweenTwoCities(cityTo, cityFrom);
-        dbConnection.closeConnection(connection);
-        return distance;
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        setCitiesFromDBToRequest(request);
+
+        setRoleToRequest(request);
+
+        request.getRequestDispatcher("/WEB-INF/view/calculator.jsp").forward(request, response);
     }
 
     private void setCitiesFromDBToRequest(HttpServletRequest request) {

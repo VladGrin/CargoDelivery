@@ -33,7 +33,6 @@ import java.util.Set;
 @WebServlet("/room/order")
 public class OrderServlet extends HttpServlet {
 
-    private final String order = "/WEB-INF/view/order.jsp";
     private final DBConnection dbConnection = new MySQLConnection();
     private final static Logger logger = Logger.getLogger(CalculatorServlet.class);
     private final DataFormatter dataFormatter = new MySQLDateFormatter();
@@ -94,7 +93,7 @@ public class OrderServlet extends HttpServlet {
         Set<City> cities = getCitiesFromDB();
         request.setAttribute("cities", cities);
 
-        request.getRequestDispatcher(order).forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/view/order.jsp").forward(request, response);
     }
 
     private String getEndDate(String cityFrom, String cityTo, String startDate) {

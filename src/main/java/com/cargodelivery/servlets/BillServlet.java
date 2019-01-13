@@ -26,37 +26,14 @@ import java.sql.Connection;
 @WebServlet("/room/bill")
 public class BillServlet extends HttpServlet {
 
-    private final String bill = "/WEB-INF/view/bill.jsp";
-    private final String index = "/WEB-INF/view/index.jsp";
     private final DBConnection dbConnection = new MySQLConnection();
     private final static Logger logger = Logger.getLogger(BillServlet.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String orderId = request.getParameter("orderId");
 
-        Order order = getOrderByOrderId(orderId);
-        request.setAttribute("order", order);
-
-        User user = getUserByUserId(order.getUserId());
-        request.setAttribute("user", user);
-
-        Company company = getCompanyById(1);
-        request.setAttribute("company", company);
-
-        request.getRequestDispatcher(bill).forward(request, response);
-    }
-
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Object userId = request.getSession().getAttribute("userId");
-        if (userId == null) {
-            request.getRequestDispatcher(index).forward(request, response);
-        }
-
-        request.getRequestDispatcher(bill).forward(request, response);
-    }
-
-    private Order getOrderByOrderId(String orderId) {
         Connection connection = dbConnection.getConnection();
+
         OrderService orderService = new OrderServiceImpl(connection);
         Order orderById = null;
         try {
@@ -65,34 +42,34 @@ public class BillServlet extends HttpServlet {
         } catch (IncorrectInputException e) {
             logger.error("Order " + orderId + " was not finded: " + e);
         }
-        dbConnection.closeConnection(connection);
+        request.setAttribute("order", orderById);
 
-        return orderById;
-    }
-
-    private User getUserByUserId(Integer userId) {
-        Connection connection = dbConnection.getConnection();
         UserService userService = new UserServiceImpl(connection);
         User userById = null;
         try {
-            userById = userService.getUserById(userId);
-            logger.info("User " + userId + " was found");
+            userById = userService.getUserById(orderById.getUserId());
+            logger.info("User " + orderById.getUserId() + " was found");
         } catch (NoSuchDataException e) {
-            logger.error("User " + userId + " was not found: " + e);
+            logger.error("User " + orderById.getUserId() + " was not found: " + e);
         }
+        request.setAttribute("user", userById);
+
+        CompanyService companyService = new CompanyServiceImpl(connection);
+        Company company = companyService.getCompanyById(1);
+        logger.info("Company " + 1 + " was found");
+        request.setAttribute("company", company);
+
         dbConnection.closeConnection(connection);
 
-        return userById;
+        request.getRequestDispatcher("/WEB-INF/view/bill.jsp").forward(request, response);
     }
 
-    private Company getCompanyById(int id) {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Object userId = request.getSession().getAttribute("userId");
+        if (userId == null) {
+            request.getRequestDispatcher("/WEB-INF/view/index.jsp").forward(request, response);
+        }
 
-        Connection connection = dbConnection.getConnection();
-        CompanyService companyService = new CompanyServiceImpl(connection);
-        Company company = companyService.getCompanyById(id);
-        logger.info("Company " + id + " was found");
-        dbConnection.closeConnection(connection);
-
-        return company;
+        request.getRequestDispatcher("/WEB-INF/view/bill.jsp").forward(request, response);
     }
 }
