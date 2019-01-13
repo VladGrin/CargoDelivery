@@ -21,7 +21,6 @@ import java.util.Set;
 @WebServlet("/direction")
 public class DirectionServlet extends HttpServlet {
 
-    private final String direction = "/WEB-INF/view/direction.jsp";
     private final DBConnection dbConnection = new MySQLConnection();
     private final static Logger logger = Logger.getLogger(DirectionServlet.class);
 
@@ -48,6 +47,6 @@ public class DirectionServlet extends HttpServlet {
             request.setAttribute("role", userRole.ordinal());
         }
 
-        request.getRequestDispatcher(direction).forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/view/direction.jsp").forward(request, response);
     }
 }

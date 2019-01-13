@@ -54,57 +54,60 @@
 </header>
 
 <main>
-    <div>
-        <h2>RESULT</h2>
+    <div class="calculate">
+        <div>Рассчёт стоимости доставки</div>
         <div>
-            <c:set var="price" value="${requestScope.price}"/>
-            <div>${price}</div>
+            <div>
+                <c:set var="price" value="${requestScope.price}"/>
+                <div>${price}</div>
+            </div>
+            <div>
+                <c:set var="priceError" value="${requestScope.priceError}"/>
+                <div style="color: #de0e0e">${priceError}</div>
+            </div>
         </div>
+        <br>
         <div>
-            <c:set var="priceError" value="${requestScope.priceError}"/>
-            <div>${priceError}</div>
+            <form method="post" action="/calculator" class="forma">
+                <div class="one">
+                    <lable>Город отправления</lable>
+                    <select name="cityFrom">
+                        <option disabled selected>Выберите город</option>
+                        <c:forEach var="cityFrom" items="${requestScope.cities}">
+                            <option c:out value="${cityFrom.id}">${cityFrom.name}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <br>
+                <div class="one">
+                    <lable>Город доставки</lable>
+                    <select name="cityTo">
+                        <option disabled selected>Выберите город</option>
+                        <c:forEach var="cityTo" items="${requestScope.cities}">
+                            <option c:out value="${cityTo.id}">${cityTo.name}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <br>
+                <div class="one">
+                    <lable>Вид доставки</lable>
+                    <select name="cargoType">
+                        <option disabled selected>Вид отправления</option>
+                        <option c:out value="DOCUMENT">документ</option>
+                        <option c:out value="PARSEL">посылка</option>
+                        <option c:out value="FREIGHT">груз</option>
+                    </select>
+                </div>
+                <br>
+                <div class="one">
+                    <lable>Вес груза</lable>
+                    <input type="text" required placeholder="вес" name="weight">
+                    <div style="font-size: 13px">Вес документов до 3кг. Вес посылок до 50кг.</div>
+                </div>
+                <br>
+                <input class="button" type="submit" value="Посчитать стоимость">
+            </form>
         </div>
-    </div>
-    <br>
-    <hr>
-    <div>
-        <form method="post" action="/calculator" class="forma">
-            <div class="one">
-                <lable>Город отправления</lable>
-                <select name="cityFrom">
-                    <option disabled selected>Выберите город</option>
-                    <c:forEach var="cityFrom" items="${requestScope.cities}">
-                        <option c:out value="${cityFrom.id}">${cityFrom.name}</option>
-                    </c:forEach>
-                </select>
-            </div>
-            <br>
-            <div class="one">
-                <lable>Город доставки</lable>
-                <select name="cityTo">
-                    <option disabled selected>Выберите город</option>
-                    <c:forEach var="cityTo" items="${requestScope.cities}">
-                        <option c:out value="${cityTo.id}">${cityTo.name}</option>
-                    </c:forEach>
-                </select>
-            </div>
-            <br>
-            <div class="one">
-                <lable>Вид доставки</lable>
-                <select name="cargoType">
-                    <option disabled selected>Вид отправления</option>
-                    <option c:out value="DOCUMENT">документ</option>
-                    <option c:out value="PARSEL">посылка</option>
-                    <option c:out value="FREIGHT">груз</option>
-                </select>
-            </div>
-            <br>
-            <div class="one">
-                <lable>Вес груза</lable>
-                <input type="text" required placeholder="вес" name="weight">
-            </div>
-            <input class="button" type="submit" value="Посчитать стоимость">
-        </form>
     </div>
 </main>
 

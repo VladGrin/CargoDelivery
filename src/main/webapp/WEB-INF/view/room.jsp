@@ -48,7 +48,7 @@
 </header>
 
 <main>
-    <h1>MY ROOM!!!</h1>
+    <h1>кабинет</h1>
     <a class="button" href=<c:url value="/room/order"/>>Сделать заказ</a>
     <div>
         <table>

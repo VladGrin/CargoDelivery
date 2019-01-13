@@ -23,17 +23,14 @@ import java.sql.Connection;
 @WebServlet("/registration")
 public class RegistrationServlet extends HttpServlet {
 
-    private final String registration = "/WEB-INF/view/registration.jsp";
-    private final String room = "/WEB-INF/view/room.jsp";
-    private final static Logger logger = Logger.getLogger(RegistrationServlet.class);
     private final PasswordEncryption passwordEncryption = new PasswordEncryptionImpl();
-
+    private final static Logger logger = Logger.getLogger(RegistrationServlet.class);
     private final DBConnection dbConnection = new MySQLConnection();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        request.getRequestDispatcher(registration).forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/view/registration.jsp").forward(request, response);
     }
 
     @Override
@@ -59,16 +56,16 @@ public class RegistrationServlet extends HttpServlet {
             request.getSession().setAttribute("role", role);
             request.getSession().setAttribute("userId", userByLogin.getId());
 
-            request.getRequestDispatcher(room).forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/view/room.jsp").forward(request, response);
 
         } catch (IncorrectInputException e) {
             setAttributeToRequest(request, name, surname, city, phone, login);
             logger.error("Incorrect input: " + e);
-            request.getRequestDispatcher(registration).forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/view/registration.jsp").forward(request, response);
         } catch (DataAlreadyExistsException e) {
             setAttributeToRequest(request, name, surname, city, phone, login);
             logger.error("Such user already exists: " + e);
-            request.getRequestDispatcher(registration).forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/view/registration.jsp").forward(request, response);
         } catch (NoSuchDataException e) {
             e.printStackTrace();
         } finally {

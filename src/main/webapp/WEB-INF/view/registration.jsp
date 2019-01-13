@@ -67,7 +67,7 @@
         </div>
         <div>
             <c:set var="registrationError" value="${requestScope.registrationError}"/>
-            <div>${registrationError}</div>
+            <div style="text-align: center; color: red">${registrationError}</div>
         </div>
         <input class="button" type="submit" value="Регистрация">
     </form>

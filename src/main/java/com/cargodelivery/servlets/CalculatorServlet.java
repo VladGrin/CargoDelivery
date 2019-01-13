@@ -28,7 +28,6 @@ import java.util.Set;
 @WebServlet("/calculator")
 public class CalculatorServlet extends HttpServlet {
 
-    private final String calculator = "/WEB-INF/view/calculator.jsp";
     private final DBConnection dbConnection = new MySQLConnection();
     private final static Logger logger = Logger.getLogger(CalculatorServlet.class);
 
@@ -43,14 +42,9 @@ public class CalculatorServlet extends HttpServlet {
 
         int distance = getDistance(cityFrom, cityTo);
 
-        String orderPrice = getOrderPrice(cargoType, weight, distance);
-        request.setAttribute("priceError", "Стоимость перевозки: " + orderPrice + " грн.");
+        getOrderPriceAndSetToRequest(request, cargoType, weight, distance);
 
-        setCitiesFromDBToRequest(request);
-
-        setRoleToRequest(request);
-
-        request.getRequestDispatcher(calculator).forward(request, response);
+        doGet(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -59,25 +53,28 @@ public class CalculatorServlet extends HttpServlet {
 
         setRoleToRequest(request);
 
-        request.getRequestDispatcher(calculator).forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/view/calculator.jsp").forward(request, response);
     }
 
-    private String getOrderPrice(String cargoType, String weight, int distance) {
+    private void getOrderPriceAndSetToRequest(HttpServletRequest request, String cargoType, String weight, int distance) {
         Connection connection = dbConnection.getConnection();
         String orderPrice = null;
+        String errorPrice = null;
         try {
             CalculateServise calculateServise = new CalculatorServiceImpl(new PriceCalculatorByCargoType(new PriceCalculatorFactory()));
             orderPrice = String.valueOf(calculateServise.getOrderPrice(cargoType, weight, distance));
+            request.setAttribute("price", "Стоимость перевозки: " + orderPrice + " грн.");
             logger.info("Get price: " + orderPrice);
         } catch (IncorrectInputException e) {
-            orderPrice = "Введены некоректные данные.";
+            errorPrice = "Введены некоректные данные";
+            request.setAttribute("priceError", errorPrice);
             logger.error("Exception" + e);
+        } finally {
+            dbConnection.closeConnection(connection);
         }
-        dbConnection.closeConnection(connection);
-        return orderPrice;
     }
 
-    private int getDistance(String cityFrom, String cityTo){
+    private int getDistance(String cityFrom, String cityTo) {
         Connection connection = dbConnection.getConnection();
         DistanceService distanceService = new DistanceServiceImpl(connection);
         int distance = distanceService.getDistanceBetweenTwoCities(cityTo, cityFrom);
