@@ -73,7 +73,9 @@ The logging in the system were processed using Log4j.
 
 Build the application using Maven. All dependencies are in the pom.xml.
 
-
+Installation Instructions.
+At first you need to install the JDK. Then start the root directory (CargoDelivery) from the cmd.
+Run the command: mvn compile war:war. 
 
 
 
