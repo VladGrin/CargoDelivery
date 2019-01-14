@@ -10,7 +10,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Room</title>
+    <title>Bill</title>
     <link rel="stylesheet" type="text/css" href="/styles/bill.css">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 </head>
