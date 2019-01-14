@@ -11,14 +11,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Room</title>
-    <link rel="stylesheet" type="text/css" href="/styles/room.css">
+    <link rel="stylesheet" type="text/css" href="/cargodelivery/styles/room.css">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 </head>
 <body>
 <header>
     <div class="logo">
         <a href="../../WEB-INF/view/index.jsp">
-            <img class="graficlogo" src="../../images/logo.png" alt="Logo">
+            <img class="graficlogo" src="/cargodelivery/images/logo.png" alt="Logo">
             <p style="color:white;font-size: 35px;font-family: 'Arial';margin-top: 20px;">CargoDelivery</p>
         </a>
         <div class="exit">
@@ -30,8 +30,8 @@
             <a href="#">КАБИНЕТ</a>
             <a href="">О КОМПАНИИ</a>
             <a href="">ТАРИФЫ</a>
-            <a href="/direction">НАПРАВЛЕНИЕ</a>
-            <a href="/calculator">КАЛЬКУЛЯТОР</a>
+            <a href="/cargodelivery/direction">НАПРАВЛЕНИЕ</a>
+            <a href="/cargodelivery/calculator">КАЛЬКУЛЯТОР</a>
             <a href="">КОНТАКТЫ</a>
             <a href="#" id="menu" class="icon">&#9776;</a>
         </div>
@@ -72,7 +72,7 @@
                     <td><span><c:out value="${order.price}"/></span></td>
                     <td>
                         <c:if test="${order.payment == false}">
-                            <form action="/room/bill" method="post">
+                            <form action="/cargodelivery/room/bill" method="post">
                                 <input type="hidden" name="orderId" c:out value="${order.id}">
                                 <input class="button" type="submit" value="счёт">
                             </form>
@@ -80,7 +80,7 @@
                     </td>
                     <td>
                         <c:if test="${order.payment == false}">
-                            <form action="/room" method="post">
+                            <form action="/cargodelivery/room" method="post">
                                 <input type="hidden" name="orderId" c:out value="${order.id}">
                                 <input class="button" type="submit" value="удалить">
                             </form>
@@ -98,21 +98,21 @@
         <a href="#">КАБИНЕТ</a>
         <a href="">О КОМПАНИИ</a>
         <a href="">ТАРИФЫ</a>
-        <a href="/direction">НАПРАВЛЕНИЕ</a>
-        <a href="/calculator">КАЛЬКУЛЯТОР</a>
+        <a href=/cargodelivery/direction">НАПРАВЛЕНИЕ</a>
+        <a href="/cargodelivery/calculator">КАЛЬКУЛЯТОР</a>
         <a href="">КОНТАКТЫ</a>
     </nav>
     <div class="social">
-        <a href="https://instagram.com"><img src="../../images/instagram.png"></a>
-        <a href="https://whatsapp.com"><img src="../../images/whatsapp.png"></a>
-        <a href="https://youtube.com"><img src="../../images/youtube.png"></a>
-        <a href="https://facebook.com"><img src="../../images/facebook.png"></a>
-        <a href="https://telegram.com"><img src="../../images/telegram.png"></a>
-        <a href="https://viber.com"><img src="../../images/viber.png"></a>
+        <a href="https://instagram.com"><img src="/cargodelivery/images/instagram.png"></a>
+        <a href="https://whatsapp.com"><img src="/cargodelivery/images/whatsapp.png"></a>
+        <a href="https://youtube.com"><img src="/cargodelivery/images/youtube.png"></a>
+        <a href="https://facebook.com"><img src="/cargodelivery/images/facebook.png"></a>
+        <a href="https://telegram.com"><img src="/cargodelivery/images/telegram.png"></a>
+        <a href="https://viber.com"><img src="/cargodelivery/images/viber.png"></a>
     </div>
     <p>Java Developer.2018-2019</p>
 </footer>
 
-<script src="../../js/script.js"></script>
+<script src="/cargodelivery/js/script.js"></script>
 </body>
 </html>

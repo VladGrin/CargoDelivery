@@ -33,7 +33,7 @@ public class LogoutServlet extends HttpServlet {
 
         logger.info("The user left his room.");
 
-        servletResponse.sendRedirect("/");
+        servletResponse.sendRedirect("/cargodelivery");
     }
 
 }

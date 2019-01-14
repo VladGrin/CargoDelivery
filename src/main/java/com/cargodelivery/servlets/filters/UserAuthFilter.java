@@ -15,8 +15,10 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.Collection;
 
 public class UserAuthFilter implements Filter {
 
@@ -35,9 +37,11 @@ public class UserAuthFilter implements Filter {
         final HttpServletRequest request = (HttpServletRequest) servletRequest;
         final HttpServletResponse response = (HttpServletResponse) servletResponse;
 
+        logger.info("----------------authentication-----------------");
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         password = passwordEncryption.getEncryptedPassword(password);
+        logger.info("Login: " + login + " Password: " + password);
 
         HttpSession session = request.getSession();
         User.Role role = null;
@@ -81,9 +85,11 @@ public class UserAuthFilter implements Filter {
     private void sendRequestByRole(HttpServletRequest request, HttpServletResponse response, User.Role role) throws ServletException, IOException {
         switch (role) {
             case USER:
-                response.sendRedirect("/room");
+                logger.info("User with id: " + request.getSession().getAttribute("userId"));
+                response.sendRedirect("/cargodelivery/room");
                 break;
             case UNKNOWN:
+                logger.info("!! Unknown user !!");
                 request.getRequestDispatcher("/WEB-INF/view/index.jsp").forward(request, response);
                 break;
         }

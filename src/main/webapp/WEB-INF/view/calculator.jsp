@@ -11,23 +11,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Calculator</title>
-    <link rel="stylesheet" type="text/css" href="/styles/calculator.css">
+    <link rel="stylesheet" type="text/css" href="/cargodelivery/styles/calculator.css">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
 </head>
 <body>
 <header>
     <div class="logo">
-        <a href="/">
-            <img class="graficlogo" src="../../images/logo.png" alt="Logo">
+        <a href="/cargodelivery">
+            <img class="graficlogo" src="/cargodelivery/images/logo.png" alt="Logo">
             <p style="color:white;font-size: 35px;font-family: 'Arial';margin-top: 20px;">CargoDelivery</p>
         </a>
         <c:if test="${requestScope.role == 0}">
-            <form method="post" action="/" class="form">
+            <form method="post" action="/cargodelivery" class="form">
                 <input type="email" required placeholder="Email" name="login" class="first"><!-- <br> -->
                 <input type="password" required placeholder="Password" name="password" class="second">
                 <input class="button" type="submit" value="Вход">
                 <div class="text">
-                    <a href="/registration" style="color:white;">регистрация</a>
+                    <a href="/cargodelivery/registration" style="color:white;">регистрация</a>
                 </div>
             </form>
         </c:if>
@@ -40,14 +40,14 @@
     <nav>
         <div class="topnav" id="myTopnav">
             <c:if test="${requestScope.role == 0}">
-                <a href="/">ГЛАВНАЯ</a>
+                <a href="/cargodelivery">ГЛАВНАЯ</a>
             </c:if>
             <c:if test="${requestScope.role == 1}">
-                <a href="/">КАБИНЕТ</a>
+                <a href="/cargodelivery">КАБИНЕТ</a>
             </c:if>
             <a href="">О КОМПАНИИ</a>
             <a href="">ТАРИФЫ</a>
-            <a href="/direction">НАПРАВЛЕНИЕ</a>
+            <a href="/cargodelivery/direction">НАПРАВЛЕНИЕ</a>
             <a href="#">КАЛЬКУЛЯТОР</a>
             <a href="">КОНТАКТЫ</a>
             <a href="#" id="menu" class="icon">&#9776;</a>
@@ -70,7 +70,7 @@
         </div>
         <br>
         <div>
-            <form method="post" action="/calculator" class="forma">
+            <form method="post" action="/cargodelivery/calculator" class="forma">
                 <div class="one">
                     <lable>Город отправления</lable>
                     <select name="cityFrom">
@@ -116,28 +116,28 @@
 <footer>
     <nav>
         <c:if test="${requestScope.role == 0}">
-            <a href="/">ГЛАВНАЯ</a>
+            <a href="/cargodelivery">ГЛАВНАЯ</a>
         </c:if>
         <c:if test="${requestScope.role == 1}">
-            <a href="/">КАБИНЕТ</a>
+            <a href="/cargodelivery">КАБИНЕТ</a>
         </c:if>
         <a href="">О КОМПАНИИ</a>
         <a href="">ТАРИФЫ</a>
-        <a href="/direction">НАПРАВЛЕНИЕ</a>
+        <a href="/cargodelivery/direction">НАПРАВЛЕНИЕ</a>
         <a href="#">КАЛЬКУЛЯТОР</a>
         <a href="">КОНТАКТЫ</a>
     </nav>
     <div class="social">
-        <a href="https://instagram.com"><img src="../../images/instagram.png"></a>
-        <a href="https://whatsapp.com"><img src="../../images/whatsapp.png"></a>
-        <a href="https://youtube.com"><img src="../../images/youtube.png"></a>
-        <a href="https://facebook.com"><img src="../../images/facebook.png"></a>
-        <a href="https://telegram.com"><img src="../../images/telegram.png"></a>
-        <a href="https://viber.com"><img src="../../images/viber.png"></a>
+        <a href="https://instagram.com"><img src="/cargodelivery/images/instagram.png"></a>
+        <a href="https://whatsapp.com"><img src="/cargodelivery/images/whatsapp.png"></a>
+        <a href="https://youtube.com"><img src="/cargodelivery/images/youtube.png"></a>
+        <a href="https://facebook.com"><img src="/cargodelivery/images/facebook.png"></a>
+        <a href="https://telegram.com"><img src="/cargodelivery/images/telegram.png"></a>
+        <a href="https://viber.com"><img src="/cargodelivery/images/viber.png"></a>
     </div>
     <p>Java Developer.2018-2019</p>
 </footer>
 
-<script src="../../js/script.js"></script>
+<script src="/cargodelivery/js/script.js"></script>
 </body>
 </html>
