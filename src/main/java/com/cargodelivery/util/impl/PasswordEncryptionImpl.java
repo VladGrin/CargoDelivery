@@ -1,6 +1,6 @@
-package com.cargodelivery.configconnection.impl;
+package com.cargodelivery.util.impl;
 
-import com.cargodelivery.configconnection.PasswordEncryption;
+import com.cargodelivery.util.PasswordEncryption;
 import org.apache.log4j.Logger;
 
 import java.security.MessageDigest;

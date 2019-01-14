@@ -1,5 +1,7 @@
 package com.cargodelivery.util.calculate;
 
+import com.cargodelivery.util.CalculatorStrategy;
+
 class DocumentPriceCalculator implements CalculatorStrategy {
 
     @Override

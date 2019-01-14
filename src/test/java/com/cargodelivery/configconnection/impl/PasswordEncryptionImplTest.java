@@ -1,5 +1,6 @@
 package com.cargodelivery.configconnection.impl;
 
+import com.cargodelivery.util.impl.PasswordEncryptionImpl;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

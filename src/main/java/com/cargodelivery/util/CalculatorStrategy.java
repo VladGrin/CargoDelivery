@@ -1,4 +1,4 @@
-package com.cargodelivery.util.calculate;
+package com.cargodelivery.util;
 
 public interface CalculatorStrategy {
 

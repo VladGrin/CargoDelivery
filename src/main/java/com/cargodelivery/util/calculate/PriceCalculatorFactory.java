@@ -1,5 +1,7 @@
 package com.cargodelivery.util.calculate;
 
+import com.cargodelivery.util.CalculatorStrategy;
+
 public class PriceCalculatorFactory {
 
     CalculatorStrategy createCalculator(String cargo) {

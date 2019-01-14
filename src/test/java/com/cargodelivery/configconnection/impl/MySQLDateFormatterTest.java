@@ -1,8 +1,9 @@
 package com.cargodelivery.configconnection.impl;
 
+import com.cargodelivery.util.impl.MySQLDateFormatter;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class MySQLDateFormatterTest {
 

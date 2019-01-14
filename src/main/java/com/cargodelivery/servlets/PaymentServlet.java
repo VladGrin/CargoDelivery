@@ -3,7 +3,6 @@ package com.cargodelivery.servlets;
 import com.cargodelivery.configconnection.DBConnection;
 import com.cargodelivery.configconnection.impl.MySQLConnection;
 import com.cargodelivery.exception.IncorrectInputException;
-import com.cargodelivery.model.Order;
 import com.cargodelivery.service.OrderService;
 import com.cargodelivery.service.impl.OrderServiceImpl;
 import org.apache.log4j.Logger;

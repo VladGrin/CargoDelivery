@@ -31,21 +31,53 @@ For processing the request from the client and the response are the classes in t
 They conform to the controllers in the Model-View-Controller template.
 - CalculatorServlet handles requests related to the calculation of the cost of transportation. (url: /calculator);
 - DirectionServlet handles requests related to get information about the directions of transportation. (url: /direction);
-- RegistrationServlet receive data from the registration form. (url: /registration);
+- RegistrationServlet receives data from the registration form. (url: /registration);
 - RoomServlet returns room information to client about orders and allows to delete them. (url: /room);
-- OrderServlet receive data from the order form. (url: /room/order);
+- OrderServlet receives data from the order form. (url: /room/order);
+- BillServlet returns the bill to the user for payment. (url: /room/bill);
+- PaymentServlet accepts a payment confirmation request. (url: /room/bill/payment);
+- LogoutServlet deletes user session data upon logout. (url: /logout);
+Filter UserAuthFilter accepts data to verify user authentication. (url: /);
+
+The service package contains interfaces and classes that implement them. 
+They are used for intermediate processing of data from servlets and repository.
+There are UserService(UserServiceImpl), OrderService(OrderServiceImpl), CityService(CityServiceImpl),
+DistanceService(DistanceServiceImpl), CompanyService(CompanyServiceImpl), CalculateServise(CalculateServiseImpl).
+
+The configconnection package contains interface and classe that implement it - DBConnection (MySQLConnection)
+It has methods for creating and breaking the connection to the database.
+
+The validator package contains the class Validator that has static methods for checking the data entered into the forms.
+
+The exception package contains my own exception for exception handling.
+- DataAlreadyExistsException. The exception is thrown when entered user data is already exist in the database.
+- IncorrectInputException. The exception is thrown when the user enters incorrect data.
+- NoSuchDataException. The exception is thrown when the data requested is not in the database.
+
+The util package contains utility interfaces and classes.
+- PasswordEncryption(PasswordEncryptionImpl) has methods for password encoding.
+- DataFormatter(MySQLDateFormatter) has methods for correctly formatting dates in the database.
+- Classes CalculatorStrategy(PriceCalculatorByCargoType), PriceCalculatorFactory, DocumentPriceCalculator, 
+FreightPriceCalculator, ParselPriceCalculator have methods for calculating the cost of transportation.
+The GoF templates Factory Method and Strategy were used when implement algorithms in the methods of these classes. 
+
+The directory by path webapp/WEB-INF/view/.. contains jsp files. JSTL library has been applied in JSP files.
+These files are consistent with the view in the Model-View-Controller template.
+
+The webapp directory contains other directories with style files and images.
+
+The application supports working with Cyrillic, the code is partially documented.
+Applications are covered by unit tests. JUnit and Mockito libraries were used.
+The sessions and filters were used, when develope business logic. 
+The logging in the system were processed using Log4j.
+
+Build the application using Maven. All dependencies are in the pom.xml.
 
 
 
 
 
-This is a simple server for tracking todo items.
-The system contains two entity types User and Todo.
- - User has an id, a username, an email address and a list of todo items.
- - Todo has an id, a subject, a due date and if the item is done or not.
 
-Start server
-The server requires Java SE 8 to run.
 
 Linux/OSX:
  Change access permissions to the start script
@@ -60,31 +92,5 @@ Windows:
 The server startup on port 9000 and you can access it at http://localhost:9000
 
 
-The server provides to following REST API:
----------------
--- Get users --
----------------
-Returns a list of users and their todo items.
-
-Request: GET /users
-Request body: n/a
-Response body:
-[
-	{
-        "id": {id},
-		"username": {username},
-		"email": {email},
-		"todos":
-		[
-			{
-				"subject": {subject},
-				"dueDate": {due date, format: yyyy-MM-dd HH:mm:ss},
-				"done": {true/false}
-			},
-			...
-		]
-	},
-	...
-]
 
 

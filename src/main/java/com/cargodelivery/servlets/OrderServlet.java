@@ -1,14 +1,10 @@
 package com.cargodelivery.servlets;
 
 import com.cargodelivery.configconnection.DBConnection;
-import com.cargodelivery.configconnection.DataFormatter;
 import com.cargodelivery.configconnection.impl.MySQLConnection;
-import com.cargodelivery.configconnection.impl.MySQLDateFormatter;
 import com.cargodelivery.exception.IncorrectInputException;
 import com.cargodelivery.exception.NoSuchDataException;
 import com.cargodelivery.model.City;
-import com.cargodelivery.repository.DistanceRepository;
-import com.cargodelivery.repository.impl.DistanceRepositoryImpl;
 import com.cargodelivery.service.CalculateServise;
 import com.cargodelivery.service.CityService;
 import com.cargodelivery.service.DistanceService;
@@ -17,8 +13,10 @@ import com.cargodelivery.service.impl.CalculatorServiceImpl;
 import com.cargodelivery.service.impl.CityServiceImpl;
 import com.cargodelivery.service.impl.DistanceServiceImpl;
 import com.cargodelivery.service.impl.OrderServiceImpl;
+import com.cargodelivery.util.DataFormatter;
 import com.cargodelivery.util.calculate.PriceCalculatorByCargoType;
 import com.cargodelivery.util.calculate.PriceCalculatorFactory;
+import com.cargodelivery.util.impl.MySQLDateFormatter;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -59,7 +57,7 @@ public class OrderServlet extends HttpServlet {
         String cityTo = cities.stream().filter(city -> city.getId().toString().equals(idCityTo)).findFirst().get().getName();
 
         logger.info("Entered data: userId: " + userId + " createDate: " + createDate + " cityFrom: " + cityFrom +
-                " cityTo: " + cityTo +" cargoType: " + cargoType + " weight: " + weight +
+                " cityTo: " + cityTo + " cargoType: " + cargoType + " weight: " + weight +
                 " startDate: " + startDate + " endDate: " + endDate + " recipient: " + recipient +
                 " recipientPhone: " + recipientPhone + " deliveryAddress: " + deliveryAddress + " price: " + price);
 

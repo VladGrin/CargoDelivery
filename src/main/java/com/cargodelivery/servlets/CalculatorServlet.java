@@ -65,14 +65,6 @@ public class CalculatorServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        setCitiesFromDBToRequest(request);
-
-        setRoleToRequest(request);
-
-        request.getRequestDispatcher("/WEB-INF/view/calculator.jsp").forward(request, response);
-    }
-
-    private void setCitiesFromDBToRequest(HttpServletRequest request) {
         Connection connection = dbConnection.getConnection();
         CityService cityService = new CityServiceImpl(connection);
         Set<City> cities = null;
@@ -85,6 +77,10 @@ public class CalculatorServlet extends HttpServlet {
 
         request.setAttribute("cities", cities);
         dbConnection.closeConnection(connection);
+
+        setRoleToRequest(request);
+
+        request.getRequestDispatcher("/WEB-INF/view/calculator.jsp").forward(request, response);
     }
 
     private void setRoleToRequest(HttpServletRequest request) {

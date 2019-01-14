@@ -1,15 +1,15 @@
 package com.cargodelivery.servlets;
 
 import com.cargodelivery.configconnection.DBConnection;
-import com.cargodelivery.configconnection.PasswordEncryption;
 import com.cargodelivery.configconnection.impl.MySQLConnection;
-import com.cargodelivery.configconnection.impl.PasswordEncryptionImpl;
 import com.cargodelivery.exception.DataAlreadyExistsException;
 import com.cargodelivery.exception.IncorrectInputException;
 import com.cargodelivery.exception.NoSuchDataException;
 import com.cargodelivery.model.User;
 import com.cargodelivery.service.UserService;
 import com.cargodelivery.service.impl.UserServiceImpl;
+import com.cargodelivery.util.PasswordEncryption;
+import com.cargodelivery.util.impl.PasswordEncryptionImpl;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;

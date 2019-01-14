@@ -1,6 +1,6 @@
-package com.cargodelivery.configconnection.impl;
+package com.cargodelivery.util.impl;
 
-import com.cargodelivery.configconnection.DataFormatter;
+import com.cargodelivery.util.DataFormatter;
 
 import java.text.DateFormat;
 import java.text.ParseException;

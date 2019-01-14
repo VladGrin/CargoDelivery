@@ -1,4 +1,4 @@
-package com.cargodelivery.configconnection;
+package com.cargodelivery.util;
 
 public interface PasswordEncryption {
 

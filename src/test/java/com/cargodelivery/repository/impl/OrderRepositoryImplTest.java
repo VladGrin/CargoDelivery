@@ -68,7 +68,7 @@ public class OrderRepositoryImplTest {
         Order expectedOrder = new Order.OrderBuilder().setId(1).setUserId(1).setCreateDate("2018-10-10").setCityFrom("Винница")
                 .setCityTo("Киев").setType(Order.Type.DOCUMENT).setWeight(1).setStartDate("2018-12-20")
                 .setEndDate("2018-12-22").setRecipient("Величко Юрий").setRecipientPhone("+380937896541")
-                .setDeliveryAddress("ул. Рейтарскаяб 25/15").setPrice(40).setPayment(false).build();
+                .setDeliveryAddress("ул. Рейтарскаяб 25/15").setPrice(40).setPayment(true).build();
         assertEquals(expectedOrder, order);
     }
 
@@ -81,7 +81,7 @@ public class OrderRepositoryImplTest {
         Order expectedOrder = new Order.OrderBuilder().setId(1).setUserId(1).setCreateDate("2018-10-10").setCityFrom("Винница")
                 .setCityTo("Киев").setType(Order.Type.DOCUMENT).setWeight(1).setStartDate("2018-12-20")
                 .setEndDate("2018-12-22").setRecipient("Величко Юрий").setRecipientPhone("+380937896541")
-                .setDeliveryAddress("ул. Рейтарскаяб 25/15").setPrice(40).setPayment(false).build();
+                .setDeliveryAddress("ул. Рейтарскаяб 25/15").setPrice(40).setPayment(true).build();
 
         assertEquals(expectedOrder, orderById);
     }

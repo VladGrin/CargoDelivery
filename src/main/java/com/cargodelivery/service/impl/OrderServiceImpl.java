@@ -1,13 +1,13 @@
 package com.cargodelivery.service.impl;
 
-import com.cargodelivery.configconnection.DataFormatter;
-import com.cargodelivery.configconnection.impl.MySQLDateFormatter;
 import com.cargodelivery.exception.IncorrectInputException;
 import com.cargodelivery.exception.NoSuchDataException;
 import com.cargodelivery.model.Order;
 import com.cargodelivery.repository.OrderRepository;
 import com.cargodelivery.repository.impl.OrderRepositoryImpl;
 import com.cargodelivery.service.OrderService;
+import com.cargodelivery.util.DataFormatter;
+import com.cargodelivery.util.impl.MySQLDateFormatter;
 import com.cargodelivery.validator.Validator;
 import org.apache.log4j.Logger;
 

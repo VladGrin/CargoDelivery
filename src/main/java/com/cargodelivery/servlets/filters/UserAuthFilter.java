@@ -1,9 +1,9 @@
 package com.cargodelivery.servlets.filters;
 
 import com.cargodelivery.configconnection.DBConnection;
-import com.cargodelivery.configconnection.PasswordEncryption;
+import com.cargodelivery.util.PasswordEncryption;
 import com.cargodelivery.configconnection.impl.MySQLConnection;
-import com.cargodelivery.configconnection.impl.PasswordEncryptionImpl;
+import com.cargodelivery.util.impl.PasswordEncryptionImpl;
 import com.cargodelivery.exception.IncorrectInputException;
 import com.cargodelivery.exception.NoSuchDataException;
 import com.cargodelivery.model.User;

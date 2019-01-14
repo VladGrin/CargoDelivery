@@ -1,5 +1,6 @@
 package com.cargodelivery.util.calculate;
 
+import com.cargodelivery.util.CalculatorStrategy;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
