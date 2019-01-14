@@ -78,19 +78,3 @@ Build the application using Maven. All dependencies are in the pom.xml.
 
 
 
-
-Linux/OSX:
- Change access permissions to the start script
-   sudo chmod 755 bin/TodoItemServer
- Run the startscript
-   bin/TodoItemServer
-
-Windows:
- Run the startscript
-   bin\TodoItemServer.bat
-
-The server startup on port 9000 and you can access it at http://localhost:9000
-
-
-
-
