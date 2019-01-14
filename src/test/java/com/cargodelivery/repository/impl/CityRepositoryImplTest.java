@@ -2,7 +2,6 @@ package com.cargodelivery.repository.impl;
 
 import com.cargodelivery.model.City;
 import com.cargodelivery.repository.CityRepository;
-import com.sun.istack.internal.NotNull;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,10 +19,8 @@ import static org.junit.Assert.assertNull;
 
 public class CityRepositoryImplTest {
 
-    @NotNull
     private CityRepository cityRepository;
 
-    @NotNull
     private Connection connection;
 
     @Before

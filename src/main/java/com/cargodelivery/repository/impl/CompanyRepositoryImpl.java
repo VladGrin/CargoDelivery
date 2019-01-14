@@ -2,7 +2,6 @@ package com.cargodelivery.repository.impl;
 
 import com.cargodelivery.model.Company;
 import com.cargodelivery.repository.CompanyRepository;
-import com.sun.istack.internal.NotNull;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -18,7 +17,6 @@ public class CompanyRepositoryImpl implements CompanyRepository {
     /**
      * Connection of database
      */
-    @NotNull
     private final Connection connection;
 
     /**

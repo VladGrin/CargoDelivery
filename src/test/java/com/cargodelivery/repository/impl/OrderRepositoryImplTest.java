@@ -2,7 +2,6 @@ package com.cargodelivery.repository.impl;
 
 import com.cargodelivery.model.Order;
 import com.cargodelivery.repository.OrderRepository;
-import com.sun.istack.internal.NotNull;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -17,10 +16,8 @@ import static org.junit.Assert.assertTrue;
 
 public class OrderRepositoryImplTest {
 
-    @NotNull
     private OrderRepository orderRepository;
 
-    @NotNull
     private Connection connection;
 
     @Before

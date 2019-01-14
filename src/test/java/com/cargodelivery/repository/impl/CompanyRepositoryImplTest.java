@@ -2,7 +2,6 @@ package com.cargodelivery.repository.impl;
 
 import com.cargodelivery.model.Company;
 import com.cargodelivery.repository.CompanyRepository;
-import com.sun.istack.internal.NotNull;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,10 +14,8 @@ import static org.junit.Assert.assertEquals;
 
 public class CompanyRepositoryImplTest {
 
-    @NotNull
     private CompanyRepository companyRepository;
 
-    @NotNull
     private Connection connection;
 
     @Before

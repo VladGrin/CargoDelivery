@@ -1,7 +1,6 @@
 package com.cargodelivery.repository.impl;
 
 import com.cargodelivery.repository.DistanceRepository;
-import com.sun.istack.internal.NotNull;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,10 +13,8 @@ import static org.junit.Assert.assertEquals;
 
 public class DistanceRepositoryImplTest {
 
-    @NotNull
     private DistanceRepository distanceRepository;
 
-    @NotNull
     private Connection connection;
 
     @Before

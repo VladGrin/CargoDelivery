@@ -2,7 +2,6 @@ package com.cargodelivery.repository.impl;
 
 import com.cargodelivery.model.User;
 import com.cargodelivery.repository.UserRepository;
-import com.sun.istack.internal.NotNull;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -21,7 +20,6 @@ public class UserRepositoryImpl implements UserRepository {
     /**
      * Connection of database
      */
-    @NotNull
     private final Connection connection;
 
     /**

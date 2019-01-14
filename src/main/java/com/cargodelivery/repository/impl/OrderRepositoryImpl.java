@@ -2,7 +2,6 @@ package com.cargodelivery.repository.impl;
 
 import com.cargodelivery.model.Order;
 import com.cargodelivery.repository.OrderRepository;
-import com.sun.istack.internal.NotNull;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -23,7 +22,6 @@ public class OrderRepositoryImpl implements OrderRepository {
     /**
      * Connection of database
      */
-    @NotNull
     private final Connection connection;
 
     /**
@@ -34,7 +32,6 @@ public class OrderRepositoryImpl implements OrderRepository {
     public OrderRepositoryImpl(Connection connection) {
         this.connection = connection;
     }
-
 
 
     /**
@@ -123,6 +120,7 @@ public class OrderRepositoryImpl implements OrderRepository {
 
     /**
      * Delete order by order id
+     *
      * @param orderId
      * @return false if Order was not deleted. If deleting success true.
      */
@@ -142,6 +140,7 @@ public class OrderRepositoryImpl implements OrderRepository {
 
     /**
      * Find order by order id
+     *
      * @param orderId
      * @return false if Order was not finded. If find success true.
      */
@@ -191,6 +190,7 @@ public class OrderRepositoryImpl implements OrderRepository {
 
     /**
      * Update payment in Order by order id
+     *
      * @param orderId
      * @return false if Payment was not updated. If updating success true.
      */

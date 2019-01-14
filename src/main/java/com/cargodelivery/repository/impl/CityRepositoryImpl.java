@@ -2,7 +2,6 @@ package com.cargodelivery.repository.impl;
 
 import com.cargodelivery.model.City;
 import com.cargodelivery.repository.CityRepository;
-import com.sun.istack.internal.NotNull;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -23,7 +22,6 @@ public class CityRepositoryImpl implements CityRepository {
     /**
      * Connection of database
      */
-    @NotNull
     private final Connection connection;
 
     /**

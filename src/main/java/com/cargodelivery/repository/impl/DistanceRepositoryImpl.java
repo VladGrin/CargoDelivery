@@ -1,8 +1,6 @@
 package com.cargodelivery.repository.impl;
 
-import com.cargodelivery.configconnection.impl.MySQLConnection;
 import com.cargodelivery.repository.DistanceRepository;
-import com.sun.istack.internal.NotNull;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -21,7 +19,6 @@ public class DistanceRepositoryImpl implements DistanceRepository {
     /**
      * Connection of database
      */
-    @NotNull
     private Connection connection;
 
     public DistanceRepositoryImpl(Connection connection) {
@@ -59,6 +56,7 @@ public class DistanceRepositoryImpl implements DistanceRepository {
 
     /**
      * Find delivery term between two sities
+     *
      * @param firstCity
      * @param secondCity
      * @return delivery term if it exists. If delivery term does not exist return 0.
@@ -89,7 +87,7 @@ public class DistanceRepositoryImpl implements DistanceRepository {
         FINDDISTANCE("SELECT DISTINCT d.distance FROM distance AS d\n" +
                 "WHERE (d.firstCity = (?) AND d.secondCity = (?)) OR (d.firstCity = (?) AND d.secondCity = (?));"),
         FINDDELIVERYTERM("SELECT DISTINCT d.delivery_term FROM distance AS d\n" +
-                             "WHERE (d.firstCity = (?) AND d.secondCity = (?)) OR (d.firstCity = (?) AND d.secondCity = (?));");
+                "WHERE (d.firstCity = (?) AND d.secondCity = (?)) OR (d.firstCity = (?) AND d.secondCity = (?));");
 
         String QUERY;
 

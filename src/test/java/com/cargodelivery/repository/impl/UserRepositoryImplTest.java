@@ -2,7 +2,6 @@ package com.cargodelivery.repository.impl;
 
 import com.cargodelivery.model.User;
 import com.cargodelivery.repository.UserRepository;
-import com.sun.istack.internal.NotNull;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,10 +14,8 @@ import static org.junit.Assert.*;
 
 public class UserRepositoryImplTest {
 
-    @NotNull
     private UserRepository userRepository;
 
-    @NotNull
     private Connection connection;
 
     @Before
