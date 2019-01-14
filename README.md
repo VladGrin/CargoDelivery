@@ -75,4 +75,9 @@ Build the application using Maven. All dependencies are in the pom.xml.
 
 Installation Instructions.
 At first you need to install the JDK. Then start the root directory (CargoDelivery) from the cmd.
-Run the command: mvn compile war:war. 
+Run the command: mvn compile war:war. You will receive CargoDelivery-1.0.war and directory CargoDelivery-1.0 
+by path CargoDelivery/target.
+
+Instruction for launching the application.
+Start server Apache Tomcat. Put CargoDelivery-1.0.war to directory ..\apache-tomcat\webapps
+or take all directories from CargoDelivery directory and put to ..\apache-tomcat\webapps\ROOT.
