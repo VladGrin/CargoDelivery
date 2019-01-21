@@ -9,6 +9,7 @@ import org.junit.Test;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 import static org.junit.Assert.assertEquals;
 
@@ -20,10 +21,11 @@ public class CompanyRepositoryImplTest {
 
     @Before
     public void before() {
+        ResourceBundle resource = ResourceBundle.getBundle("database");
         try {
-            String userName = "root";
-            String password = "1111";
-            String connectionUrl = "jdbc:mysql://localhost:3306/cargodelivery?useSSL=true&characterEncoding=utf8";
+            String userName = resource.getString("db.user");
+            String password = resource.getString("db.password");
+            String connectionUrl = resource.getString("db.url");
             connection = DriverManager.getConnection(connectionUrl, userName, password);
             companyRepository = new CompanyRepositoryImpl(connection);
         } catch (SQLException e) {

@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -25,10 +26,11 @@ public class CityRepositoryImplTest {
 
     @Before
     public void before() {
+        ResourceBundle resource = ResourceBundle.getBundle("database");
         try {
-            String userName = "root";
-            String password = "1111";
-            String connectionUrl = "jdbc:mysql://localhost:3306/cargodelivery?useSSL=true&characterEncoding=utf8";
+            String userName = resource.getString("db.user");
+            String password = resource.getString("db.password");
+            String connectionUrl = resource.getString("db.url");
             connection = DriverManager.getConnection(connectionUrl, userName, password);
             cityRepository = new CityRepositoryImpl(connection);
         } catch (SQLException e) {
