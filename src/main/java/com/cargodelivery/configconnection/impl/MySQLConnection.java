@@ -6,19 +6,25 @@ import org.apache.log4j.Logger;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 public class MySQLConnection implements DBConnection {
 
     private final static Logger logger = Logger.getLogger(MySQLConnection.class);
 
+    public static void main(String[] args) {
+
+    }
+
     @Override
     public Connection getConnection() {
-        String userName = "root";
-        String password = "1111";
-        String connectionUrl = "jdbc:mysql://localhost:3306/cargodelivery?useSSL=true&characterEncoding=utf8";
         Connection connection = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            ResourceBundle resource = ResourceBundle.getBundle("database");
+            String userName = resource.getString("db.user");
+            String password = resource.getString("db.password");
+            String connectionUrl = resource.getString("db.url");
+            Class.forName(resource.getString("db.driver"));
             connection = DriverManager.getConnection(connectionUrl, userName, password);
             logger.info("The connection was successful");
         } catch (SQLException | ClassNotFoundException e) {
