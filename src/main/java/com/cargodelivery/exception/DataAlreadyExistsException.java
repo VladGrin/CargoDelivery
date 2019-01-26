@@ -9,7 +9,6 @@ public class DataAlreadyExistsException extends Exception {
 
     @Override
     public String getMessage() {
-
         return message;
     }
 }

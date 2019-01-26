@@ -12,10 +12,6 @@ public class MySQLConnection implements DBConnection {
 
     private final static Logger logger = Logger.getLogger(MySQLConnection.class);
 
-    public static void main(String[] args) {
-
-    }
-
     @Override
     public Connection getConnection() {
         Connection connection = null;
