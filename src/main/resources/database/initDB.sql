@@ -76,8 +76,6 @@ SELECT u.id, u.name, u.surname, u.city, u.phone, u.password, u.role
 FROM users AS u
 WHERE u.mail = (?);
 
-
-
 INSERT INTO distance (firstCity, secondCity , distance, delivery_term)
 VALUES ('2', '1', 270, 2),
        ('3', '1', 380, 2),
@@ -92,9 +90,6 @@ VALUES ('2', '1', 270, 2),
 
 SELECT DISTINCT d.distance FROM distance AS d
 WHERE (d.firstCity = (?) AND d.secondCity = (?)) OR (d.firstCity = (?) AND d.secondCity = (?));
-
-
-
 
 INSERT INTO orders (id, userId , createDate, cityFrom, cityTo, orderType, weight, startDate, endDate, recipient,
                       recipientPhone, deliveryAddress, price, payment)
