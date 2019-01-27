@@ -12,21 +12,27 @@ import java.sql.SQLException;
 /**
  * Author : Volodymyr Hrinchenko
  */
-public class DistanceRepositoryImpl implements DistanceRepository {
+public class MySQLDistanceRepository implements DistanceRepository {
     /**
      * Logger log4j
      */
-    private final static Logger logger = Logger.getLogger(DistanceRepositoryImpl.class);
+    private final static Logger logger = Logger.getLogger(MySQLDistanceRepository.class);
     /**
      * Connection of database
      */
     private Connection connection;
-
-    public DistanceRepositoryImpl() {
+    /**
+     * Create empty constructor
+     * Init database connection by MtionySQL connection
+     */
+    public MySQLDistanceRepository() {
         this.connection = new MySQLConfiguration().getConnection();
     }
-
-    public DistanceRepositoryImpl(Connection connection) {
+    /**
+     * Init database connection
+     * @param connection of database
+     */
+    public MySQLDistanceRepository(Connection connection) {
         this.connection = connection;
     }
 

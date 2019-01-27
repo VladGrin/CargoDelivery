@@ -4,7 +4,7 @@ import com.cargodelivery.exception.IncorrectInputException;
 import com.cargodelivery.exception.NoSuchDataException;
 import com.cargodelivery.model.Order;
 import com.cargodelivery.repository.OrderRepository;
-import com.cargodelivery.repository.impl.OrderRepositoryImpl;
+import com.cargodelivery.repository.impl.MySQLOrderRepository;
 import com.cargodelivery.service.OrderService;
 import com.cargodelivery.validator.Validator;
 import org.apache.log4j.Logger;
@@ -14,7 +14,7 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
 
     private final static Logger logger = Logger.getLogger(OrderServiceImpl.class);
-    private OrderRepository orderRepository = new OrderRepositoryImpl();
+    private OrderRepository orderRepository = new MySQLOrderRepository();
 
     @Override
     public boolean saveOrder(int userId, String createDate, String cityFrom, String cityTo, String cargoType,

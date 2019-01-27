@@ -10,21 +10,27 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CompanyRepositoryImpl implements CompanyRepository {
+public class MySQLCompanyRepository implements CompanyRepository {
     /**
      * Logger log4j
      */
-    private final static Logger logger = Logger.getLogger(CompanyRepositoryImpl.class);
+    private final static Logger logger = Logger.getLogger(MySQLCompanyRepository.class);
     /**
      * Connection of database
      */
     private Connection connection;
-
-    public CompanyRepositoryImpl() {
+    /**
+     * Create empty constructor
+     * Init database connection by MtionySQL connection
+     */
+    public MySQLCompanyRepository() {
         this.connection = new MySQLConfiguration().getConnection();
     }
-
-    public CompanyRepositoryImpl(Connection connection) {
+    /**
+     * Init database connection
+     * @param connection of database
+     */
+    public MySQLCompanyRepository(Connection connection) {
         this.connection = connection;
     }
 

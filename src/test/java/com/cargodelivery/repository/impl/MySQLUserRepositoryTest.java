@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
 
 import static org.junit.Assert.*;
 
-public class UserRepositoryImplTest {
+public class MySQLUserRepositoryTest {
 
     private UserRepository userRepository;
 
@@ -27,7 +27,7 @@ public class UserRepositoryImplTest {
             String password = resource.getString("db.password");
             String connectionUrl = resource.getString("db.url");
             connection = DriverManager.getConnection(connectionUrl, userName, password);
-            userRepository = new UserRepositoryImpl(connection);
+            userRepository = new MySQLUserRepository(connection);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -43,7 +43,7 @@ public class UserRepositoryImplTest {
     }
 
     /**
-     * @see com.cargodelivery.repository.impl.UserRepositoryImpl#findById(Integer)
+     * @see MySQLUserRepository#findById(Integer)
      */
     @Test
     public void findUserByIdWhichExistThenReturnUser() {
@@ -60,7 +60,7 @@ public class UserRepositoryImplTest {
     }
 
     /**
-     * @see com.cargodelivery.repository.impl.UserRepositoryImpl#findById(Integer)
+     * @see MySQLUserRepository#findById(Integer)
      */
     @Test
     public void findUserByIdWhichIsNotExistThenReturnNull() {
@@ -69,7 +69,7 @@ public class UserRepositoryImplTest {
     }
 
     /**
-     * @see com.cargodelivery.repository.impl.UserRepositoryImpl#findByLogin(String)
+     * @see MySQLUserRepository#findByLogin(String)
      */
     @Test
     public void findUserByLoginWhichExistThenReturnUser() {
@@ -86,7 +86,7 @@ public class UserRepositoryImplTest {
     }
 
     /**
-     * @see com.cargodelivery.repository.impl.UserRepositoryImpl#findByLogin(String)
+     * @see MySQLUserRepository#findByLogin(String)
      */
     @Test
     public void findUserByLoginWhichIsNotExistThenReturnNull() {
@@ -95,7 +95,7 @@ public class UserRepositoryImplTest {
     }
 
     /**
-     * @see com.cargodelivery.repository.impl.UserRepositoryImpl#existsUser(String, String)
+     * @see MySQLUserRepository#existsUser(String, String)
      */
     @Test
     public void whenUserExistsReturnTrue() {
@@ -104,7 +104,7 @@ public class UserRepositoryImplTest {
     }
 
     /**
-     * @see com.cargodelivery.repository.impl.UserRepositoryImpl#existsUser(String, String)
+     * @see MySQLUserRepository#existsUser(String, String)
      */
     @Test
     public void whenNoSuchLoginReturnFalse() {
@@ -113,7 +113,7 @@ public class UserRepositoryImplTest {
     }
 
     /**
-     * @see com.cargodelivery.repository.impl.UserRepositoryImpl#existsUser(String, String)
+     * @see MySQLUserRepository#existsUser(String, String)
      */
     @Test
     public void whenNoSuitablePasswordReturnFalse() {

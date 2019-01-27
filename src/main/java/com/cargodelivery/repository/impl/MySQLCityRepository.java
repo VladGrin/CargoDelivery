@@ -15,21 +15,27 @@ import java.util.TreeSet;
 /**
  * Author : Volodymyr Hrinchenko
  */
-public class CityRepositoryImpl implements CityRepository {
+public class MySQLCityRepository implements CityRepository {
     /**
      * Logger log4j
      */
-    final static Logger logger = Logger.getLogger(CityRepositoryImpl.class);
+    final static Logger logger = Logger.getLogger(MySQLCityRepository.class);
     /**
      * Connection of database
      */
     private Connection connection;
-
-    public CityRepositoryImpl() {
+    /**
+     * Create empty constructor
+     * Init database connection by MtionySQL connection
+     */
+    public MySQLCityRepository() {
         this.connection = new MySQLConfiguration().getConnection();
     }
-
-    public CityRepositoryImpl(Connection connection) {
+    /**
+     * Init database connection
+     * @param connection of database
+     */
+    public MySQLCityRepository(Connection connection) {
         this.connection = connection;
     }
 

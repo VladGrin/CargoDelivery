@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
-public class CityRepositoryImplTest {
+public class MySQLCityRepositoryTest {
 
     private CityRepository cityRepository;
 
@@ -31,7 +31,7 @@ public class CityRepositoryImplTest {
             String password = resource.getString("db.password");
             String connectionUrl = resource.getString("db.url");
             connection = DriverManager.getConnection(connectionUrl, userName, password);
-            cityRepository = new CityRepositoryImpl(connection);
+            cityRepository = new MySQLCityRepository(connection);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -47,7 +47,7 @@ public class CityRepositoryImplTest {
     }
 
     /**
-     * @see com.cargodelivery.repository.impl.CityRepositoryImpl#findById(Integer)
+     * @see MySQLCityRepository#findById(Integer)
      */
     @Test
     public void findCityByIdWhichExistThenReturnCity() {
@@ -57,7 +57,7 @@ public class CityRepositoryImplTest {
     }
 
     /**
-     * @see com.cargodelivery.repository.impl.CityRepositoryImpl#findById(Integer)
+     * @see MySQLCityRepository#findById(Integer)
      */
     @Test
     public void findCityByIdWhichIsNotExistThenReturnNull() {
@@ -66,7 +66,7 @@ public class CityRepositoryImplTest {
     }
 
     /**
-     * @see com.cargodelivery.repository.impl.CityRepositoryImpl#findByName(String)
+     * @see MySQLCityRepository#findByName(String)
      */
     @Test
     public void findCityByNameWhichExistThenReturnCity() {
@@ -76,7 +76,7 @@ public class CityRepositoryImplTest {
     }
 
     /**
-     * @see com.cargodelivery.repository.impl.CityRepositoryImpl#findByName(String)
+     * @see MySQLCityRepository#findByName(String)
      */
     @Test
     public void findCityByNameWhichIsNotExistThenReturnNull() {
@@ -85,7 +85,7 @@ public class CityRepositoryImplTest {
     }
 
     /**
-     * @see com.cargodelivery.repository.impl.CityRepositoryImpl#findAll()
+     * @see MySQLCityRepository#findAll()
      */
     @Test
     public void findAllCitiesByNameWhichExistThenReturnSetCities() {

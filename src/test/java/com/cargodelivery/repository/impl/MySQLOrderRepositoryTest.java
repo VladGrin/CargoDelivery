@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
 
 import static org.junit.Assert.*;
 
-public class OrderRepositoryImplTest {
+public class MySQLOrderRepositoryTest {
 
     private OrderRepository orderRepository;
 
@@ -28,7 +28,7 @@ public class OrderRepositoryImplTest {
             String password = resource.getString("db.password");
             String connectionUrl = resource.getString("db.url");
             connection = DriverManager.getConnection(connectionUrl, userName, password);
-            orderRepository = new OrderRepositoryImpl(connection);
+            orderRepository = new MySQLOrderRepository(connection);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -44,7 +44,7 @@ public class OrderRepositoryImplTest {
     }
 
     /**
-     * @see com.cargodelivery.repository.impl.OrderRepositoryImpl#save(Order)
+     * @see MySQLOrderRepository#save(Order)
      */
     @Ignore
     @Test
@@ -57,7 +57,7 @@ public class OrderRepositoryImplTest {
     }
 
     /**
-     * @see com.cargodelivery.repository.impl.OrderRepositoryImpl#findAllOrdersByUserId(int)
+     * @see MySQLOrderRepository#findAllOrdersByUserId(int)
      */
     @Test
     public void findAllOrdersByUserIdTest() {
@@ -71,7 +71,7 @@ public class OrderRepositoryImplTest {
     }
 
     /**
-     * @see com.cargodelivery.repository.impl.OrderRepositoryImpl#findOrderById(int)
+     * @see MySQLOrderRepository#findOrderById(int)
      */
     @Test
     public void findOrderById() {
@@ -85,7 +85,7 @@ public class OrderRepositoryImplTest {
     }
 
     /**
-     * @see com.cargodelivery.repository.impl.OrderRepositoryImpl#updatePaymentByOrderId(Integer, boolean)
+     * @see MySQLOrderRepository#updatePaymentByOrderId(Integer, boolean)
      */
     @Test
     public void updatePaymentByOrderId() {

@@ -15,21 +15,27 @@ import java.util.List;
 /**
  * Author : Volodymyr Hrinchenko
  */
-public class OrderRepositoryImpl implements OrderRepository {
+public class MySQLOrderRepository implements OrderRepository {
     /**
      * Logger log4j
      */
-    private final static Logger logger = Logger.getLogger(OrderRepositoryImpl.class);
+    private final static Logger logger = Logger.getLogger(MySQLOrderRepository.class);
     /**
      * Connection of database
      */
     private final Connection connection;
-
-    public OrderRepositoryImpl() {
+    /**
+     * Create empty constructor
+     * Init database connection by MtionySQL connection
+     */
+    public MySQLOrderRepository() {
         this.connection = new MySQLConfiguration().getConnection();
     }
-
-    public OrderRepositoryImpl(Connection connection) {
+    /**
+     * Init database connection
+     * @param connection of database
+     */
+    public MySQLOrderRepository(Connection connection) {
         this.connection = connection;
     }
 
@@ -43,19 +49,7 @@ public class OrderRepositoryImpl implements OrderRepository {
     public boolean save(Order order) {
         boolean isSave = false;
         try (PreparedStatement statement = connection.prepareStatement(SQLOrder.SAVE.QUERY)) {
-            statement.setInt(1, order.getUserId());
-            statement.setString(2, order.getCreateDate());
-            statement.setString(3, order.getCityFrom());
-            statement.setString(4, order.getCityTo());
-            statement.setString(5, order.getType().name());
-            statement.setInt(6, order.getWeight());
-            statement.setString(7, order.getStartDate());
-            statement.setString(8, order.getEndDate());
-            statement.setString(9, order.getRecipient());
-            statement.setString(10, order.getRecipientPhone());
-            statement.setString(11, order.getDeliveryAddress());
-            statement.setInt(12, order.getPrice());
-            statement.setBoolean(13, order.isPayment());
+            setOrderToStatement(order, statement);
             isSave = statement.executeUpdate() != 0;
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
@@ -63,6 +57,22 @@ public class OrderRepositoryImpl implements OrderRepository {
         }
         logger.info("Order: " + order + " was saved to database");
         return isSave;
+    }
+
+    private void setOrderToStatement(Order order, PreparedStatement statement) throws SQLException {
+        statement.setInt(1, order.getUserId());
+        statement.setString(2, order.getCreateDate());
+        statement.setString(3, order.getCityFrom());
+        statement.setString(4, order.getCityTo());
+        statement.setString(5, order.getType().name());
+        statement.setInt(6, order.getWeight());
+        statement.setString(7, order.getStartDate());
+        statement.setString(8, order.getEndDate());
+        statement.setString(9, order.getRecipient());
+        statement.setString(10, order.getRecipientPhone());
+        statement.setString(11, order.getDeliveryAddress());
+        statement.setInt(12, order.getPrice());
+        statement.setBoolean(13, order.isPayment());
     }
 
     /**
@@ -78,34 +88,7 @@ public class OrderRepositoryImpl implements OrderRepository {
             statement.setInt(1, userId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String createDate = resultSet.getString("createDate");
-                String cityFrom = resultSet.getString("cityFrom");
-                String cityTo = resultSet.getString("cityTo");
-                String orderType = resultSet.getString("orderType");
-                int weight = resultSet.getInt("weight");
-                String startDate = resultSet.getString("startDate");
-                String endDate = resultSet.getString("endDate");
-                String recipient = resultSet.getString("recipient");
-                String recipientPhone = resultSet.getString("recipientPhone");
-                String deliveryAddress = resultSet.getString("deliveryAddress");
-                int price = resultSet.getInt("price");
-                boolean payment = resultSet.getBoolean("payment");
-
-                Order order = new Order.OrderBuilder().setId(id)
-                        .setUserId(userId)
-                        .setCreateDate(createDate)
-                        .setCityFrom(cityFrom)
-                        .setCityTo(cityTo)
-                        .setTypeByName(orderType)
-                        .setWeight(weight)
-                        .setStartDate(startDate)
-                        .setEndDate(endDate)
-                        .setRecipient(recipient)
-                        .setRecipientPhone(recipientPhone)
-                        .setDeliveryAddress(deliveryAddress)
-                        .setPrice(price)
-                        .setPayment(payment).build();
+                Order order = getOrder(userId, resultSet);
                 orders.add(order);
             }
         } catch (SQLException e) {
@@ -115,6 +98,25 @@ public class OrderRepositoryImpl implements OrderRepository {
         orders = orders.isEmpty() ? null : orders;
         logger.info("Orders were found from database : " + orders);
         return orders;
+    }
+
+    private Order getOrder(int userId, ResultSet resultSet) throws SQLException {
+
+        return new Order.OrderBuilder()
+                .setId(resultSet.getInt("id"))
+                .setUserId(userId)
+                .setCreateDate(resultSet.getString("createDate"))
+                .setCityFrom(resultSet.getString("cityFrom"))
+                .setCityTo(resultSet.getString("cityTo"))
+                .setTypeByName(resultSet.getString("orderType"))
+                .setWeight(resultSet.getInt("weight"))
+                .setStartDate(resultSet.getString("startDate"))
+                .setEndDate(resultSet.getString("endDate"))
+                .setRecipient(resultSet.getString("recipient"))
+                .setRecipientPhone(resultSet.getString("recipientPhone"))
+                .setDeliveryAddress(resultSet.getString("deliveryAddress"))
+                .setPrice(resultSet.getInt("price"))
+                .setPayment(resultSet.getBoolean("payment")).build();
     }
 
     /**

@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
 
 import static org.junit.Assert.*;
 
-public class DistanceRepositoryImplTest {
+public class MySQLDistanceRepositoryTest {
 
     private DistanceRepository distanceRepository;
 
@@ -26,7 +26,7 @@ public class DistanceRepositoryImplTest {
             String password = resource.getString("db.password");
             String connectionUrl = resource.getString("db.url");
             connection = DriverManager.getConnection(connectionUrl, userName, password);
-            distanceRepository = new DistanceRepositoryImpl(connection);
+            distanceRepository = new MySQLDistanceRepository(connection);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -42,7 +42,7 @@ public class DistanceRepositoryImplTest {
     }
 
     /**
-     * @see com.cargodelivery.repository.impl.DistanceRepositoryImpl#getDistanceBetweenTwoCities(String, String)
+     * @see MySQLDistanceRepository#getDistanceBetweenTwoCities(String, String)
      */
     @Test
     public void getDistanceBetweenTwoCities() {
@@ -54,7 +54,7 @@ public class DistanceRepositoryImplTest {
     }
 
     /**
-     * @see com.cargodelivery.repository.impl.DistanceRepositoryImpl#getDistanceBetweenTwoCities(String, String)
+     * @see MySQLDistanceRepository#getDistanceBetweenTwoCities(String, String)
      */
     @Test
     public void WhenCitiesSameThenReturnZero() {
@@ -66,7 +66,7 @@ public class DistanceRepositoryImplTest {
     }
 
     /**
-     * @see com.cargodelivery.repository.impl.DistanceRepositoryImpl#getDeliveryTermBetweenTwoCities(String, String)
+     * @see MySQLDistanceRepository#getDeliveryTermBetweenTwoCities(String, String)
      */
     @Test
     public void getDeliveryTermBetweenTwoCities() {
@@ -78,7 +78,7 @@ public class DistanceRepositoryImplTest {
     }
 
     /**
-     * @see com.cargodelivery.repository.impl.DistanceRepositoryImpl#getDeliveryTermBetweenTwoCities(String, String)
+     * @see MySQLDistanceRepository#getDeliveryTermBetweenTwoCities(String, String)
      */
     @Test
     public void WhenCitiesSameThenDeliveryTermReturnZero() {

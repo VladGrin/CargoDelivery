@@ -9,29 +9,33 @@ import java.time.LocalDateTime;
 import java.util.Calendar;
 
 public class MySQLDateFormatter implements DataFormatter {
+
+    private static final DateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+
     @Override
     public String getCurrentDate() {
-        LocalDateTime data = LocalDateTime.now();
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar calendar = Calendar.getInstance();
-        try {
-            calendar.setTime(format.parse(String.valueOf(data)));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return format.format(calendar.getTime());
+
+        Calendar calendar = getCalendar(LocalDateTime.now());
+
+        return FORMAT.format(calendar.getTime());
     }
 
     @Override
     public String getEndDate(String startDate, int deliveryTerm) {
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+        Calendar calendar = getCalendar(startDate);
+        calendar.add(Calendar.DATE, deliveryTerm);
+
+        return FORMAT.format(calendar.getTime());
+    }
+
+    private Calendar getCalendar(Object object) {
         Calendar calendar = Calendar.getInstance();
         try {
-            calendar.setTime(format.parse(String.valueOf(startDate)));
+            calendar.setTime(FORMAT.parse(String.valueOf(object)));
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        calendar.add(Calendar.DATE, deliveryTerm);
-        return format.format(calendar.getTime());
+        return calendar;
     }
 }

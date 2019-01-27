@@ -5,7 +5,7 @@ import com.cargodelivery.exception.IncorrectInputException;
 import com.cargodelivery.exception.NoSuchDataException;
 import com.cargodelivery.model.User;
 import com.cargodelivery.repository.UserRepository;
-import com.cargodelivery.repository.impl.UserRepositoryImpl;
+import com.cargodelivery.repository.impl.MySQLUserRepository;
 import com.cargodelivery.service.UserService;
 import com.cargodelivery.validator.Validator;
 
@@ -14,7 +14,7 @@ import com.cargodelivery.validator.Validator;
  */
 public class UserServiceImpl implements UserService {
 
-    private UserRepository userRepository = new UserRepositoryImpl();
+    private UserRepository userRepository = new MySQLUserRepository();
 
     @Override
     public boolean saveUser(String name, String surname, String city, String phone,

@@ -13,21 +13,27 @@ import java.sql.SQLException;
 /**
  * Author : Volodymyr Hrinchenko
  */
-public class UserRepositoryImpl implements UserRepository {
+public class MySQLUserRepository implements UserRepository {
     /**
      * Logger log4j
      */
-    private final static Logger logger = Logger.getLogger(UserRepositoryImpl.class);
+    private final static Logger logger = Logger.getLogger(MySQLUserRepository.class);
     /**
      * Connection of database
      */
     private Connection connection;
-
-    public UserRepositoryImpl() {
+    /**
+     * Create empty constructor
+     * Init database connection by MtionySQL connection
+     */
+    public MySQLUserRepository() {
         this.connection = new MySQLConfiguration().getConnection();
     }
-
-    public UserRepositoryImpl(Connection connection) {
+    /**
+     * Init database connection
+     * @param connection of database
+     */
+    public MySQLUserRepository(Connection connection) {
         this.connection = connection;
     }
 
@@ -41,13 +47,7 @@ public class UserRepositoryImpl implements UserRepository {
     public boolean save(User user) {
         boolean isSave = false;
         try (PreparedStatement statement = connection.prepareStatement(SQLUser.SAVE.QUERY)) {
-            statement.setString(1, user.getName());
-            statement.setString(2, user.getSurname());
-            statement.setString(3, user.getCity());
-            statement.setString(4, user.getPhone());
-            statement.setString(5, user.getMail());
-            statement.setString(6, user.getPassword());
-            statement.setInt(7, user.getRole().ordinal());
+            saveUserToStatement(user, statement);
             isSave = statement.executeUpdate() != 0;
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
@@ -55,6 +55,16 @@ public class UserRepositoryImpl implements UserRepository {
         }
         logger.info("User: " + user + " was saved to database");
         return isSave;
+    }
+
+    private void saveUserToStatement(User user, PreparedStatement statement) throws SQLException {
+        statement.setString(1, user.getName());
+        statement.setString(2, user.getSurname());
+        statement.setString(3, user.getCity());
+        statement.setString(4, user.getPhone());
+        statement.setString(5, user.getMail());
+        statement.setString(6, user.getPassword());
+        statement.setInt(7, user.getRole().ordinal());
     }
 
     /**
@@ -70,15 +80,7 @@ public class UserRepositoryImpl implements UserRepository {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                user = new User.UserBuilder().setId(id)
-                        .setName(resultSet.getString("name"))
-                        .setSurname(resultSet.getString("surname"))
-                        .setCity(resultSet.getString("city"))
-                        .setPhone(resultSet.getString("phone"))
-                        .setMail(resultSet.getString("mail"))
-                        .setPassword(resultSet.getString("password"))
-                        .setRoleByOrderNumber(resultSet.getInt("role"))
-                        .build();
+                user = toUser(resultSet);
             }
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
@@ -86,6 +88,19 @@ public class UserRepositoryImpl implements UserRepository {
         }
         logger.info("User was found from database : " + user);
         return user;
+    }
+
+    private User toUser(ResultSet resultSet) throws SQLException {
+        return new User.UserBuilder()
+                .setId(resultSet.getInt("id"))
+                .setName(resultSet.getString("name"))
+                .setSurname(resultSet.getString("surname"))
+                .setCity(resultSet.getString("city"))
+                .setPhone(resultSet.getString("phone"))
+                .setMail(resultSet.getString("mail"))
+                .setPassword(resultSet.getString("password"))
+                .setRoleByOrderNumber(resultSet.getInt("role"))
+                .build();
     }
 
     /**
@@ -101,15 +116,7 @@ public class UserRepositoryImpl implements UserRepository {
             statement.setString(1, login);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                user = new User.UserBuilder().setId(resultSet.getInt("id"))
-                        .setName(resultSet.getString("name"))
-                        .setSurname(resultSet.getString("surname"))
-                        .setCity(resultSet.getString("city"))
-                        .setPhone(resultSet.getString("phone"))
-                        .setMail(login)
-                        .setPassword(resultSet.getString("password"))
-                        .setRoleByOrderNumber(resultSet.getInt("role"))
-                        .build();
+                user = toUser(resultSet);
             }
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
@@ -128,12 +135,12 @@ public class UserRepositoryImpl implements UserRepository {
     enum SQLUser {
         SAVE("INSERT INTO users (id, name , surname, city, phone, mail, password, role)\n" +
                 "VALUES (DEFAULT, (?), (?), (?), (?), (?), (?), (?));"),
-        FINDBYLOGIN("SELECT u.id, u.name, u.surname, u.city, u.phone, u.password, u.role\n" +
+        FINDBYID("SELECT u.id, u.name, u.surname, u.city, u.phone, u.mail, u.password, u.role\n" +
                 "FROM users AS u\n" +
-                "WHERE u.mail = (?)"),
-        FINDBYID("SELECT u.name, u.surname, u.city, u.phone, u.mail, u.password, u.role\n" +
+                "WHERE u.id = (?);"),
+        FINDBYLOGIN("SELECT u.id, u.name, u.surname, u.city, u.phone, u.mail, u.password, u.role\n" +
                 "FROM users AS u\n" +
-                "WHERE u.id = (?);");
+                "WHERE u.mail = (?)");
 
         String QUERY;
 

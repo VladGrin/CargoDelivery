@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
 
 import static org.junit.Assert.*;
 
-public class CompanyRepositoryImplTest {
+public class MySQLCompanyRepositoryTest {
 
     private CompanyRepository companyRepository;
 
@@ -27,7 +27,7 @@ public class CompanyRepositoryImplTest {
             String password = resource.getString("db.password");
             String connectionUrl = resource.getString("db.url");
             connection = DriverManager.getConnection(connectionUrl, userName, password);
-            companyRepository = new CompanyRepositoryImpl(connection);
+            companyRepository = new MySQLCompanyRepository(connection);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -43,7 +43,7 @@ public class CompanyRepositoryImplTest {
     }
 
     /**
-     * @see com.cargodelivery.repository.impl.CompanyRepositoryImpl#findCompanyById(int)
+     * @see MySQLCompanyRepository#findCompanyById(int)
      */
     @Test
     public void getCompanyById() {

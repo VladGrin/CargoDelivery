@@ -10,29 +10,31 @@ public class PasswordEncryptionImpl implements PasswordEncryption {
 
     private final static Logger logger = Logger.getLogger(PasswordEncryptionImpl.class);
 
-    @Override
-    public String getEncryptedPassword(String password) {
-        if (password == null) {
-            return null;
-        }
-        MessageDigest md5 = null;
+    private final MessageDigest md5;
+
+    public PasswordEncryptionImpl() {
         try {
             md5 = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException e) {
-            logger.error("Encryption was not successful");
+            logger.error("MD5 digest isn't found", e);
+            throw new RuntimeException(e);
         }
-        StringBuilder builder = null;
-        if (md5 != null) {
-            byte[] bytes = md5.digest(password.getBytes());
-            builder = new StringBuilder();
-            for (byte b : bytes) {
-                builder.append(String.format("%02x", b));
-            }
+    }
+
+    @Override
+    public String getEncryptedPassword(String password) {
+
+        if (password == null) {
+            return null;
         }
-        if (builder != null) {
-            return builder.toString();
-        } else {
-            throw new RuntimeException();
+
+        byte[] passwordDigest = md5.digest(password.getBytes());
+        StringBuilder builder = new StringBuilder();
+
+        for (byte b : passwordDigest) {
+            builder.append(String.format("%02x", b));
         }
+
+        return builder.toString();
     }
 }
