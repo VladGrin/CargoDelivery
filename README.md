@@ -24,8 +24,8 @@ The database contains such basic tables as 'users', 'orders', 'cities', 'company
 model package and an intermediate table 'distance'.
 
 Interfaces and classes that implement them to access the database are in the repository package.
-- UserRepository(UserRepositoryImpl), OrderRepository(OrderRepositoryImpl), CityRepository(CityRepositoryImpl),
-CompanyRepository(CompanyRepositoryImpl), DistanseRepository(DistanceRepositoryImpl).
+- UserRepository(MySQLUserRepository), OrderRepository(MySQLOrderRepository), CityRepository(MySQLCityRepository),
+CompanyRepository(MySQLCompanyRepository), DistanseRepository(MySQLDistanceRepository).
 
 For processing the request from the client and the response are the classes in the package servlets. 
 They conform to the controllers in the Model-View-Controller template.
@@ -44,12 +44,13 @@ They are used for intermediate processing of data from servlets and repository.
 There are UserService(UserServiceImpl), OrderService(OrderServiceImpl), CityService(CityServiceImpl),
 DistanceService(DistanceServiceImpl), CompanyService(CompanyServiceImpl), CalculateServise(CalculateServiseImpl).
 
-The configconnection package contains interface and classe that implement it - DBConnection (MySQLConnection)
-It has methods for creating and breaking the connection to the database.
+The configconnection package contains class MySQLConfiguration.
+It has methods for creating the connection to the database.
 
 The validator package contains the class Validator that has static methods for checking the data entered into the forms.
 
 The exception package contains my own exception for exception handling.
+- ConnectionException.  The exception is thrown when connection was not exist.
 - DataAlreadyExistsException. The exception is thrown when entered user data is already exist in the database.
 - IncorrectInputException. The exception is thrown when the user enters incorrect data.
 - NoSuchDataException. The exception is thrown when the data requested is not in the database.
