@@ -18,7 +18,15 @@ public class CompanyRepositoryImpl implements CompanyRepository {
     /**
      * Connection of database
      */
-    private final Connection connection = new MySQLConfiguration().getConnection();
+    private Connection connection;
+
+    public CompanyRepositoryImpl() {
+        this.connection = new MySQLConfiguration().getConnection();
+    }
+
+    public CompanyRepositoryImpl(Connection connection) {
+        this.connection = connection;
+    }
 
     /**
      * Find Company by id

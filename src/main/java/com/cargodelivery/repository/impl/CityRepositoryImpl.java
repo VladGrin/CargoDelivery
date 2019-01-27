@@ -23,9 +23,11 @@ public class CityRepositoryImpl implements CityRepository {
     /**
      * Connection of database
      */
-    private Connection connection = new MySQLConfiguration().getConnection();
+    private Connection connection;
 
-    public CityRepositoryImpl() {}
+    public CityRepositoryImpl() {
+        this.connection = new MySQLConfiguration().getConnection();
+    }
 
     public CityRepositoryImpl(Connection connection) {
         this.connection = connection;

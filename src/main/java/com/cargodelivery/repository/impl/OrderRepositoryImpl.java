@@ -23,7 +23,15 @@ public class OrderRepositoryImpl implements OrderRepository {
     /**
      * Connection of database
      */
-    private final Connection connection = new MySQLConfiguration().getConnection();
+    private final Connection connection;
+
+    public OrderRepositoryImpl() {
+        this.connection = new MySQLConfiguration().getConnection();
+    }
+
+    public OrderRepositoryImpl(Connection connection) {
+        this.connection = connection;
+    }
 
     /**
      * Create/save order in database

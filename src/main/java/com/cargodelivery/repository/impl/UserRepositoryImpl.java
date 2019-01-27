@@ -21,7 +21,15 @@ public class UserRepositoryImpl implements UserRepository {
     /**
      * Connection of database
      */
-    private final Connection connection = new MySQLConfiguration().getConnection();
+    private Connection connection;
+
+    public UserRepositoryImpl() {
+        this.connection = new MySQLConfiguration().getConnection();
+    }
+
+    public UserRepositoryImpl(Connection connection) {
+        this.connection = connection;
+    }
 
     /**
      * Create/save user in database
