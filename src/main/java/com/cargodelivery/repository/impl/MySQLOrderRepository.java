@@ -26,7 +26,7 @@ public class MySQLOrderRepository implements OrderRepository {
     private final Connection connection;
     /**
      * Create empty constructor
-     * Init database connection by MtionySQL connection
+     * Init database connection by MySQL connection
      */
     public MySQLOrderRepository() {
         this.connection = new MySQLConfiguration().getConnection();

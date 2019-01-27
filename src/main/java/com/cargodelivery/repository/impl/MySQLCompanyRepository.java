@@ -21,7 +21,7 @@ public class MySQLCompanyRepository implements CompanyRepository {
     private Connection connection;
     /**
      * Create empty constructor
-     * Init database connection by MtionySQL connection
+     * Init database connection by MySQL connection
      */
     public MySQLCompanyRepository() {
         this.connection = new MySQLConfiguration().getConnection();

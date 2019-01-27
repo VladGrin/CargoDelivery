@@ -24,7 +24,7 @@ public class MySQLUserRepository implements UserRepository {
     private Connection connection;
     /**
      * Create empty constructor
-     * Init database connection by MtionySQL connection
+     * Init database connection by MySQL connection
      */
     public MySQLUserRepository() {
         this.connection = new MySQLConfiguration().getConnection();

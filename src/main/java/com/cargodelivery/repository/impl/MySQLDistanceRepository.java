@@ -23,7 +23,7 @@ public class MySQLDistanceRepository implements DistanceRepository {
     private Connection connection;
     /**
      * Create empty constructor
-     * Init database connection by MtionySQL connection
+     * Init database connection by MySQL connection
      */
     public MySQLDistanceRepository() {
         this.connection = new MySQLConfiguration().getConnection();
