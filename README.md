@@ -44,7 +44,7 @@ They are used for intermediate processing of data from servlets and repository.
 There are UserService(UserServiceImpl), OrderService(OrderServiceImpl), CityService(CityServiceImpl),
 DistanceService(DistanceServiceImpl), CompanyService(CompanyServiceImpl), CalculateServise(CalculateServiseImpl).
 
-The configconnection package contains class singleton MySQLConfiguration.
+The configconnection package contains class MySQLConfiguration.
 It has methods for creating the connection to the database.
 
 The validator package contains the class Validator that has static methods for checking the data entered into the forms.
