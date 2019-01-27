@@ -1,7 +1,6 @@
 package com.cargodelivery.repository.impl;
 
-//import com.cargodelivery.configconnection.MySQLConfiguration;
-import com.cargodelivery.configconnection.ConnectionPool;
+import com.cargodelivery.configconnection.MySQLConfiguration;
 import com.cargodelivery.model.Order;
 import com.cargodelivery.repository.OrderRepository;
 import org.apache.log4j.Logger;
@@ -30,7 +29,7 @@ public class MySQLOrderRepository implements OrderRepository {
      * Init database connection by MySQL connection
      */
     public MySQLOrderRepository() {
-        this.connection = ConnectionPool.getInstance().getConnection(); //new MySQLConfiguration().getConnection();
+        this.connection = new MySQLConfiguration().getConnection();
     }
     /**
      * Init database connection
@@ -55,8 +54,6 @@ public class MySQLOrderRepository implements OrderRepository {
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
             e.printStackTrace();
-        } finally {
-            ConnectionPool.getInstance().closeConnection(connection);
         }
         logger.info("Order: " + order + " was saved to database");
         return isSave;
@@ -97,8 +94,6 @@ public class MySQLOrderRepository implements OrderRepository {
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
             e.printStackTrace();
-        } finally {
-            ConnectionPool.getInstance().closeConnection(connection);
         }
         orders = orders.isEmpty() ? null : orders;
         logger.info("Orders were found from database : " + orders);
@@ -139,8 +134,6 @@ public class MySQLOrderRepository implements OrderRepository {
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
             e.printStackTrace();
-        } finally {
-            ConnectionPool.getInstance().closeConnection(connection);
         }
         logger.info("Order by id " + orderId + " was deleted: " + isDelete);
         return isDelete;
@@ -191,8 +184,6 @@ public class MySQLOrderRepository implements OrderRepository {
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
             e.printStackTrace();
-        } finally {
-            ConnectionPool.getInstance().closeConnection(connection);
         }
         logger.info("Order by id " + orderId + " was finded: " + order);
         return order;
@@ -214,8 +205,6 @@ public class MySQLOrderRepository implements OrderRepository {
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
             e.printStackTrace();
-        } finally {
-            ConnectionPool.getInstance().closeConnection(connection);
         }
         logger.info("Order: " + orderId + " was updated");
         return isUpdate;

@@ -1,7 +1,6 @@
 package com.cargodelivery.repository.impl;
 
-//import com.cargodelivery.configconnection.MySQLConfiguration;
-import com.cargodelivery.configconnection.ConnectionPool;
+import com.cargodelivery.configconnection.MySQLConfiguration;
 import com.cargodelivery.model.User;
 import com.cargodelivery.repository.UserRepository;
 import org.apache.log4j.Logger;
@@ -28,7 +27,7 @@ public class MySQLUserRepository implements UserRepository {
      * Init database connection by MySQL connection
      */
     public MySQLUserRepository() {
-        this.connection = ConnectionPool.getInstance().getConnection(); //new MySQLConfiguration().getConnection();
+        this.connection = new MySQLConfiguration().getConnection();
     }
     /**
      * Init database connection
@@ -53,8 +52,6 @@ public class MySQLUserRepository implements UserRepository {
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
             e.printStackTrace();
-        } finally {
-            ConnectionPool.getInstance().closeConnection(connection);
         }
         logger.info("User: " + user + " was saved to database");
         return isSave;
@@ -88,8 +85,6 @@ public class MySQLUserRepository implements UserRepository {
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
             e.printStackTrace();
-        } finally {
-            ConnectionPool.getInstance().closeConnection(connection);
         }
         logger.info("User was found from database : " + user);
         return user;
@@ -126,8 +121,6 @@ public class MySQLUserRepository implements UserRepository {
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
             e.printStackTrace();
-        } finally {
-            ConnectionPool.getInstance().closeConnection(connection);
         }
         logger.info("User was found from database : " + user);
         return user;

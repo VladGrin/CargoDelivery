@@ -1,7 +1,6 @@
 package com.cargodelivery.repository.impl;
 
-//import com.cargodelivery.configconnection.MySQLConfiguration;
-import com.cargodelivery.configconnection.ConnectionPool;
+import com.cargodelivery.configconnection.MySQLConfiguration;
 import com.cargodelivery.model.Company;
 import com.cargodelivery.repository.CompanyRepository;
 import org.apache.log4j.Logger;
@@ -25,7 +24,7 @@ public class MySQLCompanyRepository implements CompanyRepository {
      * Init database connection by MySQL connection
      */
     public MySQLCompanyRepository() {
-        this.connection = ConnectionPool.getInstance().getConnection(); //new MySQLConfiguration().getConnection();
+        this.connection = new MySQLConfiguration().getConnection();
     }
     /**
      * Init database connection
@@ -60,8 +59,6 @@ public class MySQLCompanyRepository implements CompanyRepository {
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
             e.printStackTrace();
-        }  finally {
-            ConnectionPool.getInstance().closeConnection(connection);
         }
         logger.info("Company was found from database : " + company);
         return company;

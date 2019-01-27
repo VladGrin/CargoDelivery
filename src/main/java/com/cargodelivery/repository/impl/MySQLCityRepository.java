@@ -1,7 +1,6 @@
 package com.cargodelivery.repository.impl;
 
-//import com.cargodelivery.configconnection.MySQLConfiguration;
-import com.cargodelivery.configconnection.ConnectionPool;
+import com.cargodelivery.configconnection.MySQLConfiguration;
 import com.cargodelivery.model.City;
 import com.cargodelivery.repository.CityRepository;
 import org.apache.log4j.Logger;
@@ -30,7 +29,7 @@ public class MySQLCityRepository implements CityRepository {
      * Init database connection by MySQL connection
      */
     public MySQLCityRepository() {
-        this.connection = ConnectionPool.getInstance().getConnection();  //MySQLConfiguration().getConnection();
+        this.connection = new MySQLConfiguration().getConnection();
     }
     /**
      * Init database connection
@@ -55,8 +54,6 @@ public class MySQLCityRepository implements CityRepository {
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
             e.printStackTrace();
-        } finally {
-            ConnectionPool.getInstance().closeConnection(connection);
         }
         logger.info("City " + city.getName() + " was saved to database : " + isSave);
         return isSave;
@@ -82,8 +79,6 @@ public class MySQLCityRepository implements CityRepository {
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
             e.printStackTrace();
-        } finally {
-            ConnectionPool.getInstance().closeConnection(connection);
         }
         logger.info("City was found from database : " + city);
         return city;
@@ -107,8 +102,6 @@ public class MySQLCityRepository implements CityRepository {
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
             e.printStackTrace();
-        } finally {
-            ConnectionPool.getInstance().closeConnection(connection);
         }
         logger.info("City was found from database : " + city);
         return city;
@@ -131,8 +124,6 @@ public class MySQLCityRepository implements CityRepository {
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
             e.printStackTrace();
-        } finally {
-            ConnectionPool.getInstance().closeConnection(connection);
         }
         cities = cities.isEmpty() ? null : cities;
         logger.info("Cities were found from database : " + cities);
