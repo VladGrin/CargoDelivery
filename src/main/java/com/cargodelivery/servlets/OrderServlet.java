@@ -1,7 +1,5 @@
 package com.cargodelivery.servlets;
 
-import com.cargodelivery.configconnection.DBConnection;
-import com.cargodelivery.configconnection.impl.MySQLConnection;
 import com.cargodelivery.exception.IncorrectInputException;
 import com.cargodelivery.exception.NoSuchDataException;
 import com.cargodelivery.model.City;
@@ -25,15 +23,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.Set;
 
 @WebServlet("/room/order")
 public class OrderServlet extends HttpServlet {
 
-    private final DBConnection dbConnection = new MySQLConnection();
-    private final static Logger logger = Logger.getLogger(CalculatorServlet.class);
+    private final static Logger logger = Logger.getLogger(OrderServlet.class);
     private final DataFormatter dataFormatter = new MySQLDateFormatter();
+    private OrderService orderServlet = new OrderServiceImpl();
+    private DistanceService distanceService = new DistanceServiceImpl();
+    private CityService cityService = new CityServiceImpl();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF8");
@@ -61,8 +60,6 @@ public class OrderServlet extends HttpServlet {
                 " startDate: " + startDate + " endDate: " + endDate + " recipient: " + recipient +
                 " recipientPhone: " + recipientPhone + " deliveryAddress: " + deliveryAddress + " price: " + price);
 
-        Connection connection = dbConnection.getConnection();
-        OrderService orderServlet = new OrderServiceImpl(connection);
         try {
             orderServlet.saveOrder(userId, createDate, cityFrom, cityTo, cargoType, weight, startDate,
                     endDate, recipient, recipientPhone, deliveryAddress, price);
@@ -77,8 +74,6 @@ public class OrderServlet extends HttpServlet {
             request.setAttribute("deliveryAddress", deliveryAddress);
             request.setAttribute("cities", cities);
             request.getRequestDispatcher("/WEB-INF/view/order.jsp").forward(request, response);
-        } finally {
-            dbConnection.closeConnection(connection);
         }
     }
 
@@ -95,21 +90,15 @@ public class OrderServlet extends HttpServlet {
     }
 
     private String getEndDate(String cityFrom, String cityTo, String startDate) {
-        Connection connection = dbConnection.getConnection();
 
-        DistanceService distanceService = new DistanceServiceImpl(connection);
         int deliveryTerm = distanceService.getDeliveryTermBetweenTwoCities(cityFrom, cityTo);
-
-        dbConnection.closeConnection(connection);
 
         return dataFormatter.getEndDate(startDate, deliveryTerm);
     }
 
     private int getPrice(String cityFrom, String cityTo, String cargoType, String weight) {
-        Connection connection = dbConnection.getConnection();
         int orderPrice = 0;
         try {
-            DistanceService distanceService = new DistanceServiceImpl(connection);
             int distance = distanceService.getDistanceBetweenTwoCities(cityFrom, cityTo);
             CalculateServise calculateServise = new CalculatorServiceImpl(new PriceCalculatorByCargoType(new PriceCalculatorFactory()));
             orderPrice = calculateServise.getOrderPrice(cargoType, weight, distance);
@@ -117,13 +106,10 @@ public class OrderServlet extends HttpServlet {
         } catch (IncorrectInputException e) {
             logger.error("Incorrect input data: " + e);
         }
-        dbConnection.closeConnection(connection);
         return orderPrice;
     }
 
     private Set<City> getCitiesFromDB() {
-        Connection connection = dbConnection.getConnection();
-        CityService cityService = new CityServiceImpl(connection);
         Set<City> cities = null;
         try {
             cities = cityService.getAllCities();
@@ -131,7 +117,6 @@ public class OrderServlet extends HttpServlet {
         } catch (NoSuchDataException e) {
             logger.error("No any cities in servlet. " + e);
         }
-        dbConnection.closeConnection(connection);
         return cities;
     }
 }

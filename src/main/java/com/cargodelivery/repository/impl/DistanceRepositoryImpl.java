@@ -1,5 +1,6 @@
 package com.cargodelivery.repository.impl;
 
+import com.cargodelivery.configconnection.MySQLConfiguration;
 import com.cargodelivery.repository.DistanceRepository;
 import org.apache.log4j.Logger;
 
@@ -15,15 +16,11 @@ public class DistanceRepositoryImpl implements DistanceRepository {
     /**
      * Logger log4j
      */
-    private final static Logger logger = Logger.getLogger(UserRepositoryImpl.class);
+    private final static Logger logger = Logger.getLogger(DistanceRepositoryImpl.class);
     /**
      * Connection of database
      */
-    private Connection connection;
-
-    public DistanceRepositoryImpl(Connection connection) {
-        this.connection = connection;
-    }
+    private final Connection connection = new MySQLConfiguration().getConnection();
 
     /**
      * Find distance between two sities

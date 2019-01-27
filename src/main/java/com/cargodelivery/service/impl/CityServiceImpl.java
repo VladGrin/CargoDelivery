@@ -6,7 +6,6 @@ import com.cargodelivery.repository.CityRepository;
 import com.cargodelivery.repository.impl.CityRepositoryImpl;
 import com.cargodelivery.service.CityService;
 
-import java.sql.Connection;
 import java.util.Set;
 
 public class CityServiceImpl implements CityService {

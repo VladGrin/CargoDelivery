@@ -1,7 +1,5 @@
 package com.cargodelivery.servlets;
 
-import com.cargodelivery.configconnection.DBConnection;
-import com.cargodelivery.configconnection.impl.MySQLConnection;
 import com.cargodelivery.exception.DataAlreadyExistsException;
 import com.cargodelivery.exception.IncorrectInputException;
 import com.cargodelivery.exception.NoSuchDataException;
@@ -18,14 +16,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
 
 @WebServlet("/registration")
 public class RegistrationServlet extends HttpServlet {
 
-    private final PasswordEncryption passwordEncryption = new PasswordEncryptionImpl();
     private final static Logger logger = Logger.getLogger(RegistrationServlet.class);
-    private final DBConnection dbConnection = new MySQLConnection();
+    private final PasswordEncryption passwordEncryption = new PasswordEncryptionImpl();
+    private UserService userService = new UserServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -46,8 +43,6 @@ public class RegistrationServlet extends HttpServlet {
         password = passwordEncryption.getEncryptedPassword(password);
         User.Role role = User.Role.USER;
 
-        Connection connection = dbConnection.getConnection();
-        UserService userService = new UserServiceImpl(connection);
         try {
             userService.saveUser(name, surname, city, phone, login, password, role);
             User userByLogin = userService.getUserByLogin(login);
@@ -68,8 +63,6 @@ public class RegistrationServlet extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/view/registration.jsp").forward(request, response);
         } catch (NoSuchDataException e) {
             e.printStackTrace();
-        } finally {
-            dbConnection.closeConnection(connection);
         }
     }
 

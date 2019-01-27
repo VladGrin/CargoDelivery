@@ -1,7 +1,5 @@
 package com.cargodelivery.servlets;
 
-import com.cargodelivery.configconnection.DBConnection;
-import com.cargodelivery.configconnection.impl.MySQLConnection;
 import com.cargodelivery.exception.IncorrectInputException;
 import com.cargodelivery.exception.NoSuchDataException;
 import com.cargodelivery.model.Company;
@@ -21,20 +19,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
 
 @WebServlet("/room/bill")
 public class BillServlet extends HttpServlet {
 
-    private final DBConnection dbConnection = new MySQLConnection();
     private final static Logger logger = Logger.getLogger(BillServlet.class);
+    private OrderService orderService = new OrderServiceImpl();
+    private UserService userService = new UserServiceImpl();
+    private CompanyService companyService = new CompanyServiceImpl();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String orderId = request.getParameter("orderId");
 
-        Connection connection = dbConnection.getConnection();
-
-        OrderService orderService = new OrderServiceImpl(connection);
         Order orderById = null;
         try {
             orderById = orderService.getOrderById(orderId);
@@ -44,9 +40,9 @@ public class BillServlet extends HttpServlet {
         }
         request.setAttribute("order", orderById);
 
-        UserService userService = new UserServiceImpl(connection);
         User userById = null;
         try {
+            assert orderById != null;
             userById = userService.getUserById(orderById.getUserId());
             logger.info("User " + orderById.getUserId() + " was found");
         } catch (NoSuchDataException e) {
@@ -54,12 +50,9 @@ public class BillServlet extends HttpServlet {
         }
         request.setAttribute("user", userById);
 
-        CompanyService companyService = new CompanyServiceImpl(connection);
         Company company = companyService.getCompanyById(1);
         logger.info("Company " + 1 + " was found");
         request.setAttribute("company", company);
-
-        dbConnection.closeConnection(connection);
 
         request.getRequestDispatcher("/WEB-INF/view/bill.jsp").forward(request, response);
     }

@@ -1,5 +1,6 @@
 package com.cargodelivery.repository.impl;
 
+import com.cargodelivery.configconnection.MySQLConfiguration;
 import com.cargodelivery.model.User;
 import com.cargodelivery.repository.UserRepository;
 import org.apache.log4j.Logger;
@@ -20,16 +21,7 @@ public class UserRepositoryImpl implements UserRepository {
     /**
      * Connection of database
      */
-    private final Connection connection;
-
-    /**
-     * Init database connection
-     *
-     * @param connection of database
-     */
-    public UserRepositoryImpl(Connection connection) {
-        this.connection = connection;
-    }
+    private final Connection connection = new MySQLConfiguration().getConnection();
 
     /**
      * Create/save user in database

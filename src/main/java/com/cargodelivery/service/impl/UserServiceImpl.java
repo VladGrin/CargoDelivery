@@ -9,18 +9,12 @@ import com.cargodelivery.repository.impl.UserRepositoryImpl;
 import com.cargodelivery.service.UserService;
 import com.cargodelivery.validator.Validator;
 
-import java.sql.Connection;
-
 /**
  * Author : Volodymyr Hrinchenko
  */
 public class UserServiceImpl implements UserService {
 
-    private UserRepository userRepository;
-
-    public UserServiceImpl(Connection connection) {
-        this.userRepository = new UserRepositoryImpl(connection);
-    }
+    private UserRepository userRepository = new UserRepositoryImpl();
 
     @Override
     public boolean saveUser(String name, String surname, String city, String phone,

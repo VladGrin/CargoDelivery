@@ -1,5 +1,6 @@
 package com.cargodelivery.repository.impl;
 
+import com.cargodelivery.configconnection.MySQLConfiguration;
 import com.cargodelivery.model.Company;
 import com.cargodelivery.repository.CompanyRepository;
 import org.apache.log4j.Logger;
@@ -13,20 +14,11 @@ public class CompanyRepositoryImpl implements CompanyRepository {
     /**
      * Logger log4j
      */
-    private final static Logger logger = Logger.getLogger(UserRepositoryImpl.class);
+    private final static Logger logger = Logger.getLogger(CompanyRepositoryImpl.class);
     /**
      * Connection of database
      */
-    private final Connection connection;
-
-    /**
-     * Init database connection
-     *
-     * @param connection of database
-     */
-    public CompanyRepositoryImpl(Connection connection) {
-        this.connection = connection;
-    }
+    private final Connection connection = new MySQLConfiguration().getConnection();
 
     /**
      * Find Company by id

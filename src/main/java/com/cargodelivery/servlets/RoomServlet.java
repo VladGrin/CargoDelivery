@@ -1,7 +1,5 @@
 package com.cargodelivery.servlets;
 
-import com.cargodelivery.configconnection.DBConnection;
-import com.cargodelivery.configconnection.impl.MySQLConnection;
 import com.cargodelivery.exception.IncorrectInputException;
 import com.cargodelivery.exception.NoSuchDataException;
 import com.cargodelivery.model.Order;
@@ -15,28 +13,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @WebServlet("/room")
 public class RoomServlet extends HttpServlet {
 
-    private final DBConnection dbConnection = new MySQLConnection();
     private final static Logger logger = Logger.getLogger(RoomServlet.class);
+    private OrderService orderService = new OrderServiceImpl();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String orderId = request.getParameter("orderId");
 
-        Connection connection = dbConnection.getConnection();
-        OrderService orderService = new OrderServiceImpl(connection);
         try {
             orderService.deleteOrderById(orderId);
             logger.info("Order " + orderId + " was deleted");
         } catch (IncorrectInputException e) {
             logger.error("Order " + orderId + " was not delete: " + e);
-        } finally {
-            dbConnection.closeConnection(connection);
         }
 
         response.sendRedirect("/room");
@@ -48,8 +41,6 @@ public class RoomServlet extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/view/index.jsp").forward(request, response);
         }
 
-        Connection connection = dbConnection.getConnection();
-        OrderService orderService = new OrderServiceImpl(connection);
         List<Order> orders = null;
         try {
             orders = orderService.getAllOrdersByUserId((Integer) userId).stream()
@@ -58,10 +49,7 @@ public class RoomServlet extends HttpServlet {
             logger.info("Get orders list: " + orders);
         } catch (NoSuchDataException e) {
             logger.error("Order list is empty" + e);
-        } finally {
-            dbConnection.closeConnection(connection);
         }
-
         request.setAttribute("orders", orders);
 
         request.getRequestDispatcher("/WEB-INF/view/room.jsp").forward(request, response);

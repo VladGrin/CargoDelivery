@@ -1,5 +1,6 @@
 package com.cargodelivery.repository.impl;
 
+import com.cargodelivery.configconnection.MySQLConfiguration;
 import com.cargodelivery.model.Order;
 import com.cargodelivery.repository.OrderRepository;
 import org.apache.log4j.Logger;
@@ -18,21 +19,11 @@ public class OrderRepositoryImpl implements OrderRepository {
     /**
      * Logger log4j
      */
-    private final static Logger logger = Logger.getLogger(UserRepositoryImpl.class);
+    private final static Logger logger = Logger.getLogger(OrderRepositoryImpl.class);
     /**
      * Connection of database
      */
-    private final Connection connection;
-
-    /**
-     * Init database connection
-     *
-     * @param connection of database
-     */
-    public OrderRepositoryImpl(Connection connection) {
-        this.connection = connection;
-    }
-
+    private final Connection connection = new MySQLConfiguration().getConnection();
 
     /**
      * Create/save order in database

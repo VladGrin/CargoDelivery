@@ -6,24 +6,15 @@ import com.cargodelivery.model.Order;
 import com.cargodelivery.repository.OrderRepository;
 import com.cargodelivery.repository.impl.OrderRepositoryImpl;
 import com.cargodelivery.service.OrderService;
-import com.cargodelivery.util.DataFormatter;
-import com.cargodelivery.util.impl.MySQLDateFormatter;
 import com.cargodelivery.validator.Validator;
 import org.apache.log4j.Logger;
 
-import java.sql.Connection;
 import java.util.List;
 
 public class OrderServiceImpl implements OrderService {
 
     private final static Logger logger = Logger.getLogger(OrderServiceImpl.class);
-    private OrderRepository orderRepository;
-    private DataFormatter dataFormatter;
-
-    public OrderServiceImpl(Connection connection) {
-        this.orderRepository = new OrderRepositoryImpl(connection);
-        dataFormatter = new MySQLDateFormatter();
-    }
+    private OrderRepository orderRepository = new OrderRepositoryImpl();
 
     @Override
     public boolean saveOrder(int userId, String createDate, String cityFrom, String cityTo, String cargoType,

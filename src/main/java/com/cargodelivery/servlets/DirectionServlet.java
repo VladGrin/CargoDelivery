@@ -1,7 +1,5 @@
 package com.cargodelivery.servlets;
 
-import com.cargodelivery.configconnection.DBConnection;
-import com.cargodelivery.configconnection.impl.MySQLConnection;
 import com.cargodelivery.exception.NoSuchDataException;
 import com.cargodelivery.model.City;
 import com.cargodelivery.model.User;
@@ -15,14 +13,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.Set;
 
 @WebServlet("/direction")
 public class DirectionServlet extends HttpServlet {
 
     private final static Logger logger = Logger.getLogger(DirectionServlet.class);
-    private final CityService cityService = new CityServiceImpl();
+    private CityService cityService = new CityServiceImpl();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

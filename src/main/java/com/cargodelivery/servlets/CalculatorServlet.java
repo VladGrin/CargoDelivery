@@ -1,7 +1,5 @@
 package com.cargodelivery.servlets;
 
-import com.cargodelivery.configconnection.DBConnection;
-import com.cargodelivery.configconnection.impl.MySQLConnection;
 import com.cargodelivery.exception.IncorrectInputException;
 import com.cargodelivery.exception.NoSuchDataException;
 import com.cargodelivery.model.City;
@@ -22,14 +20,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.Set;
 
 @WebServlet("/calculator")
 public class CalculatorServlet extends HttpServlet {
 
-    private final DBConnection dbConnection = new MySQLConnection();
     private final static Logger logger = Logger.getLogger(CalculatorServlet.class);
+    private DistanceService distanceService = new DistanceServiceImpl();
+    private CityService cityService = new CityServiceImpl();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF8");
@@ -40,9 +38,6 @@ public class CalculatorServlet extends HttpServlet {
         String weight = request.getParameter("weight");
         logger.info("Entered data: cityTo: " + cityTo + " cityFrom: " + cityFrom + " cargoType: " + cargoType + " weight: " + weight);
 
-        Connection connection = dbConnection.getConnection();
-
-        DistanceService distanceService = new DistanceServiceImpl(connection);
         int distance = distanceService.getDistanceBetweenTwoCities(cityTo, cityFrom);
 
         String orderPrice = null;
@@ -58,15 +53,11 @@ public class CalculatorServlet extends HttpServlet {
             logger.error("Exception" + e);
         }
 
-        dbConnection.closeConnection(connection);
-
         doGet(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        Connection connection = dbConnection.getConnection();
-        CityService cityService = new CityServiceImpl(connection);
         Set<City> cities = null;
         try {
             cities = cityService.getAllCities();
@@ -76,7 +67,6 @@ public class CalculatorServlet extends HttpServlet {
         }
 
         request.setAttribute("cities", cities);
-        dbConnection.closeConnection(connection);
 
         setRoleToRequest(request);
 

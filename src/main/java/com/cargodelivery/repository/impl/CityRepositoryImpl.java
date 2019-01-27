@@ -1,6 +1,6 @@
 package com.cargodelivery.repository.impl;
 
-import com.cargodelivery.configconnection.impl.MySQLConfiguration;
+import com.cargodelivery.configconnection.MySQLConfiguration;
 import com.cargodelivery.model.City;
 import com.cargodelivery.repository.CityRepository;
 import org.apache.log4j.Logger;

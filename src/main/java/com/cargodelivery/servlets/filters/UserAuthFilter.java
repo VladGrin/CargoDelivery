@@ -1,14 +1,12 @@
 package com.cargodelivery.servlets.filters;
 
-import com.cargodelivery.configconnection.DBConnection;
-import com.cargodelivery.util.PasswordEncryption;
-import com.cargodelivery.configconnection.impl.MySQLConnection;
-import com.cargodelivery.util.impl.PasswordEncryptionImpl;
 import com.cargodelivery.exception.IncorrectInputException;
 import com.cargodelivery.exception.NoSuchDataException;
 import com.cargodelivery.model.User;
 import com.cargodelivery.service.UserService;
 import com.cargodelivery.service.impl.UserServiceImpl;
+import com.cargodelivery.util.PasswordEncryption;
+import com.cargodelivery.util.impl.PasswordEncryptionImpl;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;
@@ -20,9 +18,9 @@ import java.sql.Connection;
 
 public class UserAuthFilter implements Filter {
 
-    private final DBConnection dbConnection = new MySQLConnection();
     private final static Logger logger = Logger.getLogger(UserAuthFilter.class);
     private final PasswordEncryption passwordEncryption = new PasswordEncryptionImpl();
+    private UserService userService = new UserServiceImpl();
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -43,8 +41,6 @@ public class UserAuthFilter implements Filter {
         User.Role role = null;
         boolean existsUser = false;
         if (login != null && password != null) {
-            Connection connection = dbConnection.getConnection();
-            UserService userService = new UserServiceImpl(connection);
             try {
                 existsUser = userService.existsUser(login, password);
                 if (existsUser) {
@@ -58,7 +54,6 @@ public class UserAuthFilter implements Filter {
             } catch (NoSuchDataException e) {
                 logger.error("Authentication filter no data: " + e);
             }
-            dbConnection.closeConnection(connection);
         }
 
         if (session.getAttribute("login") != null && session.getAttribute("password") != null) {
