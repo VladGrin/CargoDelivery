@@ -82,3 +82,4 @@ by path CargoDelivery/target.
 Instruction for launching the application.
 Start server Apache Tomcat. Put CargoDelivery-1.0.war to directory ..\apache-tomcat\webapps
 or take all directories from CargoDelivery directory and put to ..\apache-tomcat\webapps\ROOT.
+
