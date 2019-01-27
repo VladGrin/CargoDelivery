@@ -1,5 +1,6 @@
 package com.cargodelivery.repository.impl;
 
+import com.cargodelivery.configconnection.impl.MySQLConfiguration;
 import com.cargodelivery.model.City;
 import com.cargodelivery.repository.CityRepository;
 import org.apache.log4j.Logger;
@@ -22,16 +23,7 @@ public class CityRepositoryImpl implements CityRepository {
     /**
      * Connection of database
      */
-    private final Connection connection;
-
-    /**
-     * Init database connection
-     *
-     * @param connection of database
-     */
-    public CityRepositoryImpl(Connection connection) {
-        this.connection = connection;
-    }
+    private final Connection connection = new MySQLConfiguration().getConnection();
 
     /**
      * Create/save city in database

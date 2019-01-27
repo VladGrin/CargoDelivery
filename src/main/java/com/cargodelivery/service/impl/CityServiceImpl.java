@@ -11,11 +11,7 @@ import java.util.Set;
 
 public class CityServiceImpl implements CityService {
 
-    private CityRepository cityRepository;
-
-    public CityServiceImpl(Connection connection) {
-        this.cityRepository = new CityRepositoryImpl(connection);
-    }
+    private CityRepository cityRepository = new CityRepositoryImpl();
 
     @Override
     public boolean saveCity(City city) {

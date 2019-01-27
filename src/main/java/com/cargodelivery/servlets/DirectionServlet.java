@@ -21,13 +21,11 @@ import java.util.Set;
 @WebServlet("/direction")
 public class DirectionServlet extends HttpServlet {
 
-    private final DBConnection dbConnection = new MySQLConnection();
     private final static Logger logger = Logger.getLogger(DirectionServlet.class);
+    private final CityService cityService = new CityServiceImpl();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Connection connection = dbConnection.getConnection();
 
-        CityService cityService = new CityServiceImpl(connection);
         Set<City> cities = null;
         try {
             cities = cityService.getAllCities();
@@ -35,7 +33,6 @@ public class DirectionServlet extends HttpServlet {
             logger.error("No any cities in DirectionServlet." + e);
         }
         logger.info("Cities list (direction): " + cities);
-        dbConnection.closeConnection(connection);
 
         request.setAttribute("cities", cities);
 
