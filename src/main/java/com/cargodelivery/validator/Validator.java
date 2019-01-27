@@ -2,7 +2,6 @@ package com.cargodelivery.validator;
 
 import com.cargodelivery.exception.IncorrectInputException;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Validator {
@@ -30,9 +29,9 @@ public class Validator {
             throw new IncorrectInputException("Incorrectly input weight");
         }
         int weightInt = Integer.parseInt(weight);
-        if((weightInt > 3 && type.equals("DOCUMENT") ||
+        if ((weightInt > 3 && type.equals("DOCUMENT") ||
                 (weightInt > 50 && type.equals("PARSEL")) ||
-                (weightInt > 30000 && type.equals("FREIGHT")))){
+                (weightInt > 30000 && type.equals("FREIGHT")))) {
             throw new IncorrectInputException("Incorrectly input weight");
         }
     }

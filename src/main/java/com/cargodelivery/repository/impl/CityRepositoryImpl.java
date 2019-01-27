@@ -23,7 +23,13 @@ public class CityRepositoryImpl implements CityRepository {
     /**
      * Connection of database
      */
-    private final Connection connection = new MySQLConfiguration().getConnection();
+    private Connection connection = new MySQLConfiguration().getConnection();
+
+    public CityRepositoryImpl() {}
+
+    public CityRepositoryImpl(Connection connection) {
+        this.connection = connection;
+    }
 
     /**
      * Create/save city in database
