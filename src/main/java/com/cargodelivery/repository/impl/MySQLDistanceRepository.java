@@ -1,6 +1,7 @@
 package com.cargodelivery.repository.impl;
 
-import com.cargodelivery.configconnection.MySQLConfiguration;
+//import com.cargodelivery.configconnection.MySQLConfiguration;
+import com.cargodelivery.configconnection.ConnectionPool;
 import com.cargodelivery.repository.DistanceRepository;
 import org.apache.log4j.Logger;
 
@@ -26,7 +27,7 @@ public class MySQLDistanceRepository implements DistanceRepository {
      * Init database connection by MySQL connection
      */
     public MySQLDistanceRepository() {
-        this.connection = new MySQLConfiguration().getConnection();
+        this.connection = ConnectionPool.getInstance().getConnection(); //new MySQLConfiguration().getConnection();
     }
     /**
      * Init database connection
@@ -60,6 +61,8 @@ public class MySQLDistanceRepository implements DistanceRepository {
         } catch (SQLException e) {
             logger.error("Invalid connection.");
             e.printStackTrace();
+        } finally {
+            ConnectionPool.getInstance().closeConnection(connection);
         }
         logger.info("Distance was found from database : " + distance);
         return distance;
@@ -89,6 +92,8 @@ public class MySQLDistanceRepository implements DistanceRepository {
         } catch (SQLException e) {
             logger.error("Invalid connection.");
             e.printStackTrace();
+        } finally {
+            ConnectionPool.getInstance().closeConnection(connection);
         }
         logger.info("Delibery term was found from database : " + deliveryTerm);
         return deliveryTerm;
