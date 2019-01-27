@@ -26,7 +26,7 @@ public class MySQLCityRepository implements CityRepository {
     private Connection connection;
     /**
      * Create empty constructor
-     * Init database connection by MtionySQL connection
+     * Init database connection by MySQL connection
      */
     public MySQLCityRepository() {
         this.connection = new MySQLConfiguration().getConnection();
