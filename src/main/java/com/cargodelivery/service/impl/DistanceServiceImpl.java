@@ -15,6 +15,6 @@ public class DistanceServiceImpl implements DistanceService {
 
     @Override
     public synchronized int getDeliveryTermBetweenTwoCities(String firstCity, String secondCity) {
-        return distanceRepository.getDeliveryTermBetweenTwoCities(firstCity, firstCity);
+        return distanceRepository.getDeliveryTermBetweenTwoCities(firstCity, secondCity);
     }
 }
