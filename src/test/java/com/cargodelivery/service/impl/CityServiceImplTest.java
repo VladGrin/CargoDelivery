@@ -2,13 +2,11 @@ package com.cargodelivery.service.impl;
 
 import com.cargodelivery.exception.NoSuchDataException;
 import com.cargodelivery.model.City;
-import org.junit.After;
+import com.cargodelivery.repository.CityRepository;
+import com.cargodelivery.repository.impl.MySQLCityRepository;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.ResourceBundle;
+import org.mockito.Mockito;
 
 import static org.junit.Assert.*;
 
@@ -16,47 +14,30 @@ public class CityServiceImplTest {
 
     private CityServiceImpl cityService;
 
-    private Connection connection;
+    private CityRepository cityRepository;
 
     @Before
     public void before() {
-        ResourceBundle resource = ResourceBundle.getBundle("database");
-//        try {
-//            String userName = resource.getString("db.user");
-//            String password = resource.getString("db.password");
-//            String connectionUrl = resource.getString("db.url");
-//            connection = DriverManager.getConnection(connectionUrl, userName, password);
-//            cityRepository = new MySQLCityRepository();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-        cityService = new CityServiceImpl();
-    }
-
-    @After
-    public void after() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-//
-//    /**
-//     * @see CityServiceImpl#getCityById(Integer)
-//     */
-//    @Test
-//    public void getCityByIdWhichExistThenReturnCity() throws NoSuchDataException {
-//        City city = cityService.getCityById(1);
-//        City expectedCity = new City(1, "Винница");
-//        assertEquals(city, expectedCity);
-//    }
-
-    @Test
-    public void getCityByName() {
+        cityRepository = Mockito.mock(MySQLCityRepository.class);
+        cityService = new CityServiceImpl(cityRepository);
     }
 
     @Test
-    public void getAllCities() {
+    public void getCityByIdTest() throws NoSuchDataException {
+
+        Integer cityId = 123;
+        City city = new City();
+
+        Mockito.when(cityRepository.findById(cityId)).thenReturn(city);
+
+        City result = cityService.getCityById(cityId);
+
+        assertEquals(city, result);
+    }
+
+    @Test(expected = NoSuchDataException.class)
+    public void getNullCityByIdTest() throws NoSuchDataException {
+
+        cityService.getCityById(321);
     }
 }
