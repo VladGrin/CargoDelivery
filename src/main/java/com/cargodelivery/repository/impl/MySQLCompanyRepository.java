@@ -16,24 +16,6 @@ public class MySQLCompanyRepository implements CompanyRepository {
      * Logger log4j
      */
     private final static Logger logger = Logger.getLogger(MySQLCompanyRepository.class);
-    /**
-     * Connection of database
-     */
-    private Connection connection;
-    /**
-     * Create empty constructor
-     * Init database connection by MySQL connection
-     */
-    public MySQLCompanyRepository() {
-        this.connection = ConnectionPool.getInstance().getConnection(); //new MySQLConfiguration().getConnection();
-    }
-    /**
-     * Init database connection
-     * @param connection of database
-     */
-    public MySQLCompanyRepository(Connection connection) {
-        this.connection = connection;
-    }
 
     /**
      * Find Company by id
@@ -43,6 +25,7 @@ public class MySQLCompanyRepository implements CompanyRepository {
      */
     @Override
     public Company findCompanyById(int id) {
+        Connection connection = ConnectionPool.getInstance().getConnection();
         Company company = new Company();
         try (PreparedStatement statement = connection.prepareStatement(SQLCompany.FINDBYID.QUERY)) {
             statement.setInt(1, id);

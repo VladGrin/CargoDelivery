@@ -18,24 +18,6 @@ public class MySQLDistanceRepository implements DistanceRepository {
      * Logger log4j
      */
     private final static Logger logger = Logger.getLogger(MySQLDistanceRepository.class);
-    /**
-     * Connection of database
-     */
-    private Connection connection;
-    /**
-     * Create empty constructor
-     * Init database connection by MySQL connection
-     */
-    public MySQLDistanceRepository() {
-        this.connection = ConnectionPool.getInstance().getConnection(); //new MySQLConfiguration().getConnection();
-    }
-    /**
-     * Init database connection
-     * @param connection of database
-     */
-    public MySQLDistanceRepository(Connection connection) {
-        this.connection = connection;
-    }
 
     /**
      * Find distance between two sities
@@ -47,7 +29,7 @@ public class MySQLDistanceRepository implements DistanceRepository {
     @Override
     public int getDistanceBetweenTwoCities(String firstCity, String secondCity) {
         int distance = 0;
-
+        Connection connection = ConnectionPool.getInstance().getConnection();
         try (PreparedStatement statement = connection.prepareStatement(SQLDistance.FINDDISTANCE.QUERY)) {
             statement.setString(1, firstCity);
             statement.setString(2, secondCity);
@@ -78,7 +60,7 @@ public class MySQLDistanceRepository implements DistanceRepository {
     @Override
     public int getDeliveryTermBetweenTwoCities(String firstCity, String secondCity) {
         int deliveryTerm = 0;
-
+        Connection connection = ConnectionPool.getInstance().getConnection();
         try (PreparedStatement statement = connection.prepareStatement(SQLDistance.FINDDELIVERYTERM.QUERY)) {
             statement.setString(1, firstCity);
             statement.setString(2, secondCity);

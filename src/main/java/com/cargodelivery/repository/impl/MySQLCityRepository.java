@@ -21,24 +21,6 @@ public class MySQLCityRepository implements CityRepository {
      * Logger log4j
      */
     private final static Logger logger = Logger.getLogger(MySQLCityRepository.class);
-    /**
-     * Connection of database
-     */
-    private Connection connection;
-    /**
-     * Create empty constructor
-     * Init database connection by MySQL connection
-     */
-    public MySQLCityRepository() {
-        this.connection = ConnectionPool.getInstance().getConnection();  //MySQLConfiguration().getConnection();
-    }
-    /**
-     * Init database connection
-     * @param connection of database
-     */
-    public MySQLCityRepository(Connection connection) {
-        this.connection = connection;
-    }
 
     /**
      * Create/save city in database
@@ -48,6 +30,7 @@ public class MySQLCityRepository implements CityRepository {
      */
     @Override
     public boolean save(City city) {
+        Connection connection = ConnectionPool.getInstance().getConnection();
         boolean isSave = false;
         try (PreparedStatement statement = connection.prepareStatement(SQLCity.SAVE.QUERY)) {
             statement.setString(1, city.getName());
@@ -62,8 +45,6 @@ public class MySQLCityRepository implements CityRepository {
         return isSave;
     }
 
-
-
     /**
      * Find city by id
      *
@@ -72,6 +53,7 @@ public class MySQLCityRepository implements CityRepository {
      */
     @Override
     public City findById(Integer id) {
+        Connection connection = ConnectionPool.getInstance().getConnection();
         City city = null;
         try (PreparedStatement statement = connection.prepareStatement(SQLCity.FINDBYID.QUERY)) {
             statement.setInt(1, id);
@@ -97,6 +79,7 @@ public class MySQLCityRepository implements CityRepository {
      */
     @Override
     public City findByName(String name) {
+        Connection connection = ConnectionPool.getInstance().getConnection();
         City city = null;
         try (PreparedStatement statement = connection.prepareStatement(SQLCity.FINDBYNAME.QUERY)) {
             statement.setString(1, name);
@@ -121,6 +104,7 @@ public class MySQLCityRepository implements CityRepository {
      */
     @Override
     public Set<City> findAll() {
+        Connection connection = ConnectionPool.getInstance().getConnection();
         Set<City> cities = new TreeSet<>();
         try (PreparedStatement statement = connection.prepareStatement(SQLCity.FINDALL.QUERY)) {
             ResultSet resultSet = statement.executeQuery();

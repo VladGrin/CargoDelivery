@@ -21,24 +21,6 @@ public class MySQLOrderRepository implements OrderRepository {
      * Logger log4j
      */
     private final static Logger logger = Logger.getLogger(MySQLOrderRepository.class);
-    /**
-     * Connection of database
-     */
-    private final Connection connection;
-    /**
-     * Create empty constructor
-     * Init database connection by MySQL connection
-     */
-    public MySQLOrderRepository() {
-        this.connection = ConnectionPool.getInstance().getConnection(); //new MySQLConfiguration().getConnection();
-    }
-    /**
-     * Init database connection
-     * @param connection of database
-     */
-    public MySQLOrderRepository(Connection connection) {
-        this.connection = connection;
-    }
 
     /**
      * Create/save order in database
@@ -49,6 +31,7 @@ public class MySQLOrderRepository implements OrderRepository {
     @Override
     public boolean save(Order order) {
         boolean isSave = false;
+        Connection connection = ConnectionPool.getInstance().getConnection();
         try (PreparedStatement statement = connection.prepareStatement(SQLOrder.SAVE.QUERY)) {
             setOrderToStatement(order, statement);
             isSave = statement.executeUpdate() != 0;
@@ -86,6 +69,7 @@ public class MySQLOrderRepository implements OrderRepository {
      */
     @Override
     public List<Order> findAllOrdersByUserId(int userId) {
+        Connection connection = ConnectionPool.getInstance().getConnection();
         List<Order> orders = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SQLOrder.FINDALLBYUSERID.QUERY)) {
             statement.setInt(1, userId);
@@ -132,6 +116,7 @@ public class MySQLOrderRepository implements OrderRepository {
      */
     @Override
     public boolean deleteOrderById(int orderId) {
+        Connection connection = ConnectionPool.getInstance().getConnection();
         boolean isDelete = false;
         try (PreparedStatement statement = connection.prepareStatement(SQLOrder.DELETEBYID.QUERY)) {
             statement.setInt(1, orderId);
@@ -154,6 +139,7 @@ public class MySQLOrderRepository implements OrderRepository {
      */
     @Override
     public Order findOrderById(int orderId) {
+        Connection connection = ConnectionPool.getInstance().getConnection();
         Order order = null;
         try (PreparedStatement statement = connection.prepareStatement(SQLOrder.FINDBYID.QUERY)) {
             statement.setInt(1, orderId);
@@ -206,6 +192,7 @@ public class MySQLOrderRepository implements OrderRepository {
      */
     @Override
     public boolean updatePaymentByOrderId(Integer orderId, boolean isPayment) {
+        Connection connection = ConnectionPool.getInstance().getConnection();
         boolean isUpdate = false;
         try (PreparedStatement statement = connection.prepareStatement(SQLOrder.UPDATEPAYMENTBYORDERID.QUERY)) {
             statement.setBoolean(1, isPayment);

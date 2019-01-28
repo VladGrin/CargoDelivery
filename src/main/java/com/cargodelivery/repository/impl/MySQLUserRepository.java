@@ -19,24 +19,6 @@ public class MySQLUserRepository implements UserRepository {
      * Logger log4j
      */
     private final static Logger logger = Logger.getLogger(MySQLUserRepository.class);
-    /**
-     * Connection of database
-     */
-    private Connection connection;
-    /**
-     * Create empty constructor
-     * Init database connection by MySQL connection
-     */
-    public MySQLUserRepository() {
-        this.connection = ConnectionPool.getInstance().getConnection(); //new MySQLConfiguration().getConnection();
-    }
-    /**
-     * Init database connection
-     * @param connection of database
-     */
-    public MySQLUserRepository(Connection connection) {
-        this.connection = connection;
-    }
 
     /**
      * Create/save user in database
@@ -46,6 +28,7 @@ public class MySQLUserRepository implements UserRepository {
      */
     @Override
     public boolean save(User user) {
+        Connection connection = ConnectionPool.getInstance().getConnection();
         boolean isSave = false;
         try (PreparedStatement statement = connection.prepareStatement(SQLUser.SAVE.QUERY)) {
             saveUserToStatement(user, statement);
@@ -78,6 +61,7 @@ public class MySQLUserRepository implements UserRepository {
      */
     @Override
     public User findById(Integer id) {
+        Connection connection = ConnectionPool.getInstance().getConnection();
         User user = null;
         try (PreparedStatement statement = connection.prepareStatement(SQLUser.FINDBYID.QUERY)) {
             statement.setInt(1, id);
@@ -116,6 +100,7 @@ public class MySQLUserRepository implements UserRepository {
      */
     @Override
     public User findByLogin(String login) {
+        Connection connection = ConnectionPool.getInstance().getConnection();
         User user = null;
         try (PreparedStatement statement = connection.prepareStatement(SQLUser.FINDBYLOGIN.QUERY)) {
             statement.setString(1, login);
