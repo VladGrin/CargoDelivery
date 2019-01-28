@@ -41,16 +41,16 @@ public class CityServiceImplTest {
             e.printStackTrace();
         }
     }
-
-    /**
-     * @see CityServiceImpl#getCityById(Integer)
-     */
-    @Test
-    public void getCityByIdWhichExistThenReturnCity() throws NoSuchDataException {
-        City city = cityService.getCityById(1);
-        City expectedCity = new City(1, "Винница");
-        assertEquals(city, expectedCity);
-    }
+//
+//    /**
+//     * @see CityServiceImpl#getCityById(Integer)
+//     */
+//    @Test
+//    public void getCityByIdWhichExistThenReturnCity() throws NoSuchDataException {
+//        City city = cityService.getCityById(1);
+//        City expectedCity = new City(1, "Винница");
+//        assertEquals(city, expectedCity);
+//    }
 
     @Test
     public void getCityByName() {
