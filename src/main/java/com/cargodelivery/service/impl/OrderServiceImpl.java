@@ -14,7 +14,15 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
 
     private final static Logger logger = Logger.getLogger(OrderServiceImpl.class);
-    private OrderRepository orderRepository = new MySQLOrderRepository();
+    private OrderRepository orderRepository;
+
+    public OrderServiceImpl() {
+        this.orderRepository = new MySQLOrderRepository();
+    }
+
+    public OrderServiceImpl(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
 
     @Override
     public boolean saveOrder(int userId, String createDate, String cityFrom, String cityTo, String cargoType,

@@ -14,7 +14,15 @@ import com.cargodelivery.validator.Validator;
  */
 public class UserServiceImpl implements UserService {
 
-    private UserRepository userRepository = new MySQLUserRepository();
+    private UserRepository userRepository;
+
+    public UserServiceImpl() {
+        this.userRepository = new MySQLUserRepository();
+    }
+
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public boolean saveUser(String name, String surname, String city, String phone,
