@@ -6,6 +6,7 @@ import com.cargodelivery.model.Order;
 import com.cargodelivery.repository.OrderRepository;
 import org.apache.log4j.Logger;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,6 +23,11 @@ public class MySQLOrderRepository implements OrderRepository {
      */
     private final static Logger logger = Logger.getLogger(MySQLOrderRepository.class);
 
+    private DataSource dataSource;
+
+    public MySQLOrderRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
     /**
      * Create/save order in database
      *
@@ -31,15 +37,13 @@ public class MySQLOrderRepository implements OrderRepository {
     @Override
     public boolean save(Order order) {
         boolean isSave = false;
-        Connection connection = ConnectionPool.getInstance().getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQLOrder.SAVE.QUERY)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLOrder.SAVE.QUERY)) {
             setOrderToStatement(order, statement);
             isSave = statement.executeUpdate() != 0;
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
             e.printStackTrace();
-        } finally {
-            ConnectionPool.getInstance().closeConnection(connection);
         }
         logger.info("Order: " + order + " was saved to database");
         return isSave;
@@ -69,9 +73,9 @@ public class MySQLOrderRepository implements OrderRepository {
      */
     @Override
     public List<Order> findAllOrdersByUserId(int userId) {
-        Connection connection = ConnectionPool.getInstance().getConnection();
         List<Order> orders = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(SQLOrder.FINDALLBYUSERID.QUERY)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLOrder.FINDALLBYUSERID.QUERY)) {
             statement.setInt(1, userId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -81,8 +85,6 @@ public class MySQLOrderRepository implements OrderRepository {
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
             e.printStackTrace();
-        } finally {
-            ConnectionPool.getInstance().closeConnection(connection);
         }
         orders = orders.isEmpty() ? null : orders;
         logger.info("Orders were found from database : " + orders);
@@ -116,16 +118,14 @@ public class MySQLOrderRepository implements OrderRepository {
      */
     @Override
     public boolean deleteOrderById(int orderId) {
-        Connection connection = ConnectionPool.getInstance().getConnection();
         boolean isDelete = false;
-        try (PreparedStatement statement = connection.prepareStatement(SQLOrder.DELETEBYID.QUERY)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLOrder.DELETEBYID.QUERY)) {
             statement.setInt(1, orderId);
             isDelete = statement.executeUpdate() != 0;
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
             e.printStackTrace();
-        } finally {
-            ConnectionPool.getInstance().closeConnection(connection);
         }
         logger.info("Order by id " + orderId + " was deleted: " + isDelete);
         return isDelete;
@@ -139,9 +139,9 @@ public class MySQLOrderRepository implements OrderRepository {
      */
     @Override
     public Order findOrderById(int orderId) {
-        Connection connection = ConnectionPool.getInstance().getConnection();
         Order order = null;
-        try (PreparedStatement statement = connection.prepareStatement(SQLOrder.FINDBYID.QUERY)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLOrder.FINDBYID.QUERY)) {
             statement.setInt(1, orderId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -177,8 +177,6 @@ public class MySQLOrderRepository implements OrderRepository {
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
             e.printStackTrace();
-        } finally {
-            ConnectionPool.getInstance().closeConnection(connection);
         }
         logger.info("Order by id " + orderId + " was finded: " + order);
         return order;
@@ -192,17 +190,15 @@ public class MySQLOrderRepository implements OrderRepository {
      */
     @Override
     public boolean updatePaymentByOrderId(Integer orderId, boolean isPayment) {
-        Connection connection = ConnectionPool.getInstance().getConnection();
         boolean isUpdate = false;
-        try (PreparedStatement statement = connection.prepareStatement(SQLOrder.UPDATEPAYMENTBYORDERID.QUERY)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLOrder.UPDATEPAYMENTBYORDERID.QUERY)) {
             statement.setBoolean(1, isPayment);
             statement.setInt(2, orderId);
             isUpdate = statement.executeUpdate() != 0;
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
             e.printStackTrace();
-        } finally {
-            ConnectionPool.getInstance().closeConnection(connection);
         }
         logger.info("Order: " + orderId + " was updated");
         return isUpdate;

@@ -6,6 +6,7 @@ import com.cargodelivery.model.City;
 import com.cargodelivery.repository.CityRepository;
 import org.apache.log4j.Logger;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,6 +23,12 @@ public class MySQLCityRepository implements CityRepository {
      */
     private final static Logger logger = Logger.getLogger(MySQLCityRepository.class);
 
+    private DataSource dataSource;
+
+    public MySQLCityRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
     /**
      * Create/save city in database
      *
@@ -30,16 +37,14 @@ public class MySQLCityRepository implements CityRepository {
      */
     @Override
     public boolean save(City city) {
-        Connection connection = ConnectionPool.getInstance().getConnection();
         boolean isSave = false;
-        try (PreparedStatement statement = connection.prepareStatement(SQLCity.SAVE.QUERY)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLCity.SAVE.QUERY)) {
             statement.setString(1, city.getName());
             isSave = statement.executeUpdate() != 0;
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
             e.printStackTrace();
-        } finally {
-            ConnectionPool.getInstance().closeConnection(connection);
         }
         logger.info("City " + city.getName() + " was saved to database : " + isSave);
         return isSave;
@@ -53,9 +58,9 @@ public class MySQLCityRepository implements CityRepository {
      */
     @Override
     public City findById(Integer id) {
-        Connection connection = ConnectionPool.getInstance().getConnection();
         City city = null;
-        try (PreparedStatement statement = connection.prepareStatement(SQLCity.FINDBYID.QUERY)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLCity.FINDBYID.QUERY)) {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -64,8 +69,6 @@ public class MySQLCityRepository implements CityRepository {
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
             e.printStackTrace();
-        } finally {
-            ConnectionPool.getInstance().closeConnection(connection);
         }
         logger.info("City was found from database : " + city);
         return city;
@@ -79,9 +82,9 @@ public class MySQLCityRepository implements CityRepository {
      */
     @Override
     public City findByName(String name) {
-        Connection connection = ConnectionPool.getInstance().getConnection();
         City city = null;
-        try (PreparedStatement statement = connection.prepareStatement(SQLCity.FINDBYNAME.QUERY)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLCity.FINDBYNAME.QUERY)) {
             statement.setString(1, name);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -90,8 +93,6 @@ public class MySQLCityRepository implements CityRepository {
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
             e.printStackTrace();
-        } finally {
-            ConnectionPool.getInstance().closeConnection(connection);
         }
         logger.info("City was found from database : " + city);
         return city;
@@ -104,9 +105,9 @@ public class MySQLCityRepository implements CityRepository {
      */
     @Override
     public Set<City> findAll() {
-        Connection connection = ConnectionPool.getInstance().getConnection();
         Set<City> cities = new TreeSet<>();
-        try (PreparedStatement statement = connection.prepareStatement(SQLCity.FINDALL.QUERY)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLCity.FINDALL.QUERY)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 City city = new City(resultSet.getInt("id"), resultSet.getString("name"));
@@ -115,8 +116,6 @@ public class MySQLCityRepository implements CityRepository {
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
             e.printStackTrace();
-        } finally {
-            ConnectionPool.getInstance().closeConnection(connection);
         }
         cities = cities.isEmpty() ? null : cities;
         logger.info("Cities were found from database : " + cities);

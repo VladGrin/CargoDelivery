@@ -6,6 +6,7 @@ import com.cargodelivery.model.User;
 import com.cargodelivery.repository.UserRepository;
 import org.apache.log4j.Logger;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,6 +21,11 @@ public class MySQLUserRepository implements UserRepository {
      */
     private final static Logger logger = Logger.getLogger(MySQLUserRepository.class);
 
+    private DataSource dataSource;
+
+    public MySQLUserRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
     /**
      * Create/save user in database
      *
@@ -28,16 +34,14 @@ public class MySQLUserRepository implements UserRepository {
      */
     @Override
     public boolean save(User user) {
-        Connection connection = ConnectionPool.getInstance().getConnection();
         boolean isSave = false;
-        try (PreparedStatement statement = connection.prepareStatement(SQLUser.SAVE.QUERY)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLUser.SAVE.QUERY)) {
             saveUserToStatement(user, statement);
             isSave = statement.executeUpdate() != 0;
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
             e.printStackTrace();
-        } finally {
-            ConnectionPool.getInstance().closeConnection(connection);
         }
         logger.info("User: " + user + " was saved to database");
         return isSave;
@@ -61,9 +65,9 @@ public class MySQLUserRepository implements UserRepository {
      */
     @Override
     public User findById(Integer id) {
-        Connection connection = ConnectionPool.getInstance().getConnection();
         User user = null;
-        try (PreparedStatement statement = connection.prepareStatement(SQLUser.FINDBYID.QUERY)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLUser.FINDBYID.QUERY)) {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -72,8 +76,6 @@ public class MySQLUserRepository implements UserRepository {
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
             e.printStackTrace();
-        } finally {
-            ConnectionPool.getInstance().closeConnection(connection);
         }
         logger.info("User was found from database : " + user);
         return user;
@@ -100,9 +102,9 @@ public class MySQLUserRepository implements UserRepository {
      */
     @Override
     public User findByLogin(String login) {
-        Connection connection = ConnectionPool.getInstance().getConnection();
         User user = null;
-        try (PreparedStatement statement = connection.prepareStatement(SQLUser.FINDBYLOGIN.QUERY)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLUser.FINDBYLOGIN.QUERY)) {
             statement.setString(1, login);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -111,8 +113,6 @@ public class MySQLUserRepository implements UserRepository {
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
             e.printStackTrace();
-        } finally {
-            ConnectionPool.getInstance().closeConnection(connection);
         }
         logger.info("User was found from database : " + user);
         return user;

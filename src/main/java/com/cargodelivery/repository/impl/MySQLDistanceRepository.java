@@ -5,6 +5,7 @@ import com.cargodelivery.configconnection.ConnectionPool;
 import com.cargodelivery.repository.DistanceRepository;
 import org.apache.log4j.Logger;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,6 +20,11 @@ public class MySQLDistanceRepository implements DistanceRepository {
      */
     private final static Logger logger = Logger.getLogger(MySQLDistanceRepository.class);
 
+    private DataSource dataSource;
+
+    public MySQLDistanceRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
     /**
      * Find distance between two sities
      *
@@ -29,8 +35,8 @@ public class MySQLDistanceRepository implements DistanceRepository {
     @Override
     public int getDistanceBetweenTwoCities(String firstCity, String secondCity) {
         int distance = 0;
-        Connection connection = ConnectionPool.getInstance().getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQLDistance.FINDDISTANCE.QUERY)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLDistance.FINDDISTANCE.QUERY)) {
             statement.setString(1, firstCity);
             statement.setString(2, secondCity);
             statement.setString(3, secondCity);
@@ -43,8 +49,6 @@ public class MySQLDistanceRepository implements DistanceRepository {
         } catch (SQLException e) {
             logger.error("Invalid connection.");
             e.printStackTrace();
-        } finally {
-            ConnectionPool.getInstance().closeConnection(connection);
         }
         logger.info("Distance was found from database : " + distance);
         return distance;
@@ -60,8 +64,8 @@ public class MySQLDistanceRepository implements DistanceRepository {
     @Override
     public int getDeliveryTermBetweenTwoCities(String firstCity, String secondCity) {
         int deliveryTerm = 0;
-        Connection connection = ConnectionPool.getInstance().getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(SQLDistance.FINDDELIVERYTERM.QUERY)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQLDistance.FINDDELIVERYTERM.QUERY)) {
             statement.setString(1, firstCity);
             statement.setString(2, secondCity);
             statement.setString(3, secondCity);
@@ -74,8 +78,6 @@ public class MySQLDistanceRepository implements DistanceRepository {
         } catch (SQLException e) {
             logger.error("Invalid connection.");
             e.printStackTrace();
-        } finally {
-            ConnectionPool.getInstance().closeConnection(connection);
         }
         logger.info("Delibery term was found from database : " + deliveryTerm);
         return deliveryTerm;

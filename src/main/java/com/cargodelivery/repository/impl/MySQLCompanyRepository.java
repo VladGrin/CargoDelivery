@@ -6,6 +6,7 @@ import com.cargodelivery.model.Company;
 import com.cargodelivery.repository.CompanyRepository;
 import org.apache.log4j.Logger;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,6 +18,12 @@ public class MySQLCompanyRepository implements CompanyRepository {
      */
     private final static Logger logger = Logger.getLogger(MySQLCompanyRepository.class);
 
+    private DataSource dataSource;
+
+    public MySQLCompanyRepository(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
     /**
      * Find Company by id
      *
@@ -25,9 +32,9 @@ public class MySQLCompanyRepository implements CompanyRepository {
      */
     @Override
     public Company findCompanyById(int id) {
-        Connection connection = ConnectionPool.getInstance().getConnection();
         Company company = new Company();
-        try (PreparedStatement statement = connection.prepareStatement(SQLCompany.FINDBYID.QUERY)) {
+        try (Connection connection = dataSource.getConnection();
+            PreparedStatement statement = connection.prepareStatement(SQLCompany.FINDBYID.QUERY)) {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -43,8 +50,6 @@ public class MySQLCompanyRepository implements CompanyRepository {
         } catch (SQLException e) {
             logger.error("Invalid connection. ");
             e.printStackTrace();
-        }  finally {
-            ConnectionPool.getInstance().closeConnection(connection);
         }
         logger.info("Company was found from database : " + company);
         return company;
