@@ -1,7 +1,6 @@
 package com.cargodelivery.repository.impl;
 
-//import com.cargodelivery.configconnection.MySQLConfiguration;
-import com.cargodelivery.configconnection.ConnectionPool;
+import com.cargodelivery.configconnection.MySQLConfiguration;
 import com.cargodelivery.model.City;
 import com.cargodelivery.repository.CityRepository;
 import org.apache.log4j.Logger;
@@ -25,8 +24,8 @@ public class MySQLCityRepository implements CityRepository {
 
     private DataSource dataSource;
 
-    public MySQLCityRepository(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public MySQLCityRepository() {
+        this.dataSource = MySQLConfiguration.getInstance().getDataSource();
     }
 
     /**

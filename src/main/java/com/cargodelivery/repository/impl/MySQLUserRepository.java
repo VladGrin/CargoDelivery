@@ -1,7 +1,6 @@
 package com.cargodelivery.repository.impl;
 
-//import com.cargodelivery.configconnection.MySQLConfiguration;
-import com.cargodelivery.configconnection.ConnectionPool;
+import com.cargodelivery.configconnection.MySQLConfiguration;
 import com.cargodelivery.model.User;
 import com.cargodelivery.repository.UserRepository;
 import org.apache.log4j.Logger;
@@ -23,8 +22,8 @@ public class MySQLUserRepository implements UserRepository {
 
     private DataSource dataSource;
 
-    public MySQLUserRepository(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public MySQLUserRepository() {
+        this.dataSource = MySQLConfiguration.getInstance().getDataSource();
     }
     /**
      * Create/save user in database

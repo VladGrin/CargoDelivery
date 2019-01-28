@@ -1,7 +1,6 @@
 package com.cargodelivery.repository.impl;
 
-//import com.cargodelivery.configconnection.MySQLConfiguration;
-import com.cargodelivery.configconnection.ConnectionPool;
+import com.cargodelivery.configconnection.MySQLConfiguration;
 import com.cargodelivery.repository.DistanceRepository;
 import org.apache.log4j.Logger;
 
@@ -22,9 +21,10 @@ public class MySQLDistanceRepository implements DistanceRepository {
 
     private DataSource dataSource;
 
-    public MySQLDistanceRepository(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public MySQLDistanceRepository() {
+        this.dataSource = MySQLConfiguration.getInstance().getDataSource();
     }
+
     /**
      * Find distance between two sities
      *

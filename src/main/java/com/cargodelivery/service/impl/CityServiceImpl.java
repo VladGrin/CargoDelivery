@@ -10,7 +10,15 @@ import java.util.Set;
 
 public class CityServiceImpl implements CityService {
 
-    private CityRepository cityRepository = new MySQLCityRepository();
+    private CityRepository cityRepository;
+
+    public CityServiceImpl() {
+        this.cityRepository = new MySQLCityRepository();
+    }
+
+    public CityServiceImpl(CityRepository cityRepository) {
+        this.cityRepository = cityRepository;
+    }
 
     @Override
     public boolean saveCity(City city) {

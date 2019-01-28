@@ -1,7 +1,6 @@
 package com.cargodelivery.repository.impl;
 
-//import com.cargodelivery.configconnection.MySQLConfiguration;
-import com.cargodelivery.configconnection.ConnectionPool;
+import com.cargodelivery.configconnection.MySQLConfiguration;
 import com.cargodelivery.model.Order;
 import com.cargodelivery.repository.OrderRepository;
 import org.apache.log4j.Logger;
@@ -25,9 +24,10 @@ public class MySQLOrderRepository implements OrderRepository {
 
     private DataSource dataSource;
 
-    public MySQLOrderRepository(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public MySQLOrderRepository() {
+        this.dataSource = MySQLConfiguration.getInstance().getDataSource();
     }
+
     /**
      * Create/save order in database
      *

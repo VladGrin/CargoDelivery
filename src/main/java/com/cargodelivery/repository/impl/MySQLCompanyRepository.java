@@ -1,7 +1,8 @@
 package com.cargodelivery.repository.impl;
 
 //import com.cargodelivery.configconnection.MySQLConfiguration;
-import com.cargodelivery.configconnection.ConnectionPool;
+
+import com.cargodelivery.configconnection.MySQLConfiguration;
 import com.cargodelivery.model.Company;
 import com.cargodelivery.repository.CompanyRepository;
 import org.apache.log4j.Logger;
@@ -20,8 +21,8 @@ public class MySQLCompanyRepository implements CompanyRepository {
 
     private DataSource dataSource;
 
-    public MySQLCompanyRepository(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public MySQLCompanyRepository() {
+        this.dataSource = MySQLConfiguration.getInstance().getDataSource();
     }
 
     /**
@@ -34,7 +35,7 @@ public class MySQLCompanyRepository implements CompanyRepository {
     public Company findCompanyById(int id) {
         Company company = new Company();
         try (Connection connection = dataSource.getConnection();
-            PreparedStatement statement = connection.prepareStatement(SQLCompany.FINDBYID.QUERY)) {
+             PreparedStatement statement = connection.prepareStatement(SQLCompany.FINDBYID.QUERY)) {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
