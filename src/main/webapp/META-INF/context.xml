@@ -9,7 +9,7 @@
               driverClassName="com.mysql.jdbc.Driver"
               url="jdbc:mysql://localhost:3306/cargodelivery?autoReconnect=true"
               validationQuery="select 1"
-              maxTotal="8"
+              maxActive="10"
               maxIdle="4"/>
 
 </Context>
